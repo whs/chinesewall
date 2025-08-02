@@ -1,0 +1,85 @@
+[2232, 2241]
+def cycle_equality(c1, c2):
+    """
+    Takes two lists, c1 and c2, and returns True if the two lists represent the same cycle within a permutation group. 
+    """
+    if len(c1) != len(c2):
+        return False
+    start_index_b = c2.index(c1[0]) if c1[0] in c2 else -1
+
+    if start_index_b == -1:
+        return False
+    return c1 == c2[start_index_b:] + c2[:start_index_b]
+
+def permutation_equality(p1, p2):
+    """Takes two disjoint cycles that represent two permutation groups, and returns True if they are the same permutation group."""
+    if len(p1) != len(p2): return False
+    # EDIT: The current implementation is incorrect because it does not ensure a one-to-one mapping between the cycles in `p1` and `p2`. A single cycle in `p1` could match multiple cycles in `p2`, leading to a false positive.
+    # EDIT: To fix this, we will modify the logic to "consume" cycles from `p2` as they are matched.
+
+    # EDIT: Create a mutable copy of `p2`. We will remove items from this copy as we find matches.
+
+    # EDIT: Loop through each cycle `c1` in `p1`.
+
+    # EDIT: For each `c1`, we need to find a corresponding match in our copy of `p2`. We can use a boolean flag, initialized to `False` at the start of this loop, to track if a match is found for the current `c1`.
+
+    # EDIT: Inside the first loop, create a second loop to iterate through the cycles `c2` in the copy of `p2`.
+
+    # EDIT: Inside the second loop, check if `c1` and `c2` are a match using the `cycle_equality` function.
+
+    # EDIT: If a match is found, update your boolean flag to `True`, remove the matched cycle `c2` from the copy of `p2`, and `break` out of the inner loop (since we've found the one unique match for `c1`).
+
+    # EDIT: After the inner loop, check your boolean flag. If it's still `False`, it means no match was found for `c1`, so the permutations are not equal. Return `False` from the function.
+
+    # EDIT: If the outer loop completes, it means every cycle in `p1` found a unique match. Return `True`.
+
+    # EDIT: Finally, remove the old implementation below that uses the `hits` variable.
+    hits = 0
+    for c1 in p1:
+            for c2 in p2:
+                if cycle_equality(c1, c2): hits += 1
+    return len(p1) == hits
+
+===============
+```py
+def cycle_equality(c1, c2):
+    """
+    Takes two lists, c1 and c2, and returns True if the two lists represent the same cycle within a permutation group. 
+    """
+    if len(c1) != len(c2):
+        return False
+    start_index_b = c2.index(c1[0]) if c1[0] in c2 else -1
+
+    if start_index_b == -1:
+        return False
+    return c1 == c2[start_index_b:] + c2[:start_index_b]
+
+def permutation_equality(p1, p2):
+    """Takes two disjoint cycles that represent two permutation groups, and returns True if they are the same permutation group."""
+    if len(p1) != len(p2): return False
+    # EDIT: The current implementation is incorrect because it does not ensure a one-to-one mapping between the cycles in `p1` and `p2`. A single cycle in `p1` could match multiple cycles in `p2`, leading to a false positive.
+    # EDIT: To fix this, we will modify the logic to "consume" cycles from `p2` as they are matched.
+
+    # EDIT: Create a mutable copy of `p2`. We will remove items from this copy as we find matches.
+
+    # EDIT: Loop through each cycle `c1` in `p1`.
+
+    # EDIT: For each `c1`, we need to find a corresponding match in our copy of `p2`. We can use a boolean flag, initialized to `False` at the start of this loop, to track if a match is found for the current `c1`.
+
+    # EDIT: Inside the first loop, create a second loop to iterate through the cycles `c2` in the copy of `p2`.
+
+    # EDIT: Inside the second loop, check if `c1` and `c2` are a match using the `cycle_equality` function.
+
+    # EDIT: If a match is found, update your boolean flag to `True`, remove the matched cycle `c2` from the copy of `p2`, and `break` out of the inner loop (since we've found the one unique match for `c1`).
+
+    # EDIT: After the inner loop, check your boolean flag. If it's still `False`, it means no match was found for `c1`, so the permutations are not equal. Return `False` from the function.
+
+    # EDIT: If the outer loop completes, it means every cycle in `p1` found a unique match. Return `True`.
+
+    # EDIT: Finally, remove the old implementation below that uses the `hits` variable.
+    hits = 0
+    for c1 in p1:
+            for c2 in p2:
+                if cycle_equality(c1, c2): hits += 1
+    return len(p1) == hits
+```

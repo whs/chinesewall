@@ -1,0 +1,123 @@
+[4115, 4124]
+import math
+from typing import List, Dict
+
+class BM25:
+    def __init__(self, corpus: List[List[str]], k1: float = 1.5, b: float = 0.75) -> None:
+        self.corpus = corpus
+        self.corpus_size = len(corpus)
+        self.avgdl = sum(len(doc) for doc in corpus) / self.corpus_size
+        self.k1 = k1
+        self.b = b
+        # EDIT: To optimize the algorithm, we will pre-calculate document frequencies and IDF values here instead of in the `calculate_bm25` method.
+        # EDIT: First, initialize three new instance attributes. `self.doc_freqs` should be an empty list. `self.df` (document frequency) and `self.idf` (inverse document frequency) should be empty dictionaries.
+
+        # EDIT: Now, we need to populate `self.doc_freqs` and `self.df`. Start a loop that iterates through each `document` in `self.corpus`.
+        # EDIT: Inside the loop, create a dictionary called `frequencies` to store the count of each word in the current `document`.
+        # EDIT: Create a nested loop to go through each `word` in the `document` and update its count in the `frequencies` dictionary. A good way to do this is `frequencies[word] = frequencies.get(word, 0) + 1`.
+        # EDIT: After counting the words in the document, append the `frequencies` dictionary to `self.doc_freqs`.
+        # EDIT: To correctly calculate the document frequency (how many documents a word appears in), loop through the unique words (the keys) of the `frequencies` dictionary you just created.
+        # EDIT: For each unique word, increment its count in the `self.df` dictionary. For example: `self.df[word] = self.df.get(word, 0) + 1`.
+
+        # EDIT: After the main loop over the corpus is finished, you can calculate the final IDF values.
+        # EDIT: Start a new loop that iterates through the items (e.g., `word`, `freq`) in `self.df`.
+        # EDIT: Inside this loop, calculate the IDF score for the `word` using the formula: `math.log(1 + (self.corpus_size - freq + 0.5) / (freq + 0.5))`.
+        # EDIT: Store the calculated score in the `self.idf` dictionary with the `word` as the key.
+
+    def calculate_bm25(self, document_index: int, query: List[str]) -> float:
+        # EDIT: This entire block of code for calculating frequencies is inefficient because it runs every time this method is called. You should remove it. The calculation has been moved to the `__init__` method to be done only once.
+        # EDIT: Start of block to remove.
+        doc_freqs: List[Dict[str, int]] = []
+        df: Dict[str, int] = {}
+        idf = {}
+        for document in self.corpus:
+            frequencies: Dict[str, int] = {}
+            for word in document:
+                frequencies[word] = frequencies.get(word, 0) + 1
+                if word not in df:
+                    df[word] = 0
+                df[word] += 1
+            doc_freqs.append(frequencies)
+
+        for word, freq in df.items():
+            idf[word] = math.log(1 + (self.corpus_size - freq + 0.5) / (freq + 0.5))
+        # EDIT: End of block to remove.
+            
+        score = 0.0
+        document = self.corpus[document_index]
+        doc_len = len(document)
+        for term in query:
+            # EDIT: To use the pre-calculated frequencies, modify this `if` condition. Check if the `term` exists in the frequencies for the specific document, which is stored in `self.doc_freqs[document_index]`.
+            if term in doc_freqs[document_index]:
+                # EDIT: Get the term frequency from the pre-calculated `self.doc_freqs`. The correct value is `self.doc_freqs[document_index][term]`.
+                term_freq = doc_freqs[document_index][term]
+                # EDIT: Update the score calculation. Replace the local `idf[term]` with the pre-calculated value from the instance, which is `self.idf[term]`.
+                score += idf[term] * term_freq * (self.k1 + 1) / (term_freq + self.k1 * (1 - self.b + self.b * doc_len / self.avgdl))
+        return score
+
+    def rank(self, query: List[str]) -> List[float]:
+        scores = [self.calculate_bm25(idx, query) for idx in range(self.corpus_size)]
+        return scores
+
+===============
+```py
+import math
+from typing import List, Dict
+
+class BM25:
+    def __init__(self, corpus: List[List[str]], k1: float = 1.5, b: float = 0.75) -> None:
+        self.corpus = corpus
+        self.corpus_size = len(corpus)
+        self.avgdl = sum(len(doc) for doc in corpus) / self.corpus_size
+        self.k1 = k1
+        self.b = b
+        # EDIT: To optimize the algorithm, we will pre-calculate document frequencies and IDF values here instead of in the `calculate_bm25` method.
+        # EDIT: First, initialize three new instance attributes. `self.doc_freqs` should be an empty list. `self.df` (document frequency) and `self.idf` (inverse document frequency) should be empty dictionaries.
+
+        # EDIT: Now, we need to populate `self.doc_freqs` and `self.df`. Start a loop that iterates through each `document` in `self.corpus`.
+        # EDIT: Inside the loop, create a dictionary called `frequencies` to store the count of each word in the current `document`.
+        # EDIT: Create a nested loop to go through each `word` in the `document` and update its count in the `frequencies` dictionary. A good way to do this is `frequencies[word] = frequencies.get(word, 0) + 1`.
+        # EDIT: After counting the words in the document, append the `frequencies` dictionary to `self.doc_freqs`.
+        # EDIT: To correctly calculate the document frequency (how many documents a word appears in), loop through the unique words (the keys) of the `frequencies` dictionary you just created.
+        # EDIT: For each unique word, increment its count in the `self.df` dictionary. For example: `self.df[word] = self.df.get(word, 0) + 1`.
+
+        # EDIT: After the main loop over the corpus is finished, you can calculate the final IDF values.
+        # EDIT: Start a new loop that iterates through the items (e.g., `word`, `freq`) in `self.df`.
+        # EDIT: Inside this loop, calculate the IDF score for the `word` using the formula: `math.log(1 + (self.corpus_size - freq + 0.5) / (freq + 0.5))`.
+        # EDIT: Store the calculated score in the `self.idf` dictionary with the `word` as the key.
+
+    def calculate_bm25(self, document_index: int, query: List[str]) -> float:
+        # EDIT: This entire block of code for calculating frequencies is inefficient because it runs every time this method is called. You should remove it. The calculation has been moved to the `__init__` method to be done only once.
+        # EDIT: Start of block to remove.
+        doc_freqs: List[Dict[str, int]] = []
+        df: Dict[str, int] = {}
+        idf = {}
+        for document in self.corpus:
+            frequencies: Dict[str, int] = {}
+            for word in document:
+                frequencies[word] = frequencies.get(word, 0) + 1
+                if word not in df:
+                    df[word] = 0
+                df[word] += 1
+            doc_freqs.append(frequencies)
+
+        for word, freq in df.items():
+            idf[word] = math.log(1 + (self.corpus_size - freq + 0.5) / (freq + 0.5))
+        # EDIT: End of block to remove.
+            
+        score = 0.0
+        document = self.corpus[document_index]
+        doc_len = len(document)
+        for term in query:
+            # EDIT: To use the pre-calculated frequencies, modify this `if` condition. Check if the `term` exists in the frequencies for the specific document, which is stored in `self.doc_freqs[document_index]`.
+            if term in doc_freqs[document_index]:
+                # EDIT: Get the term frequency from the pre-calculated `self.doc_freqs`. The correct value is `self.doc_freqs[document_index][term]`.
+                term_freq = doc_freqs[document_index][term]
+                # EDIT: Update the score calculation. Replace the local `idf[term]` with the pre-calculated value from the instance, which is `self.idf[term]`.
+                score += idf[term] * term_freq * (self.k1 + 1) / (term_freq + self.k1 * (1 - self.b + self.b * doc_len / self.avgdl))
+        return score
+
+    def rank(self, query: List[str]) -> List[float]:
+        scores = [self.calculate_bm25(idx, query) for idx in range(self.corpus_size)]
+        return scores
+```

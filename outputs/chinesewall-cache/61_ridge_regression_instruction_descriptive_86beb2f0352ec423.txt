@@ -1,0 +1,53 @@
+[1789, 1798]
+# EDIT: We need a different model for this task. Change `LinearRegression` to `RidgeCV` to import the Ridge Regression model which can automatically tune its parameters.
+from sklearn.linear_model import LinearRegression
+# EDIT: We also need a tool to create a range of numbers. On a new line below this one, import the numpy library. A common way to do this is by writing 'import numpy as np'.
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize_data(data, scaler):
+    """Normalizes the columns with float values"""
+    numeric = data.select_dtypes(include=['float64']).columns
+    data_copy = data.copy()
+    data_copy[numeric] = scaler.fit_transform(data[numeric])
+    return data_copy
+
+def regression(X, y):
+    """Normalizes the features of the data, and fits a linear regression model on it."""
+    scaler = MinMaxScaler()
+    normalized = normalize_data(X, scaler)
+    # EDIT: Before creating the model, we need to define the range of alpha values to test.
+    # 1. Create a variable called `alpha_list`.
+    # 2. Assign it a sequence of numbers starting from 1.0 up to and including 2.0, with steps of 0.01.
+    # 3. You can use the `np.arange(start, stop, step)` function. Remember that `np.arange` does not include the `stop` number, so you'll need to set `stop` to a value slightly larger than 2.0 (like 2.01) to make sure 2.0 is included in the sequence.
+    # EDIT: Replace the `LinearRegression` model with the `RidgeCV` model. When creating the `RidgeCV` model, you need to tell it which alpha values to try. Pass the `alpha_list` variable you created in the previous step to the `alphas` parameter of the `RidgeCV` model. The line should look like `model = RidgeCV(alphas=alpha_list)`.
+    model = LinearRegression()
+    model.fit(normalized, y)
+    return model
+
+===============
+```py
+# EDIT: We need a different model for this task. Change `LinearRegression` to `RidgeCV` to import the Ridge Regression model which can automatically tune its parameters.
+from sklearn.linear_model import LinearRegression
+# EDIT: We also need a tool to create a range of numbers. On a new line below this one, import the numpy library. A common way to do this is by writing 'import numpy as np'.
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize_data(data, scaler):
+    """Normalizes the columns with float values"""
+    numeric = data.select_dtypes(include=['float64']).columns
+    data_copy = data.copy()
+    data_copy[numeric] = scaler.fit_transform(data[numeric])
+    return data_copy
+
+def regression(X, y):
+    """Normalizes the features of the data, and fits a linear regression model on it."""
+    scaler = MinMaxScaler()
+    normalized = normalize_data(X, scaler)
+    # EDIT: Before creating the model, we need to define the range of alpha values to test.
+    # 1. Create a variable called `alpha_list`.
+    # 2. Assign it a sequence of numbers starting from 1.0 up to and including 2.0, with steps of 0.01.
+    # 3. You can use the `np.arange(start, stop, step)` function. Remember that `np.arange` does not include the `stop` number, so you'll need to set `stop` to a value slightly larger than 2.0 (like 2.01) to make sure 2.0 is included in the sequence.
+    # EDIT: Replace the `LinearRegression` model with the `RidgeCV` model. When creating the `RidgeCV` model, you need to tell it which alpha values to try. Pass the `alpha_list` variable you created in the previous step to the `alphas` parameter of the `RidgeCV` model. The line should look like `model = RidgeCV(alphas=alpha_list)`.
+    model = LinearRegression()
+    model.fit(normalized, y)
+    return model
+```

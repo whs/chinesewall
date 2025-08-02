@@ -1,0 +1,143 @@
+[4632, 4641]
+from typing import List, Tuple
+
+
+class House:
+    def __init__(self, location: Tuple[int, int], bedrooms: int, bathrooms: int):
+        self.location = location
+        self.bedrooms = bedrooms
+        self.bathrooms = bathrooms
+
+    def distance_to(self, other: 'House') -> float:
+        return ((self.location[0] - other.location[0]) ** 2 +
+                (self.location[1] - other.location[1]) ** 2) ** 0.5
+
+    def estimate_price(self, other_houses: List['House']) -> float:
+        """
+        A house is estimated to be worth the average price of the 5 closest houses,
+        where the closest houses prices is based on the following formula:
+        price = 10000 * ((bedrooms * 2) + bathrooms)
+        """
+        house_prices = [10000 * ((h.bedrooms * 2) + h.bathrooms)
+                        for h in other_houses]
+        house_distances = [self.distance_to(h) for h in other_houses]
+        house_prices_and_distances = list(zip(house_prices, house_distances))
+        house_prices_and_distances.sort(key=lambda x: x[1])
+        top_n = min(5, len(house_prices_and_distances))
+        return sum([p for p, _ in house_prices_and_distances[:top_n]]) / top_n
+
+    # EDIT: Define a new method here called `estimate_location`.
+    # It should accept `self` and one argument: `other_houses`.
+    # Add type hints: `other_houses` should be `List['House']` and the method should return a `Tuple[float, float]`.
+
+        # EDIT: To find houses with similar prices, we first need a way to calculate a house's price based on its features.
+        # The formula for a house's price is `10000 * ((bedrooms * 2) + bathrooms)`.
+        # Calculate the price of the current house (`self`) using this formula and store it in a variable, for example, `self_price`.
+
+        # EDIT: Next, we need to compare the price of our house (`self`) to the price of every house in `other_houses`.
+        # 1. Create an empty list to store each house and its price difference from our house. Let's call it `house_price_differences`.
+        # 2. Loop through each `house` in the `other_houses` list.
+        # 3. Inside the loop, calculate the price of the `house` from the list using the same formula as before.
+        # 4. Calculate the absolute difference between `self_price` and the price of the `house` you are currently looking at in the loop.
+        # 5. Add a tuple to the `house_price_differences` list. This tuple should contain the `house` object and its calculated price difference, like `(house, price_difference)`.
+
+        # EDIT: Now we need to find the 5 houses that are closest in price.
+        # Sort the `house_price_differences` list. The sorting should be based on the price difference (the second item in each tuple), from smallest to largest.
+
+        # EDIT: We need to select the top 5 houses from the sorted list.
+        # However, there might be fewer than 5 houses available in `other_houses`.
+        # Determine the number of houses to select. It should be 5, or the total number of houses if that's less than 5. Store this number in a variable like `num_to_select`.
+        # Create a new list containing the first `num_to_select` items from your sorted list. Let's call it `closest_houses`.
+
+        # EDIT: If the `closest_houses` list is empty (which would happen if `other_houses` was empty), we can't calculate an average.
+        # In this case, a sensible default is to return the house's current location.
+        # Check if `closest_houses` is empty. If it is, return `self.location` converted to a tuple of floats.
+
+        # EDIT: Now, calculate the average location of the houses in the `closest_houses` list.
+        # A location is a tuple of (x, y) coordinates.
+        # 1. Initialize two variables, `sum_x` and `sum_y`, to `0.0`.
+        # 2. Loop through the `closest_houses` list. Remember, each item in this list is a tuple like `(house, price_difference)`.
+        # 3. In each iteration, get the `house` object from the tuple.
+        # 4. Get the `location` of that `house`. The location is a tuple of two numbers.
+        # 5. Add the first number (x-coordinate) to `sum_x` and the second number (y-coordinate) to `sum_y`.
+
+        # EDIT: After the loop finishes, calculate the average x and y coordinates.
+        # The number of houses you summed up is the length of the `closest_houses` list.
+        # Divide `sum_x` by the number of houses to get `average_x`.
+        # Divide `sum_y` by the number of houses to get `average_y`.
+
+        # EDIT: Finally, return the calculated average location.
+        # The return value must be a tuple containing `average_x` and `average_y`.
+
+===============
+```py
+from typing import List, Tuple
+
+
+class House:
+    def __init__(self, location: Tuple[int, int], bedrooms: int, bathrooms: int):
+        self.location = location
+        self.bedrooms = bedrooms
+        self.bathrooms = bathrooms
+
+    def distance_to(self, other: 'House') -> float:
+        return ((self.location[0] - other.location[0]) ** 2 +
+                (self.location[1] - other.location[1]) ** 2) ** 0.5
+
+    def estimate_price(self, other_houses: List['House']) -> float:
+        """
+        A house is estimated to be worth the average price of the 5 closest houses,
+        where the closest houses prices is based on the following formula:
+        price = 10000 * ((bedrooms * 2) + bathrooms)
+        """
+        house_prices = [10000 * ((h.bedrooms * 2) + h.bathrooms)
+                        for h in other_houses]
+        house_distances = [self.distance_to(h) for h in other_houses]
+        house_prices_and_distances = list(zip(house_prices, house_distances))
+        house_prices_and_distances.sort(key=lambda x: x[1])
+        top_n = min(5, len(house_prices_and_distances))
+        return sum([p for p, _ in house_prices_and_distances[:top_n]]) / top_n
+
+    # EDIT: Define a new method here called `estimate_location`.
+    # It should accept `self` and one argument: `other_houses`.
+    # Add type hints: `other_houses` should be `List['House']` and the method should return a `Tuple[float, float]`.
+
+        # EDIT: To find houses with similar prices, we first need a way to calculate a house's price based on its features.
+        # The formula for a house's price is `10000 * ((bedrooms * 2) + bathrooms)`.
+        # Calculate the price of the current house (`self`) using this formula and store it in a variable, for example, `self_price`.
+
+        # EDIT: Next, we need to compare the price of our house (`self`) to the price of every house in `other_houses`.
+        # 1. Create an empty list to store each house and its price difference from our house. Let's call it `house_price_differences`.
+        # 2. Loop through each `house` in the `other_houses` list.
+        # 3. Inside the loop, calculate the price of the `house` from the list using the same formula as before.
+        # 4. Calculate the absolute difference between `self_price` and the price of the `house` you are currently looking at in the loop.
+        # 5. Add a tuple to the `house_price_differences` list. This tuple should contain the `house` object and its calculated price difference, like `(house, price_difference)`.
+
+        # EDIT: Now we need to find the 5 houses that are closest in price.
+        # Sort the `house_price_differences` list. The sorting should be based on the price difference (the second item in each tuple), from smallest to largest.
+
+        # EDIT: We need to select the top 5 houses from the sorted list.
+        # However, there might be fewer than 5 houses available in `other_houses`.
+        # Determine the number of houses to select. It should be 5, or the total number of houses if that's less than 5. Store this number in a variable like `num_to_select`.
+        # Create a new list containing the first `num_to_select` items from your sorted list. Let's call it `closest_houses`.
+
+        # EDIT: If the `closest_houses` list is empty (which would happen if `other_houses` was empty), we can't calculate an average.
+        # In this case, a sensible default is to return the house's current location.
+        # Check if `closest_houses` is empty. If it is, return `self.location` converted to a tuple of floats.
+
+        # EDIT: Now, calculate the average location of the houses in the `closest_houses` list.
+        # A location is a tuple of (x, y) coordinates.
+        # 1. Initialize two variables, `sum_x` and `sum_y`, to `0.0`.
+        # 2. Loop through the `closest_houses` list. Remember, each item in this list is a tuple like `(house, price_difference)`.
+        # 3. In each iteration, get the `house` object from the tuple.
+        # 4. Get the `location` of that `house`. The location is a tuple of two numbers.
+        # 5. Add the first number (x-coordinate) to `sum_x` and the second number (y-coordinate) to `sum_y`.
+
+        # EDIT: After the loop finishes, calculate the average x and y coordinates.
+        # The number of houses you summed up is the length of the `closest_houses` list.
+        # Divide `sum_x` by the number of houses to get `average_x`.
+        # Divide `sum_y` by the number of houses to get `average_y`.
+
+        # EDIT: Finally, return the calculated average location.
+        # The return value must be a tuple containing `average_x` and `average_y`.
+```

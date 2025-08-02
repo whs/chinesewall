@@ -1,0 +1,27 @@
+[799, 808]
+def simpleInterest(principal, rate, periods):
+    return principal * rate * periods
+
+def compoundInterest(principal, rate, compoundFreq, periods):
+    # EDIT: The formula for compound interest is P * (1 + r/n)^(n*t).
+    # In Python, the exponentiation operator (raising to the power of) is `**`, not `*`.
+    # The part `(1 + (rate / compoundFreq))` should be raised to the power of `(compoundFreq * periods)`.
+    # Please change the multiplication operator `*` to the exponentiation operator `**` in the expression below.
+    # EDIT: The formula above calculates the total amount (principal + interest).
+    # To return only the interest, you must subtract the original `principal` from the final calculated amount.
+    return principal * ((1 + (rate / compoundFreq)) * (compoundFreq * periods))
+
+===============
+```py
+def simpleInterest(principal, rate, periods):
+    return principal * rate * periods
+
+def compoundInterest(principal, rate, compoundFreq, periods):
+    # EDIT: The formula for compound interest is P * (1 + r/n)^(n*t).
+    # In Python, the exponentiation operator (raising to the power of) is `**`, not `*`.
+    # The part `(1 + (rate / compoundFreq))` should be raised to the power of `(compoundFreq * periods)`.
+    # Please change the multiplication operator `*` to the exponentiation operator `**` in the expression below.
+    # EDIT: The formula above calculates the total amount (principal + interest).
+    # To return only the interest, you must subtract the original `principal` from the final calculated amount.
+    return principal * ((1 + (rate / compoundFreq)) * (compoundFreq * periods))
+```

@@ -1,0 +1,389 @@
+[6678, 6687]
+from abc import ABC, abstractmethod
+from typing import Dict, Literal, Set
+
+# A-Normal Form (ANF) is a way of writing programs where every subexpression is
+# a variable or a function call. This is useful for compilers because it makes
+# it easier to reason about the program and to perform optimizations.
+
+
+# the kind of immediate values
+ImmKind = Literal["int", "bool", "id"]
+# interference graph is a graph where each node is a variable and each edge
+# represents a conflict between two variables.
+InterfGraph = Dict[str, Set[str]]
+
+
+class AST(ABC):
+    """
+    Abstract syntax tree (AST) is a tree representation of the abstract syntactic
+    structure of source code written in a programming language.
+    """
+    @abstractmethod
+    def free_vars(self) -> Set[str]:
+        """
+        Returns the set of free variables in this AST.
+        """
+        pass
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        """
+        Returns the interference graph of this AST, setting all variables in
+        `remove` to be removed at the first Let and adding all variables in
+        `live` to be live at the first Let.
+        """
+        return {}
+
+
+class AExpr(AST):
+    pass
+
+
+class CExpr(AST):
+    pass
+
+
+def merge_graphs(g1: InterfGraph, g2: InterfGraph) -> InterfGraph:
+    g1 = g1.copy()
+    for node in g2:
+        if node in g1:
+            g1[node] |= g2[node]
+        else:
+            g1[node] = g2[node]
+    return g1
+
+
+def add_node(g: InterfGraph, name: str) -> InterfGraph:
+    if name in g:
+        return g
+    else:
+        g = g.copy()
+        g[name] = set()
+        return g
+
+
+def add_directed_edge(g: InterfGraph, n1: str, n2: str) -> InterfGraph:
+    g = g.copy()
+    g = add_node(g, n1)
+    g = add_node(g, n2)
+    neighbors = g[n1]
+    neighbors.add(n2)
+    return g
+
+
+def add_edge(g: InterfGraph, n1: str, n2: str) -> InterfGraph:
+    g = add_directed_edge(g, n1, n2)
+    g = add_directed_edge(g, n2, n1)
+    return g
+
+
+class ImmExpr:
+    def __init__(self, value, kind: ImmKind):
+        self.value = value
+        self.kind = kind
+
+    def free_vars(self) -> Set[str]:
+        if self.kind == "id":
+            return {self.value}
+        else:
+            return set()
+
+
+class CIf(CExpr):
+    def __init__(self, cond: ImmExpr, then: AExpr, els: AExpr):
+        self.cond = cond
+        self.then = then
+        self.els = els
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        return merge_graphs(self.then.interfere(live, remove), self.els.interfere(live, remove))
+
+    def free_vars(self):
+        return self.cond.free_vars() | self.then.free_vars() | self.els.free_vars()
+
+
+class CPrim(CExpr):
+    def __init__(self, op: Literal["+", "-", "*", "/"], left: ImmExpr, right: ImmExpr):
+        self.op = op
+        self.left = left
+        self.right = right
+
+    def free_vars(self):
+        return self.left.free_vars() | self.right.free_vars()
+
+
+class CApp(CExpr):
+    def __init__(self, func: ImmExpr, args: list[ImmExpr]):
+        self.func = func
+        self.args = args
+
+    def free_vars(self):
+        return self.func.free_vars() | set.union(*map(lambda arg: arg.free_vars(), self.args))
+
+
+class CImmExpr(CExpr):
+    def __init__(self, expr: ImmExpr):
+        self.expr = expr
+
+    def free_vars(self):
+        return self.expr.free_vars()
+
+
+class CLambda(CExpr):
+    def __init__(self, params: list[str], body: AExpr):
+        self.params = params
+        self.body = body
+
+    def free_vars(self):
+        return self.body.free_vars() - set(self.params)
+
+
+class ALet(AExpr):
+    def __init__(self, name, value: CExpr, body: AExpr):
+        self.name = name
+        self.value = value
+        self.body = body
+
+    def free_vars(self):
+        return self.value.free_vars() | (self.body.free_vars() - {self.name})
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        fvs = self.free_vars()
+        interf = (fvs - remove) | live
+        g = add_node(self.value.interfere(live, remove), self.name)
+        for fv in interf:
+            g = add_edge(g, self.name, fv)
+        return merge_graphs(g, self.body.interfere(live | {self.name}, remove))
+
+
+class ACExpr(AExpr):
+    def __init__(self, expr: CExpr):
+        self.expr = expr
+
+    def free_vars(self):
+        return self.expr.free_vars()
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        return self.expr.interfere(live, remove)
+
+
+# EDIT: Define a new class here called `ASeq` that inherits from the `AExpr` class.
+# This class will represent a sequence of expressions, where one expression is executed after another.
+
+    # EDIT: Inside the `ASeq` class, define the constructor method `__init__`.
+    # This method should accept three arguments: `self`, `e1`, and `e2`.
+    # `e1` will be the first expression in the sequence (of type `CExpr`).
+    # `e2` will be the second expression in the sequence (of type `AExpr`).
+    # In the method body, assign `e1` to an instance attribute named `self.e1`.
+    # Similarly, assign `e2` to an instance attribute named `self.e2`.
+
+    # EDIT: Inside the `ASeq` class, define the `free_vars` method.
+    # This method takes `self` as its only argument.
+    # It should calculate and return the set of all free variables in the sequence.
+    # The free variables of the sequence are the combination of the free variables of `self.e1` and `self.e2`.
+    # To get the free variables of an expression, you can call its `free_vars()` method.
+    # To combine the two sets of free variables, use the union operator (`|`).
+
+    # EDIT: Inside the `ASeq` class, define the `interfere` method.
+    # It should have the same arguments as the one in the `AST` class: `self`, `live: Set[str]`, and `remove: Set[str]`.
+    # This method calculates the interference graph for the entire sequence.
+    # The process involves handling the two expressions in reverse order of execution:
+    # 1. First, calculate the interference graph for the second expression, `self.e2`. The variables that are "live" (still in use) after `self.e2` finishes are given by the `live` parameter. Call `self.e2.interfere(live, remove)` to get this graph.
+    # 2. Next, calculate the interference graph for the first expression, `self.e1`. The variables that are "live" after `self.e1` finishes are those that are needed for `self.e2` to run. This set is exactly the free variables of `self.e2`. Get this set by calling `self.e2.free_vars()`. Then, call `self.e1.interfere` using this set as the `live` argument.
+    # 3. Finally, combine the two interference graphs from the steps above using the `merge_graphs` helper function and return the result.
+
+===============
+```py
+from abc import ABC, abstractmethod
+from typing import Dict, Literal, Set
+
+# A-Normal Form (ANF) is a way of writing programs where every subexpression is
+# a variable or a function call. This is useful for compilers because it makes
+# it easier to reason about the program and to perform optimizations.
+
+
+# the kind of immediate values
+ImmKind = Literal["int", "bool", "id"]
+# interference graph is a graph where each node is a variable and each edge
+# represents a conflict between two variables.
+InterfGraph = Dict[str, Set[str]]
+
+
+class AST(ABC):
+    """
+    Abstract syntax tree (AST) is a tree representation of the abstract syntactic
+    structure of source code written in a programming language.
+    """
+    @abstractmethod
+    def free_vars(self) -> Set[str]:
+        """
+        Returns the set of free variables in this AST.
+        """
+        pass
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        """
+        Returns the interference graph of this AST, setting all variables in
+        `remove` to be removed at the first Let and adding all variables in
+        `live` to be live at the first Let.
+        """
+        return {}
+
+
+class AExpr(AST):
+    pass
+
+
+class CExpr(AST):
+    pass
+
+
+def merge_graphs(g1: InterfGraph, g2: InterfGraph) -> InterfGraph:
+    g1 = g1.copy()
+    for node in g2:
+        if node in g1:
+            g1[node] |= g2[node]
+        else:
+            g1[node] = g2[node]
+    return g1
+
+
+def add_node(g: InterfGraph, name: str) -> InterfGraph:
+    if name in g:
+        return g
+    else:
+        g = g.copy()
+        g[name] = set()
+        return g
+
+
+def add_directed_edge(g: InterfGraph, n1: str, n2: str) -> InterfGraph:
+    g = g.copy()
+    g = add_node(g, n1)
+    g = add_node(g, n2)
+    neighbors = g[n1]
+    neighbors.add(n2)
+    return g
+
+
+def add_edge(g: InterfGraph, n1: str, n2: str) -> InterfGraph:
+    g = add_directed_edge(g, n1, n2)
+    g = add_directed_edge(g, n2, n1)
+    return g
+
+
+class ImmExpr:
+    def __init__(self, value, kind: ImmKind):
+        self.value = value
+        self.kind = kind
+
+    def free_vars(self) -> Set[str]:
+        if self.kind == "id":
+            return {self.value}
+        else:
+            return set()
+
+
+class CIf(CExpr):
+    def __init__(self, cond: ImmExpr, then: AExpr, els: AExpr):
+        self.cond = cond
+        self.then = then
+        self.els = els
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        return merge_graphs(self.then.interfere(live, remove), self.els.interfere(live, remove))
+
+    def free_vars(self):
+        return self.cond.free_vars() | self.then.free_vars() | self.els.free_vars()
+
+
+class CPrim(CExpr):
+    def __init__(self, op: Literal["+", "-", "*", "/"], left: ImmExpr, right: ImmExpr):
+        self.op = op
+        self.left = left
+        self.right = right
+
+    def free_vars(self):
+        return self.left.free_vars() | self.right.free_vars()
+
+
+class CApp(CExpr):
+    def __init__(self, func: ImmExpr, args: list[ImmExpr]):
+        self.func = func
+        self.args = args
+
+    def free_vars(self):
+        return self.func.free_vars() | set.union(*map(lambda arg: arg.free_vars(), self.args))
+
+
+class CImmExpr(CExpr):
+    def __init__(self, expr: ImmExpr):
+        self.expr = expr
+
+    def free_vars(self):
+        return self.expr.free_vars()
+
+
+class CLambda(CExpr):
+    def __init__(self, params: list[str], body: AExpr):
+        self.params = params
+        self.body = body
+
+    def free_vars(self):
+        return self.body.free_vars() - set(self.params)
+
+
+class ALet(AExpr):
+    def __init__(self, name, value: CExpr, body: AExpr):
+        self.name = name
+        self.value = value
+        self.body = body
+
+    def free_vars(self):
+        return self.value.free_vars() | (self.body.free_vars() - {self.name})
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        fvs = self.free_vars()
+        interf = (fvs - remove) | live
+        g = add_node(self.value.interfere(live, remove), self.name)
+        for fv in interf:
+            g = add_edge(g, self.name, fv)
+        return merge_graphs(g, self.body.interfere(live | {self.name}, remove))
+
+
+class ACExpr(AExpr):
+    def __init__(self, expr: CExpr):
+        self.expr = expr
+
+    def free_vars(self):
+        return self.expr.free_vars()
+
+    def interfere(self, live: Set[str], remove: Set[str]) -> InterfGraph:
+        return self.expr.interfere(live, remove)
+
+
+# EDIT: Define a new class here called `ASeq` that inherits from the `AExpr` class.
+# This class will represent a sequence of expressions, where one expression is executed after another.
+
+    # EDIT: Inside the `ASeq` class, define the constructor method `__init__`.
+    # This method should accept three arguments: `self`, `e1`, and `e2`.
+    # `e1` will be the first expression in the sequence (of type `CExpr`).
+    # `e2` will be the second expression in the sequence (of type `AExpr`).
+    # In the method body, assign `e1` to an instance attribute named `self.e1`.
+    # Similarly, assign `e2` to an instance attribute named `self.e2`.
+
+    # EDIT: Inside the `ASeq` class, define the `free_vars` method.
+    # This method takes `self` as its only argument.
+    # It should calculate and return the set of all free variables in the sequence.
+    # The free variables of the sequence are the combination of the free variables of `self.e1` and `self.e2`.
+    # To get the free variables of an expression, you can call its `free_vars()` method.
+    # To combine the two sets of free variables, use the union operator (`|`).
+
+    # EDIT: Inside the `ASeq` class, define the `interfere` method.
+    # It should have the same arguments as the one in the `AST` class: `self`, `live: Set[str]`, and `remove: Set[str]`.
+    # This method calculates the interference graph for the entire sequence.
+    # The process involves handling the two expressions in reverse order of execution:
+    # 1. First, calculate the interference graph for the second expression, `self.e2`. The variables that are "live" (still in use) after `self.e2` finishes are given by the `live` parameter. Call `self.e2.interfere(live, remove)` to get this graph.
+    # 2. Next, calculate the interference graph for the first expression, `self.e1`. The variables that are "live" after `self.e1` finishes are those that are needed for `self.e2` to run. This set is exactly the free variables of `self.e2`. Get this set by calling `self.e2.free_vars()`. Then, call `self.e1.interfere` using this set as the `live` argument.
+    # 3. Finally, combine the two interference graphs from the steps above using the `merge_graphs` helper function and return the result.
+```

@@ -1,0 +1,67 @@
+[1920, 1929]
+class Sorter:
+    def __init__(self):
+        pass
+
+    # EDIT: Change the return type hint from `list[int]` to `None`, as this method will now sort the list in-place and won't return a new list.
+    def sort(self, nums: list[int]) -> list[int]:
+        # EDIT: The entire content of this method should be replaced with an in-place sorting algorithm.
+        # The new algorithm should be an iterative insertion sort.
+        # 1. Start a `for` loop that iterates from the second element of `nums` to the end. Let the loop variable be `i`.
+        # 2. Inside the loop, save the current element `nums[i]` into a variable called `key`.
+        # 3. Create another variable `j` and set it to `i - 1`. This will be used to scan backwards through the sorted part of the list.
+        # 4. Start a `while` loop. It should continue as long as `j` is 0 or greater, AND the element `nums[j]` is greater than `key`.
+        # 5. Inside the `while` loop, shift the element `nums[j]` one position to the right (to `nums[j + 1]`).
+        # 6. Still inside the `while` loop, decrease `j` by 1 to move to the next element on the left.
+        # 7. After the `while` loop finishes, the correct position for `key` is at index `j + 1`. Place `key` there.
+        # 8. Make sure this method does not have a `return` statement at the end.
+        if len(nums) == 0:
+            return nums
+        else:
+            return self.insert(self.sort(nums[1:]), nums[0])
+        
+    # EDIT: Since the new `sort` method will be implemented to work in-place, it will no longer need this helper method. You can delete the entire `insert` method.
+    def insert(self, nums: list[int], num: int) -> list[int]:
+        output = []
+        for i, n in enumerate(nums):
+            if num < n:
+                output.append(num)
+                return output + nums[i:]
+            else:
+                output.append(n)
+        return output + [num]
+
+===============
+```py
+class Sorter:
+    def __init__(self):
+        pass
+
+    # EDIT: Change the return type hint from `list[int]` to `None`, as this method will now sort the list in-place and won't return a new list.
+    def sort(self, nums: list[int]) -> list[int]:
+        # EDIT: The entire content of this method should be replaced with an in-place sorting algorithm.
+        # The new algorithm should be an iterative insertion sort.
+        # 1. Start a `for` loop that iterates from the second element of `nums` to the end. Let the loop variable be `i`.
+        # 2. Inside the loop, save the current element `nums[i]` into a variable called `key`.
+        # 3. Create another variable `j` and set it to `i - 1`. This will be used to scan backwards through the sorted part of the list.
+        # 4. Start a `while` loop. It should continue as long as `j` is 0 or greater, AND the element `nums[j]` is greater than `key`.
+        # 5. Inside the `while` loop, shift the element `nums[j]` one position to the right (to `nums[j + 1]`).
+        # 6. Still inside the `while` loop, decrease `j` by 1 to move to the next element on the left.
+        # 7. After the `while` loop finishes, the correct position for `key` is at index `j + 1`. Place `key` there.
+        # 8. Make sure this method does not have a `return` statement at the end.
+        if len(nums) == 0:
+            return nums
+        else:
+            return self.insert(self.sort(nums[1:]), nums[0])
+        
+    # EDIT: Since the new `sort` method will be implemented to work in-place, it will no longer need this helper method. You can delete the entire `insert` method.
+    def insert(self, nums: list[int], num: int) -> list[int]:
+        output = []
+        for i, n in enumerate(nums):
+            if num < n:
+                output.append(num)
+                return output + nums[i:]
+            else:
+                output.append(n)
+        return output + [num]
+```

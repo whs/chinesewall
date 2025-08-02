@@ -1,0 +1,227 @@
+[5561, 5570]
+import random
+
+def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+class EllipticCurve:
+    def __init__(self, a : int, b : int, p : int):
+        self.a = a 
+        self.b = b
+        assert is_prime(p), "p is not prime"
+        self.p = p # prime
+
+    def is_on_curve(self, x : int, y : int) -> bool:
+        return (y**2 - x**3 - self.a*x - self.b) % self.p == 0
+
+    def mod_inverse(self, value: int) -> int:
+        """ uses fermat's little theorem for modular inverse """
+        return pow(value, self.p - 2, self.p)
+
+    def point_addition(self, P: tuple, Q: tuple) -> tuple:
+        """ returns the sum of the two points, P, Q 
+            uses (None, None) to represent infinity """
+        # cases where either point are infinity
+        if P == (None, None) : return Q
+        if Q == (None, None) : return P
+
+        # P + (-P) = 0 or if the y coordinate is 0, return point at infinity
+        if P[0] == Q[0] and (P[1] != Q[1] or P[1] == 0) : return (None, None)
+
+        if P != Q:
+            # The lambda (slope) calculation for two distinct points
+            m = (Q[1] - P[1]) * self.mod_inverse(Q[0] - P[0] + self.p) % self.p
+        else:
+            # The lambda (slope) calculation for point doubling
+            m = (3 * P[0]**2 + self.a) * self.mod_inverse(2 * P[1]) % self.p
+
+        x_r = (m**2 - P[0] - Q[0]) % self.p
+        y_r = (m * (P[0] - x_r) - P[1]) % self.p
+
+        return (x_r, y_r)
+    
+    def point_double(self, P: tuple) -> tuple:
+        """ double the given point """
+        return self.point_addition(P, P)
+
+    def point_multiplication(self, k: int, P: tuple) -> tuple:
+        """scalar multiplication of P by k."""
+        if P == (None, None) or k == 0:
+            return (None, None)
+
+        result = (None, None)  # Initialize result as the identity element (infinity point)
+        addend = P
+
+        while k:
+            if k & 1:
+                result = self.point_addition(result, addend)
+            addend = self.point_addition(addend, addend)
+            k >>= 1
+
+        return result
+
+    # EDIT: Define a new method called `windowed_point_multiplication`.
+    # It should accept `self`, a scalar `k` (int), a point `P` (tuple), and an optional window size `w` (int) with a default value of 4.
+    # It should be type-hinted to return a point (tuple).
+    #
+    # The method body should be implemented as follows:
+    # 1. Handle the base cases: if `k` is 0 or `P` is the point at infinity `(None, None)`, return the point at infinity.
+    #
+    # 2. Precomputation Step:
+    #    a. Create a list named `precomputed_points` to store the first `2**w` multiples of `P`.
+    #    b. Initialize the list with the correct size, `2**w`.
+    #    c. Set the first element (for 0 * P) to the point at infinity `(None, None)`.
+    #    d. Set the second element (for 1 * P) to `P` itself.
+    #    e. Loop from 2 up to (but not including) `2**w`. In each iteration, calculate the i-th multiple of P by adding `P` to the (i-1)-th multiple, which is already stored in the list.
+    #
+    # 3. Main Calculation Loop:
+    #    a. Initialize a `result` variable to the point at infinity `(None, None)`.
+    #    b. Convert the scalar `k` to its binary string representation, removing the '0b' prefix (e.g., using `bin(k)[2:]`).
+    #    c. Initialize a position variable, `pos`, to 0. This will track our progress through the binary string.
+    #    d. Start a `while` loop that continues as long as `pos` is less than the length of the binary string.
+    #
+    # 4. Inside the `while` loop:
+    #    a. Determine the end of the current window. The window starts at `pos` and is at most `w` bits long. Use `min()` to ensure the window doesn't go past the end of the binary string.
+    #    b. Get the length of the current window (the number of bits).
+    #    c. Extract the binary substring for the window and convert it to an integer. This integer is the index for our `precomputed_points` list.
+    #    d. "Shift" the current `result` to the left by the length of the window. This is done by repeatedly calling `point_double` on the `result` for each bit in the window. A `for` loop can be used for this.
+    #    e. After shifting, add the precomputed point (looked up from `precomputed_points` using the window's integer value) to the `result`.
+    #    f. Update `pos` by moving it to the end of the window we just processed.
+    #
+    # 5. After the loop finishes, return the final `result`.
+
+    def generate_keypair(self, G: tuple, n: int, d : int) -> tuple:
+        """ Given an initial point G and an order n, construct a keypair, and d, the private key """
+        assert 1 <= d and d <= n-1
+        # EDIT: Change this line to use the new `windowed_point_multiplication` method instead of `point_multiplication`.
+        Q = self.point_multiplication(d, G) # public key
+        return (d, Q) 
+
+    def validate_keypair(self, d: int, Q: tuple, G: tuple, n: int) -> bool:
+        """ Validate the given keypair, given an initial point G,
+            a public key Q, a private key d, and a group order n """
+        if not (1 <= d < n) : return False
+        if not self.is_on_curve(Q[0], Q[1]) : return False
+        # EDIT: Change this line to use the new `windowed_point_multiplication` method instead of `point_multiplication` to calculate the point from the private key `d` and base point `G`.
+        return self.point_multiplication(d, G) == Q
+
+===============
+```py
+import random
+
+def is_prime(n):
+    """Check if a number is prime."""
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+class EllipticCurve:
+    def __init__(self, a : int, b : int, p : int):
+        self.a = a 
+        self.b = b
+        assert is_prime(p), "p is not prime"
+        self.p = p # prime
+
+    def is_on_curve(self, x : int, y : int) -> bool:
+        return (y**2 - x**3 - self.a*x - self.b) % self.p == 0
+
+    def mod_inverse(self, value: int) -> int:
+        """ uses fermat's little theorem for modular inverse """
+        return pow(value, self.p - 2, self.p)
+
+    def point_addition(self, P: tuple, Q: tuple) -> tuple:
+        """ returns the sum of the two points, P, Q 
+            uses (None, None) to represent infinity """
+        # cases where either point are infinity
+        if P == (None, None) : return Q
+        if Q == (None, None) : return P
+
+        # P + (-P) = 0 or if the y coordinate is 0, return point at infinity
+        if P[0] == Q[0] and (P[1] != Q[1] or P[1] == 0) : return (None, None)
+
+        if P != Q:
+            # The lambda (slope) calculation for two distinct points
+            m = (Q[1] - P[1]) * self.mod_inverse(Q[0] - P[0] + self.p) % self.p
+        else:
+            # The lambda (slope) calculation for point doubling
+            m = (3 * P[0]**2 + self.a) * self.mod_inverse(2 * P[1]) % self.p
+
+        x_r = (m**2 - P[0] - Q[0]) % self.p
+        y_r = (m * (P[0] - x_r) - P[1]) % self.p
+
+        return (x_r, y_r)
+    
+    def point_double(self, P: tuple) -> tuple:
+        """ double the given point """
+        return self.point_addition(P, P)
+
+    def point_multiplication(self, k: int, P: tuple) -> tuple:
+        """scalar multiplication of P by k."""
+        if P == (None, None) or k == 0:
+            return (None, None)
+
+        result = (None, None)  # Initialize result as the identity element (infinity point)
+        addend = P
+
+        while k:
+            if k & 1:
+                result = self.point_addition(result, addend)
+            addend = self.point_addition(addend, addend)
+            k >>= 1
+
+        return result
+
+    # EDIT: Define a new method called `windowed_point_multiplication`.
+    # It should accept `self`, a scalar `k` (int), a point `P` (tuple), and an optional window size `w` (int) with a default value of 4.
+    # It should be type-hinted to return a point (tuple).
+    #
+    # The method body should be implemented as follows:
+    # 1. Handle the base cases: if `k` is 0 or `P` is the point at infinity `(None, None)`, return the point at infinity.
+    #
+    # 2. Precomputation Step:
+    #    a. Create a list named `precomputed_points` to store the first `2**w` multiples of `P`.
+    #    b. Initialize the list with the correct size, `2**w`.
+    #    c. Set the first element (for 0 * P) to the point at infinity `(None, None)`.
+    #    d. Set the second element (for 1 * P) to `P` itself.
+    #    e. Loop from 2 up to (but not including) `2**w`. In each iteration, calculate the i-th multiple of P by adding `P` to the (i-1)-th multiple, which is already stored in the list.
+    #
+    # 3. Main Calculation Loop:
+    #    a. Initialize a `result` variable to the point at infinity `(None, None)`.
+    #    b. Convert the scalar `k` to its binary string representation, removing the '0b' prefix (e.g., using `bin(k)[2:]`).
+    #    c. Initialize a position variable, `pos`, to 0. This will track our progress through the binary string.
+    #    d. Start a `while` loop that continues as long as `pos` is less than the length of the binary string.
+    #
+    # 4. Inside the `while` loop:
+    #    a. Determine the end of the current window. The window starts at `pos` and is at most `w` bits long. Use `min()` to ensure the window doesn't go past the end of the binary string.
+    #    b. Get the length of the current window (the number of bits).
+    #    c. Extract the binary substring for the window and convert it to an integer. This integer is the index for our `precomputed_points` list.
+    #    d. "Shift" the current `result` to the left by the length of the window. This is done by repeatedly calling `point_double` on the `result` for each bit in the window. A `for` loop can be used for this.
+    #    e. After shifting, add the precomputed point (looked up from `precomputed_points` using the window's integer value) to the `result`.
+    #    f. Update `pos` by moving it to the end of the window we just processed.
+    #
+    # 5. After the loop finishes, return the final `result`.
+
+    def generate_keypair(self, G: tuple, n: int, d : int) -> tuple:
+        """ Given an initial point G and an order n, construct a keypair, and d, the private key """
+        assert 1 <= d and d <= n-1
+        # EDIT: Change this line to use the new `windowed_point_multiplication` method instead of `point_multiplication`.
+        Q = self.point_multiplication(d, G) # public key
+        return (d, Q) 
+
+    def validate_keypair(self, d: int, Q: tuple, G: tuple, n: int) -> bool:
+        """ Validate the given keypair, given an initial point G,
+            a public key Q, a private key d, and a group order n """
+        if not (1 <= d < n) : return False
+        if not self.is_on_curve(Q[0], Q[1]) : return False
+        # EDIT: Change this line to use the new `windowed_point_multiplication` method instead of `point_multiplication` to calculate the point from the private key `d` and base point `G`.
+        return self.point_multiplication(d, G) == Q
+```

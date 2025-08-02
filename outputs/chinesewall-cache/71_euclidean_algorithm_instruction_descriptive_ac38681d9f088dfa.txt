@@ -1,0 +1,19 @@
+[463, 472]
+def gcd(a, b):
+    # EDIT: The arguments in the recursive call are incorrect, causing an infinite loop. The first argument should be `b`, and the second argument should be the remainder of `a` divided by `b`.
+    return a if b == 0 else gcd(a % b, b)
+
+def lcm(a, b):
+    # EDIT: The division operator `/` results in a floating-point number. To ensure the least common multiple is an integer, use the integer division operator `//`.
+    return (a * b) / gcd(a, b)
+
+===============
+```py
+def gcd(a, b):
+    # EDIT: The arguments in the recursive call are incorrect, causing an infinite loop. The first argument should be `b`, and the second argument should be the remainder of `a` divided by `b`.
+    return a if b == 0 else gcd(a % b, b)
+
+def lcm(a, b):
+    # EDIT: The division operator `/` results in a floating-point number. To ensure the least common multiple is an integer, use the integer division operator `//`.
+    return (a * b) / gcd(a, b)
+```

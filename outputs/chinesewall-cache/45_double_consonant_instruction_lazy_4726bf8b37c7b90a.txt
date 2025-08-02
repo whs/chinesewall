@@ -1,0 +1,77 @@
+[1336, 1345]
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def double_consonant(substring):
+    consonant_streak = 0
+    consonant_count = 0
+    consonants = "qwrtypsdfghjklzcmnvb"
+    double_consonant = False
+        
+    substring = prepare_string(substring)
+    assert len(substring) == 2
+
+    # EDIT: Add a new conditional check right here, before the `for` loop.
+    # EDIT: This check will handle special cases that should not be counted as double consonants.
+    # EDIT: Check if the `substring` is equal to 'th', OR if it's equal to 'ch', OR if it's equal to 'll'.
+    # EDIT: If any of these conditions are true, the function should immediately stop and return the value `False`.
+
+    for i in range(len(substring)):
+        if substring[i] in consonants:
+            consonant_streak += 1
+        elif substring[i] == "x": #x counts as double consonant
+            consonant_streak += 2
+
+        if i+1 == len(substring): #if last letter, check if double consonant
+            if consonant_streak >= 2:
+                consonant_count += 2
+            consonant_streak = 0 #reset streak
+    if consonant_count >= 2:
+        double_consonant = True
+    return double_consonant
+
+===============
+```py
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def double_consonant(substring):
+    consonant_streak = 0
+    consonant_count = 0
+    consonants = "qwrtypsdfghjklzcmnvb"
+    double_consonant = False
+        
+    substring = prepare_string(substring)
+    assert len(substring) == 2
+
+    # EDIT: Add a new conditional check right here, before the `for` loop.
+    # EDIT: This check will handle special cases that should not be counted as double consonants.
+    # EDIT: Check if the `substring` is equal to 'th', OR if it's equal to 'ch', OR if it's equal to 'll'.
+    # EDIT: If any of these conditions are true, the function should immediately stop and return the value `False`.
+
+    for i in range(len(substring)):
+        if substring[i] in consonants:
+            consonant_streak += 1
+        elif substring[i] == "x": #x counts as double consonant
+            consonant_streak += 2
+
+        if i+1 == len(substring): #if last letter, check if double consonant
+            if consonant_streak >= 2:
+                consonant_count += 2
+            consonant_streak = 0 #reset streak
+    if consonant_count >= 2:
+        double_consonant = True
+    return double_consonant
+```

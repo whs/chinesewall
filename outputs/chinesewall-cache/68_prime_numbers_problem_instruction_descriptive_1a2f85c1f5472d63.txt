@@ -1,0 +1,103 @@
+[2664, 2673]
+from typing import List
+
+# EDIT: Change the function name to `sum_of_prime_products_in_range` and its parameters to `start: int, end: int`.
+def sum_of_prime_products(n: int) -> int:
+    """
+    # EDIT: Update this docstring to describe the new functionality. It should explain that the function calculates the sum of all distinct products formed by multiplying three different prime numbers within the specified range from `start` to `end`.
+    Let P be the set of the first 15 prime numbers. Find the sum of all distinct
+    products that can be formed by multiplying any two different primes in P.
+    """
+    def is_prime(n: int) -> bool:
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+    # EDIT: Change the name of this helper function to `get_primes_in_range`.
+    # EDIT: Change the parameter of this function from `n: int` to `start: int, end: int`.
+    def first_n_primes(n: int) -> List[int]:
+        # EDIT: The logic of this function needs to change. Instead of finding the first `n` primes, it should find all primes between `start` and `end`.
+        # 1. Keep the `primes = []` line.
+        # 2. Create a `for` loop that iterates through each number from `start` to `end` (inclusive).
+        # 3. Inside the loop, use the `is_prime` function to check if the current number is prime.
+        # 4. If it is prime, append it to the `primes` list.
+        # 5. Remove the old `num` and `while` loop logic.
+        primes = []
+        num = 2
+        while len(primes) < n:
+            if is_prime(num):
+                primes.append(num)
+            num += 1
+        return primes
+    # EDIT: Call the new `get_primes_in_range` function here, passing `start` and `end` as arguments.
+    primes = first_n_primes(n)
+    products = set()
+    for i in range(len(primes)):
+        for j in range(i + 1, len(primes)):
+            # EDIT: Add a third nested `for` loop here to iterate through the primes. Let's use `k` as the loop variable.
+            # The loop should start from `j + 1` and go up to the end of the `primes` list. This ensures that you are selecting three distinct primes for each product.
+            # EDIT: Modify the following line to calculate the product of three primes using indices `i`, `j`, and `k`.
+            # EDIT: This line should be moved inside the new, innermost `k` loop you just created.
+            products.add(primes[i] * primes[j])
+    return sum(products)
+
+===============
+```py
+from typing import List
+
+# EDIT: Change the function name to `sum_of_prime_products_in_range` and its parameters to `start: int, end: int`.
+def sum_of_prime_products(n: int) -> int:
+    """
+    # EDIT: Update this docstring to describe the new functionality. It should explain that the function calculates the sum of all distinct products formed by multiplying three different prime numbers within the specified range from `start` to `end`.
+    Let P be the set of the first 15 prime numbers. Find the sum of all distinct
+    products that can be formed by multiplying any two different primes in P.
+    """
+    def is_prime(n: int) -> bool:
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i += 6
+        return True
+    # EDIT: Change the name of this helper function to `get_primes_in_range`.
+    # EDIT: Change the parameter of this function from `n: int` to `start: int, end: int`.
+    def first_n_primes(n: int) -> List[int]:
+        # EDIT: The logic of this function needs to change. Instead of finding the first `n` primes, it should find all primes between `start` and `end`.
+        # 1. Keep the `primes = []` line.
+        # 2. Create a `for` loop that iterates through each number from `start` to `end` (inclusive).
+        # 3. Inside the loop, use the `is_prime` function to check if the current number is prime.
+        # 4. If it is prime, append it to the `primes` list.
+        # 5. Remove the old `num` and `while` loop logic.
+        primes = []
+        num = 2
+        while len(primes) < n:
+            if is_prime(num):
+                primes.append(num)
+            num += 1
+        return primes
+    # EDIT: Call the new `get_primes_in_range` function here, passing `start` and `end` as arguments.
+    primes = first_n_primes(n)
+    products = set()
+    for i in range(len(primes)):
+        for j in range(i + 1, len(primes)):
+            # EDIT: Add a third nested `for` loop here to iterate through the primes. Let's use `k` as the loop variable.
+            # The loop should start from `j + 1` and go up to the end of the `primes` list. This ensures that you are selecting three distinct primes for each product.
+            # EDIT: Modify the following line to calculate the product of three primes using indices `i`, `j`, and `k`.
+            # EDIT: This line should be moved inside the new, innermost `k` loop you just created.
+            products.add(primes[i] * primes[j])
+    return sum(products)
+```

@@ -1,0 +1,61 @@
+[2350, 2359]
+from typing import List
+
+# EDIT: The function should return a tuple of three integers. Update the type hint to reflect this: `-> tuple[int, int, int]`.
+def max_sublstay_sum(lst: List[int]) -> int:
+    max_so_far = lst[0]
+    curr_max = lst[0]
+    # EDIT: Initialize a variable named `start_idx` to 0. This will store the starting index of the overall maximum subarray.
+    # EDIT: Initialize a variable named `end_idx` to 0. This will store the ending index of the overall maximum subarray.
+    # EDIT: Initialize a variable named `current_start_idx` to 0. This will track the start of the subarray we are currently examining.
+    for i in range(1, len(lst)):
+        # The next line `curr_max = max(lst[i], curr_max + lst[i])` decides whether to start a new subarray or extend the current one.
+        # We need to replace it with an if/else statement to also track the starting index.
+        # EDIT: Check if starting a new subarray at the current element `lst[i]` gives a larger sum than extending the previous subarray.
+        # The condition for this is `if lst[i] > curr_max + lst[i]:`.
+        # If true, it means a new subarray starts here. Set `curr_max` to `lst[i]` and set `current_start_idx` to the current index `i`.
+        # EDIT: If the condition is false (`else:`), it means we should extend the current subarray. Update `curr_max` by adding `lst[i]` to it.
+        curr_max = max(lst[i], curr_max + lst[i])
+        
+        # The next line `max_so_far = max(max_so_far, curr_max)` updates the overall maximum sum.
+        # We need to replace it with an if statement to also update the start and end indices of the best subarray found so far.
+        # EDIT: Check if the maximum sum of the subarray ending at the current position (`curr_max`) is greater than the overall maximum sum found so far (`max_so_far`).
+        # EDIT: If it is, we've found a new best subarray.
+        # 1. Update `max_so_far` to be equal to `curr_max`.
+        # 2. Update `start_idx` to be equal to `current_start_idx`.
+        # 3. Update `end_idx` to be equal to the current index `i`.
+        max_so_far = max(max_so_far, curr_max)
+    # EDIT: Modify the return statement to return a tuple containing the overall maximum sum, its starting index, and its ending index. The format should be `(max_so_far, start_idx, end_idx)`.
+    return max_so_far
+
+===============
+```py
+from typing import List
+
+# EDIT: The function should return a tuple of three integers. Update the type hint to reflect this: `-> tuple[int, int, int]`.
+def max_sublstay_sum(lst: List[int]) -> int:
+    max_so_far = lst[0]
+    curr_max = lst[0]
+    # EDIT: Initialize a variable named `start_idx` to 0. This will store the starting index of the overall maximum subarray.
+    # EDIT: Initialize a variable named `end_idx` to 0. This will store the ending index of the overall maximum subarray.
+    # EDIT: Initialize a variable named `current_start_idx` to 0. This will track the start of the subarray we are currently examining.
+    for i in range(1, len(lst)):
+        # The next line `curr_max = max(lst[i], curr_max + lst[i])` decides whether to start a new subarray or extend the current one.
+        # We need to replace it with an if/else statement to also track the starting index.
+        # EDIT: Check if starting a new subarray at the current element `lst[i]` gives a larger sum than extending the previous subarray.
+        # The condition for this is `if lst[i] > curr_max + lst[i]:`.
+        # If true, it means a new subarray starts here. Set `curr_max` to `lst[i]` and set `current_start_idx` to the current index `i`.
+        # EDIT: If the condition is false (`else:`), it means we should extend the current subarray. Update `curr_max` by adding `lst[i]` to it.
+        curr_max = max(lst[i], curr_max + lst[i])
+        
+        # The next line `max_so_far = max(max_so_far, curr_max)` updates the overall maximum sum.
+        # We need to replace it with an if statement to also update the start and end indices of the best subarray found so far.
+        # EDIT: Check if the maximum sum of the subarray ending at the current position (`curr_max`) is greater than the overall maximum sum found so far (`max_so_far`).
+        # EDIT: If it is, we've found a new best subarray.
+        # 1. Update `max_so_far` to be equal to `curr_max`.
+        # 2. Update `start_idx` to be equal to `current_start_idx`.
+        # 3. Update `end_idx` to be equal to the current index `i`.
+        max_so_far = max(max_so_far, curr_max)
+    # EDIT: Modify the return statement to return a tuple containing the overall maximum sum, its starting index, and its ending index. The format should be `(max_so_far, start_idx, end_idx)`.
+    return max_so_far
+```

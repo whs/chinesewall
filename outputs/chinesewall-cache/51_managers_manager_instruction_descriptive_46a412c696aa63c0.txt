@@ -1,0 +1,85 @@
+[2540, 2549]
+from typing import List, Union
+
+class Manager:
+    def __init__(self, name: str, direct_reports: List[Union["Manager", "IC"]]):
+        self.name = name
+        self.team = direct_reports
+    
+    # EDIT: Change the method name to `find_manager_n`.
+    # EDIT: Add a new parameter `n` of type `int` after the `name` parameter.
+    def find_managers_manager(self, name: str) -> List[str]:
+        all_managers_managers_names = []
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call to `find_manager_n_help`.
+                # EDIT: Pass the new parameter `n` to this method call, between `name` and the list.
+                all_managers_managers_names.extend(direct_report.find_managers_manager_help(name, [self.name]))
+        return sorted(list(set(all_managers_managers_names)))
+    
+    # EDIT: Change the method name to `find_manager_n_help`.
+    # EDIT: Add a new parameter `n` of type `int` after the `name` parameter.
+    def find_managers_manager_help(self, name: str, path: List[str]) -> List[str]:
+        managers_managers_names = []
+        # EDIT: The condition should check if the length of the `path` list is greater than or equal to `n`, not 2.
+        if self.name == name and len(path) >= 2:
+            # EDIT: Instead of getting the manager's manager (the second to last element, index -2), we need to find the manager `n` levels up. You can get this by accessing the element at index `-n` in the `path` list.
+            managers_managers_names.append(path[-2])
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call to `find_manager_n_help`.
+                # EDIT: Pass the `n` parameter to this recursive call. It should be placed between `name` and the path list.
+                managers_managers_names.extend(direct_report.find_managers_manager_help(name, path + [self.name]))
+            # EDIT: The condition should check if the length of the `path` list is greater than or equal to `n`, not 1.
+            elif direct_report.name == name and len(path) >= 1:
+                # EDIT: Instead of getting the direct manager (the last element, index -1), we need to find the manager `n` levels up. You can get this by accessing the element at index `-n` in the `path` list.
+                managers_managers_names.append(path[-1])
+        return managers_managers_names
+    
+class IC:
+    def __init__(self, name: str):
+        self.name = name
+
+===============
+```py
+from typing import List, Union
+
+class Manager:
+    def __init__(self, name: str, direct_reports: List[Union["Manager", "IC"]]):
+        self.name = name
+        self.team = direct_reports
+    
+    # EDIT: Change the method name to `find_manager_n`.
+    # EDIT: Add a new parameter `n` of type `int` after the `name` parameter.
+    def find_managers_manager(self, name: str) -> List[str]:
+        all_managers_managers_names = []
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call to `find_manager_n_help`.
+                # EDIT: Pass the new parameter `n` to this method call, between `name` and the list.
+                all_managers_managers_names.extend(direct_report.find_managers_manager_help(name, [self.name]))
+        return sorted(list(set(all_managers_managers_names)))
+    
+    # EDIT: Change the method name to `find_manager_n_help`.
+    # EDIT: Add a new parameter `n` of type `int` after the `name` parameter.
+    def find_managers_manager_help(self, name: str, path: List[str]) -> List[str]:
+        managers_managers_names = []
+        # EDIT: The condition should check if the length of the `path` list is greater than or equal to `n`, not 2.
+        if self.name == name and len(path) >= 2:
+            # EDIT: Instead of getting the manager's manager (the second to last element, index -2), we need to find the manager `n` levels up. You can get this by accessing the element at index `-n` in the `path` list.
+            managers_managers_names.append(path[-2])
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call to `find_manager_n_help`.
+                # EDIT: Pass the `n` parameter to this recursive call. It should be placed between `name` and the path list.
+                managers_managers_names.extend(direct_report.find_managers_manager_help(name, path + [self.name]))
+            # EDIT: The condition should check if the length of the `path` list is greater than or equal to `n`, not 1.
+            elif direct_report.name == name and len(path) >= 1:
+                # EDIT: Instead of getting the direct manager (the last element, index -1), we need to find the manager `n` levels up. You can get this by accessing the element at index `-n` in the `path` list.
+                managers_managers_names.append(path[-1])
+        return managers_managers_names
+    
+class IC:
+    def __init__(self, name: str):
+        self.name = name
+```

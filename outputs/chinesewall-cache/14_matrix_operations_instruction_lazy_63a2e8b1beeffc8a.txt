@@ -1,0 +1,97 @@
+[2229, 2238]
+class Matrix:
+
+    def __init__(self, matrix: list[list[int]]):
+        self.matrix = matrix
+
+    # EDIT: Create a new helper method here called `same_size`.
+    # It should take `self` and `other` as arguments.
+    # This method will check if two matrices have the same dimensions.
+    # 1. Get the number of rows of the first matrix using `len(self.matrix)`.
+    # 2. Get the number of columns of the first matrix using `len(self.matrix[0])`.
+    # 3. Get the number of rows of the second matrix using `len(other.matrix)`.
+    # 4. Get the number of columns of the second matrix using `len(other.matrix[0])`.
+    # 5. Return `True` if the number of rows are equal AND the number of columns are equal. Otherwise, return `False`.
+
+    def add(self, other):
+        # EDIT: Before doing any addition, check if the matrices have the same size.
+        # 1. Call the `same_size` method you just created, passing `other` to it (e.g., `self.same_size(other)`).
+        # 2. If the result is `False`, raise a `ValueError` with the message "Matrices must have the same dimensions for addition."
+        result = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix[0])):
+                row.append(self.matrix[i][j] + other.matrix[i][j])
+            result.append(row)
+        return Matrix(result)
+    
+    def subtract(self, other):
+        # EDIT: Before doing any subtraction, check if the matrices have the same size.
+        # 1. Call the `same_size` method, passing `other` to it (e.g., `self.same_size(other)`).
+        # 2. If the result is `False`, raise a `ValueError` with the message "Matrices must have the same dimensions for subtraction."
+        result = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix[0])):
+                row.append(self.matrix[i][j] - other.matrix[i][j])
+            result.append(row)
+        return Matrix(result)
+
+    def transpose(self):
+        result = []
+        for i in range(len(self.matrix[0])):
+            row = []
+            for j in range(len(self.matrix)):
+                row.append(self.matrix[j][i])
+            result.append(row)
+        return Matrix(result)
+
+===============
+```py
+class Matrix:
+
+    def __init__(self, matrix: list[list[int]]):
+        self.matrix = matrix
+
+    # EDIT: Create a new helper method here called `same_size`.
+    # It should take `self` and `other` as arguments.
+    # This method will check if two matrices have the same dimensions.
+    # 1. Get the number of rows of the first matrix using `len(self.matrix)`.
+    # 2. Get the number of columns of the first matrix using `len(self.matrix[0])`.
+    # 3. Get the number of rows of the second matrix using `len(other.matrix)`.
+    # 4. Get the number of columns of the second matrix using `len(other.matrix[0])`.
+    # 5. Return `True` if the number of rows are equal AND the number of columns are equal. Otherwise, return `False`.
+
+    def add(self, other):
+        # EDIT: Before doing any addition, check if the matrices have the same size.
+        # 1. Call the `same_size` method you just created, passing `other` to it (e.g., `self.same_size(other)`).
+        # 2. If the result is `False`, raise a `ValueError` with the message "Matrices must have the same dimensions for addition."
+        result = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix[0])):
+                row.append(self.matrix[i][j] + other.matrix[i][j])
+            result.append(row)
+        return Matrix(result)
+    
+    def subtract(self, other):
+        # EDIT: Before doing any subtraction, check if the matrices have the same size.
+        # 1. Call the `same_size` method, passing `other` to it (e.g., `self.same_size(other)`).
+        # 2. If the result is `False`, raise a `ValueError` with the message "Matrices must have the same dimensions for subtraction."
+        result = []
+        for i in range(len(self.matrix)):
+            row = []
+            for j in range(len(self.matrix[0])):
+                row.append(self.matrix[i][j] - other.matrix[i][j])
+            result.append(row)
+        return Matrix(result)
+
+    def transpose(self):
+        result = []
+        for i in range(len(self.matrix[0])):
+            row = []
+            for j in range(len(self.matrix)):
+                row.append(self.matrix[j][i])
+            result.append(row)
+        return Matrix(result)
+```

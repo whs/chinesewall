@@ -1,0 +1,93 @@
+[1726, 1735]
+import abc
+
+class Encoder(abc.ABC):
+    @abc.abstractmethod
+    def encode(self, n: int) -> str:
+        raise NotImplementedError
+
+class LowerAlphaEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        while n > 0:
+            n, remainder = divmod(n - 1, 26)
+            key = chr(97 + remainder) + key
+        return key
+
+class UpperAlphaEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        while n > 0:
+            n, remainder = divmod(n - 1, 26)
+            key = chr(65 + remainder) + key
+        return key
+    
+class UpperAlphaNumericEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        # EDIT: This variable switches between letters and numbers on every character. To switch every third character, we need a counter.
+        # Replace this line with a new integer variable, let's call it `pos`, and initialize it to 0.
+        is_alpha = True
+        while n > 0:
+            # EDIT: This condition checks if we should encode a letter or a number.
+            # Change the condition to check if `pos` is a multiple of 3.
+            # A number is a multiple of 3 if its remainder when divided by 3 is 0.
+            # The new condition should be `pos % 3 == 0`.
+            if is_alpha:
+                n, remainder = divmod(n - 1, 26)
+                key = chr(65 + remainder) + key
+            else:
+                n, remainder = divmod(n - 1, 10)
+                key = chr(48 + remainder) + key
+            # EDIT: This line flips the switch between letters and numbers.
+            # Replace this line to increment our position counter `pos` by 1 at the end of each loop pass.
+            is_alpha = not is_alpha
+        return key
+
+===============
+```py
+import abc
+
+class Encoder(abc.ABC):
+    @abc.abstractmethod
+    def encode(self, n: int) -> str:
+        raise NotImplementedError
+
+class LowerAlphaEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        while n > 0:
+            n, remainder = divmod(n - 1, 26)
+            key = chr(97 + remainder) + key
+        return key
+
+class UpperAlphaEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        while n > 0:
+            n, remainder = divmod(n - 1, 26)
+            key = chr(65 + remainder) + key
+        return key
+    
+class UpperAlphaNumericEncoder(Encoder):
+    def encode(self, n: int) -> str:
+        key = ""
+        # EDIT: This variable switches between letters and numbers on every character. To switch every third character, we need a counter.
+        # Replace this line with a new integer variable, let's call it `pos`, and initialize it to 0.
+        is_alpha = True
+        while n > 0:
+            # EDIT: This condition checks if we should encode a letter or a number.
+            # Change the condition to check if `pos` is a multiple of 3.
+            # A number is a multiple of 3 if its remainder when divided by 3 is 0.
+            # The new condition should be `pos % 3 == 0`.
+            if is_alpha:
+                n, remainder = divmod(n - 1, 26)
+                key = chr(65 + remainder) + key
+            else:
+                n, remainder = divmod(n - 1, 10)
+                key = chr(48 + remainder) + key
+            # EDIT: This line flips the switch between letters and numbers.
+            # Replace this line to increment our position counter `pos` by 1 at the end of each loop pass.
+            is_alpha = not is_alpha
+        return key
+```

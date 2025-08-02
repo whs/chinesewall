@@ -1,0 +1,29 @@
+[863, 872]
+def reverseString(originalString):
+    reversedString = ""
+    for i in range(0, len(originalString)):
+        # EDIT: This line is currently taking characters from the beginning of the original string because the loop counter `i` starts from 0.
+        # EDIT: To reverse the string, you need to get characters from the end of the `originalString` first.
+        # EDIT: You can calculate the index of the character from the end of the string. For example, when `i` is 0, you want the last character, which is at index `len(originalString) - 1`.
+        # EDIT: Change the index used to access the character from `originalString`. Instead of `i`, use `len(originalString) - 1 - i`.
+        reversedString += originalString[i]
+    return reversedString
+
+def isPalindrome(originalString):
+    return originalString.lower() == reverseString(originalString.lower())
+
+===============
+```py
+def reverseString(originalString):
+    reversedString = ""
+    for i in range(0, len(originalString)):
+        # EDIT: This line is currently taking characters from the beginning of the original string because the loop counter `i` starts from 0.
+        # EDIT: To reverse the string, you need to get characters from the end of the `originalString` first.
+        # EDIT: You can calculate the index of the character from the end of the string. For example, when `i` is 0, you want the last character, which is at index `len(originalString) - 1`.
+        # EDIT: Change the index used to access the character from `originalString`. Instead of `i`, use `len(originalString) - 1 - i`.
+        reversedString += originalString[i]
+    return reversedString
+
+def isPalindrome(originalString):
+    return originalString.lower() == reverseString(originalString.lower())
+```

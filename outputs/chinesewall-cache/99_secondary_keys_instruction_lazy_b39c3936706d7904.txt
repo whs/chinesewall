@@ -1,0 +1,107 @@
+[3457, 3466]
+from typing import Any, Hashable, Optional
+
+class KeyValueCache:
+    def __init__(self) -> None:
+        # EDIT: Initialize a private integer variable named `_hits` to 0. This will be used to count successful data retrievals.
+        # EDIT: Initialize a private integer variable named `_misses` to 0. This will be used to count failed data retrievals.
+        # EDIT: Initialize a private integer variable named `_num_entries` to 0. This will track the total number of items in the cache.
+        self.primary_cache = {}
+        self.secondary_key_map = {}
+
+    def put(self, primary_key: Hashable, value: Any, secondary_keys: Optional[list[Hashable]] = None) -> None:
+        # EDIT: Before adding the new key-value pair, check if the `primary_key` does NOT already exist in `self.primary_cache`.
+        # EDIT: If the key is new, increment `self._num_entries` by 1 to reflect the new entry.
+        self.primary_cache[primary_key] = value
+        if secondary_keys:
+            for key in secondary_keys:
+                self.secondary_key_map[key] = primary_key
+
+    def get_by_primary(self, primary_key: Hashable) -> Any:
+        # EDIT: Before returning the value, we need to update our hit/miss counters.
+        # EDIT: Create an `if` statement to check if `primary_key` is in `self.primary_cache`.
+        # EDIT: If it is, this is a "hit". Increment `self._hits` by 1.
+        # EDIT: Add an `else` block for when the key is not found.
+        # EDIT: Inside the `else` block, this is a "miss". Increment `self._misses` by 1.
+        return self.primary_cache.get(primary_key, None)
+
+    def get_by_secondary(self, secondary_key: Hashable) -> Any:
+        primary_key = self.secondary_key_map.get(secondary_key, None)
+        # EDIT: Check if the `primary_key` that was found is `None`.
+        # EDIT: If `primary_key` is `None`, the secondary key does not exist, which is a "miss". Increment `self._misses` by 1.
+        # EDIT: Then, return `None` immediately.
+        # EDIT: If the `primary_key` is not `None`, then call `self.get_by_primary` with the found `primary_key` and return its result. The `get_by_primary` method will handle counting this as a "hit".
+        # EDIT: You will need to replace the single line `return self.get_by_primary(primary_key) if primary_key else None` with this new if/else logic.
+        return self.get_by_primary(primary_key) if primary_key else None
+
+    def delete(self, primary_key: Hashable) -> None:
+        if primary_key in self.primary_cache:
+            # EDIT: Since the item is confirmed to exist and is about to be deleted, decrement `self._num_entries` by 1.
+            del self.primary_cache[primary_key]
+            secondary_keys_to_delete = [k for k, v in self.secondary_key_map.items() if v == primary_key]
+            for key in secondary_keys_to_delete:
+                del self.secondary_key_map[key]
+
+    # EDIT: Define a new method here called `get_hits`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_hits` instance variable.
+
+    # EDIT: Define a new method here called `get_misses`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_misses` instance variable.
+
+    # EDIT: Define a new method here called `get_num_entries`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_num_entries` instance variable.
+
+===============
+```py
+from typing import Any, Hashable, Optional
+
+class KeyValueCache:
+    def __init__(self) -> None:
+        # EDIT: Initialize a private integer variable named `_hits` to 0. This will be used to count successful data retrievals.
+        # EDIT: Initialize a private integer variable named `_misses` to 0. This will be used to count failed data retrievals.
+        # EDIT: Initialize a private integer variable named `_num_entries` to 0. This will track the total number of items in the cache.
+        self.primary_cache = {}
+        self.secondary_key_map = {}
+
+    def put(self, primary_key: Hashable, value: Any, secondary_keys: Optional[list[Hashable]] = None) -> None:
+        # EDIT: Before adding the new key-value pair, check if the `primary_key` does NOT already exist in `self.primary_cache`.
+        # EDIT: If the key is new, increment `self._num_entries` by 1 to reflect the new entry.
+        self.primary_cache[primary_key] = value
+        if secondary_keys:
+            for key in secondary_keys:
+                self.secondary_key_map[key] = primary_key
+
+    def get_by_primary(self, primary_key: Hashable) -> Any:
+        # EDIT: Before returning the value, we need to update our hit/miss counters.
+        # EDIT: Create an `if` statement to check if `primary_key` is in `self.primary_cache`.
+        # EDIT: If it is, this is a "hit". Increment `self._hits` by 1.
+        # EDIT: Add an `else` block for when the key is not found.
+        # EDIT: Inside the `else` block, this is a "miss". Increment `self._misses` by 1.
+        return self.primary_cache.get(primary_key, None)
+
+    def get_by_secondary(self, secondary_key: Hashable) -> Any:
+        primary_key = self.secondary_key_map.get(secondary_key, None)
+        # EDIT: Check if the `primary_key` that was found is `None`.
+        # EDIT: If `primary_key` is `None`, the secondary key does not exist, which is a "miss". Increment `self._misses` by 1.
+        # EDIT: Then, return `None` immediately.
+        # EDIT: If the `primary_key` is not `None`, then call `self.get_by_primary` with the found `primary_key` and return its result. The `get_by_primary` method will handle counting this as a "hit".
+        # EDIT: You will need to replace the single line `return self.get_by_primary(primary_key) if primary_key else None` with this new if/else logic.
+        return self.get_by_primary(primary_key) if primary_key else None
+
+    def delete(self, primary_key: Hashable) -> None:
+        if primary_key in self.primary_cache:
+            # EDIT: Since the item is confirmed to exist and is about to be deleted, decrement `self._num_entries` by 1.
+            del self.primary_cache[primary_key]
+            secondary_keys_to_delete = [k for k, v in self.secondary_key_map.items() if v == primary_key]
+            for key in secondary_keys_to_delete:
+                del self.secondary_key_map[key]
+
+    # EDIT: Define a new method here called `get_hits`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_hits` instance variable.
+
+    # EDIT: Define a new method here called `get_misses`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_misses` instance variable.
+
+    # EDIT: Define a new method here called `get_num_entries`. It should not take any arguments besides `self`.
+    # EDIT: This method should return the value of the `_num_entries` instance variable.
+```

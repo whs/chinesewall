@@ -1,0 +1,101 @@
+[2858, 2867]
+from typing import Any, Hashable, Optional
+
+class KeyValueCache:
+    def __init__(self) -> None:
+        self.primary_cache = {}
+        self.secondary_key_map = {}
+        # EDIT: Initialize an instance variable called `stats`.
+        # It should be a dictionary with three keys: 'hits', 'misses', and 'num_entries'.
+        # Set the initial value for all three keys to 0.
+
+    def put(self, primary_key: Hashable, value: Any, secondary_keys: Optional[list[Hashable]] = None) -> None:
+        # EDIT: Increment the 'num_entries' count in the `self.stats` dictionary by 1.
+        self.primary_cache[primary_key] = value
+        if secondary_keys:
+            for key in secondary_keys:
+                self.secondary_key_map[key] = primary_key
+
+    def get_by_primary(self, primary_key: Hashable) -> Any:
+        # EDIT: Before returning the value, check if the lookup was successful to update the stats.
+        # 1. Check if `primary_key` exists in `self.primary_cache`.
+        # 2. If it exists, it's a "hit". Increment the 'hits' count in `self.stats` by 1.
+        # 3. If it does not exist, it's a "miss". Increment the 'misses' count in `self.stats` by 1.
+        return self.primary_cache.get(primary_key, None)
+
+    def get_by_secondary(self, secondary_key: Hashable) -> Any:
+        # EDIT: Before performing the lookup, check if the secondary key exists to update the stats.
+        # 1. Check if `secondary_key` exists in `self.secondary_key_map`.
+        # 2. If it exists, it's a "hit". Increment the 'hits' count in `self.stats` by 1.
+        # 3. If it does not exist, it's a "miss". Increment the 'misses' count in `self.stats` by 1.
+        primary_key = self.secondary_key_map.get(secondary_key, None)
+        return self.get_by_primary(primary_key) if primary_key else None
+
+    def delete(self, primary_key: Hashable) -> None:
+        if primary_key in self.primary_cache:
+            # EDIT: Since the key was found and will be deleted, decrement the 'num_entries' count in `self.stats` by 1.
+            del self.primary_cache[primary_key]
+            secondary_keys_to_delete = [k for k, v in self.secondary_key_map.items() if v == primary_key]
+            for key in secondary_keys_to_delete:
+                del self.secondary_key_map[key]
+
+    # EDIT: Define a new method named `get_hits`. It should take `self` as its only parameter.
+    # This method should return the current value of 'hits' from the `self.stats` dictionary.
+
+    # EDIT: Define a new method named `get_misses`. It should take `self` as its only parameter.
+    # This method should return the current value of 'misses' from the `self.stats` dictionary.
+
+    # EDIT: Define a new method named `get_num_entries`. It should take `self` as its only parameter.
+    # This method should return the current value of 'num_entries' from the `self.stats` dictionary.
+
+===============
+```py
+from typing import Any, Hashable, Optional
+
+class KeyValueCache:
+    def __init__(self) -> None:
+        self.primary_cache = {}
+        self.secondary_key_map = {}
+        # EDIT: Initialize an instance variable called `stats`.
+        # It should be a dictionary with three keys: 'hits', 'misses', and 'num_entries'.
+        # Set the initial value for all three keys to 0.
+
+    def put(self, primary_key: Hashable, value: Any, secondary_keys: Optional[list[Hashable]] = None) -> None:
+        # EDIT: Increment the 'num_entries' count in the `self.stats` dictionary by 1.
+        self.primary_cache[primary_key] = value
+        if secondary_keys:
+            for key in secondary_keys:
+                self.secondary_key_map[key] = primary_key
+
+    def get_by_primary(self, primary_key: Hashable) -> Any:
+        # EDIT: Before returning the value, check if the lookup was successful to update the stats.
+        # 1. Check if `primary_key` exists in `self.primary_cache`.
+        # 2. If it exists, it's a "hit". Increment the 'hits' count in `self.stats` by 1.
+        # 3. If it does not exist, it's a "miss". Increment the 'misses' count in `self.stats` by 1.
+        return self.primary_cache.get(primary_key, None)
+
+    def get_by_secondary(self, secondary_key: Hashable) -> Any:
+        # EDIT: Before performing the lookup, check if the secondary key exists to update the stats.
+        # 1. Check if `secondary_key` exists in `self.secondary_key_map`.
+        # 2. If it exists, it's a "hit". Increment the 'hits' count in `self.stats` by 1.
+        # 3. If it does not exist, it's a "miss". Increment the 'misses' count in `self.stats` by 1.
+        primary_key = self.secondary_key_map.get(secondary_key, None)
+        return self.get_by_primary(primary_key) if primary_key else None
+
+    def delete(self, primary_key: Hashable) -> None:
+        if primary_key in self.primary_cache:
+            # EDIT: Since the key was found and will be deleted, decrement the 'num_entries' count in `self.stats` by 1.
+            del self.primary_cache[primary_key]
+            secondary_keys_to_delete = [k for k, v in self.secondary_key_map.items() if v == primary_key]
+            for key in secondary_keys_to_delete:
+                del self.secondary_key_map[key]
+
+    # EDIT: Define a new method named `get_hits`. It should take `self` as its only parameter.
+    # This method should return the current value of 'hits' from the `self.stats` dictionary.
+
+    # EDIT: Define a new method named `get_misses`. It should take `self` as its only parameter.
+    # This method should return the current value of 'misses' from the `self.stats` dictionary.
+
+    # EDIT: Define a new method named `get_num_entries`. It should take `self` as its only parameter.
+    # This method should return the current value of 'num_entries' from the `self.stats` dictionary.
+```

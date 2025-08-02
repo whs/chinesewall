@@ -1,0 +1,191 @@
+[4603, 4612]
+from typing import List
+
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+
+    def __init__(self, id: int):
+        self.id = id
+        self.out_edges = []
+        self.in_edges = []
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Node):
+            return False
+        else:
+            return self.id == __value.id
+
+    def __hash__(self) -> int:
+        return self.id
+
+
+class Edge:
+    def __init__(self, src: Node, dest: Node, weight: int):
+        assert weight > 0
+        # EDIT: The assertion below is likely a bug. It forces every edge to be a self-loop (source and destination are the same). For the purpose of this exercise, we will assume this is intended. However, for a typical graph, you would likely want to remove this line or change it to `assert src != dest`.
+        assert src == dest
+
+        self.src = src
+        self.dest = dest
+        self.weight = weight
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Edge):
+            return False
+        else:
+            return self.dest == __value.dest and self.src == __value.src
+
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+        self.edges = []
+
+    def add_edge(self, edge: Edge):
+        assert edge not in self.edges
+        self.edges.append(edge)
+
+    # EDIT: Define a new method here called `dijkstra`. It should accept `self` and a starting `Node` named `x` as arguments. The method should have a return type hint of a dictionary.
+    # This method will calculate the shortest distance from the starting node `x` to all other nodes in the graph.
+
+    # EDIT: Inside the `dijkstra` method, first, you need a way to store the distances from the start node `x` to every other node.
+    # Create a dictionary called `distances`.
+    # To initialize it, iterate through all nodes in `self.nodes`. For each node, add it as a key to the `distances` dictionary.
+    # The initial value for each node should be infinity, because we haven't found a path to it yet. You can represent infinity with `float('inf')`.
+
+    # EDIT: The distance from the starting node `x` to itself is always 0. Update the `distances` dictionary to set the value for key `x` to `0`.
+
+    # EDIT: We also need to keep track of which nodes we haven't visited yet.
+    # Create a set called `unvisited_nodes` and initialize it with a copy of all the nodes in the graph (`self.nodes`).
+
+    # EDIT: Now, start a loop that continues as long as the `unvisited_nodes` set is not empty.
+
+    # EDIT: Inside the loop, you need to find the unvisited node with the smallest distance found so far.
+    # Let's call this `current_node`. Iterate through the `unvisited_nodes` and find the one with the lowest value in the `distances` dictionary.
+
+    # EDIT: Once you've found the `current_node`, remove it from the `unvisited_nodes` set. This marks it as "visited".
+
+    # EDIT: Now, we need to check the neighbors of the `current_node`. A neighbor is a node connected by an outgoing edge.
+    # Iterate through the `out_edges` of the `current_node`.
+
+    # EDIT: For each `edge` in the `out_edges`:
+    # 1. Get the destination node of the edge, let's call it `neighbor_node`.
+    # 2. Get the `weight` of the edge.
+    # 3. Calculate the potential new distance to this neighbor. This is the distance to the `current_node` (from the `distances` dictionary) plus the `weight` of the edge.
+    # 4. Compare this new distance with the existing distance for `neighbor_node` in the `distances` dictionary.
+    # 5. If the new distance is smaller, update the `distances` dictionary with this new, shorter distance for `neighbor_node`.
+
+    # EDIT: After the loop finishes, the `distances` dictionary will hold the shortest distances to all reachable nodes.
+    # However, any node that is unreachable will still have `float('inf')` as its distance.
+    # The final step is to replace these `float('inf')` values with `None`.
+    # Create a new result dictionary. Iterate through the `distances` dictionary's items (node and distance).
+    # If a distance is `float('inf')`, add the node to your result dictionary with a value of `None`.
+    # Otherwise, add the node and its calculated distance to the result dictionary.
+
+    # EDIT: Finally, return the result dictionary.
+
+===============
+```py
+from typing import List
+
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+
+    def __init__(self, id: int):
+        self.id = id
+        self.out_edges = []
+        self.in_edges = []
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Node):
+            return False
+        else:
+            return self.id == __value.id
+
+    def __hash__(self) -> int:
+        return self.id
+
+
+class Edge:
+    def __init__(self, src: Node, dest: Node, weight: int):
+        assert weight > 0
+        # EDIT: The assertion below is likely a bug. It forces every edge to be a self-loop (source and destination are the same). For the purpose of this exercise, we will assume this is intended. However, for a typical graph, you would likely want to remove this line or change it to `assert src != dest`.
+        assert src == dest
+
+        self.src = src
+        self.dest = dest
+        self.weight = weight
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Edge):
+            return False
+        else:
+            return self.dest == __value.dest and self.src == __value.src
+
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+        self.edges = []
+
+    def add_edge(self, edge: Edge):
+        assert edge not in self.edges
+        self.edges.append(edge)
+
+    # EDIT: Define a new method here called `dijkstra`. It should accept `self` and a starting `Node` named `x` as arguments. The method should have a return type hint of a dictionary.
+    # This method will calculate the shortest distance from the starting node `x` to all other nodes in the graph.
+
+    # EDIT: Inside the `dijkstra` method, first, you need a way to store the distances from the start node `x` to every other node.
+    # Create a dictionary called `distances`.
+    # To initialize it, iterate through all nodes in `self.nodes`. For each node, add it as a key to the `distances` dictionary.
+    # The initial value for each node should be infinity, because we haven't found a path to it yet. You can represent infinity with `float('inf')`.
+
+    # EDIT: The distance from the starting node `x` to itself is always 0. Update the `distances` dictionary to set the value for key `x` to `0`.
+
+    # EDIT: We also need to keep track of which nodes we haven't visited yet.
+    # Create a set called `unvisited_nodes` and initialize it with a copy of all the nodes in the graph (`self.nodes`).
+
+    # EDIT: Now, start a loop that continues as long as the `unvisited_nodes` set is not empty.
+
+    # EDIT: Inside the loop, you need to find the unvisited node with the smallest distance found so far.
+    # Let's call this `current_node`. Iterate through the `unvisited_nodes` and find the one with the lowest value in the `distances` dictionary.
+
+    # EDIT: Once you've found the `current_node`, remove it from the `unvisited_nodes` set. This marks it as "visited".
+
+    # EDIT: Now, we need to check the neighbors of the `current_node`. A neighbor is a node connected by an outgoing edge.
+    # Iterate through the `out_edges` of the `current_node`.
+
+    # EDIT: For each `edge` in the `out_edges`:
+    # 1. Get the destination node of the edge, let's call it `neighbor_node`.
+    # 2. Get the `weight` of the edge.
+    # 3. Calculate the potential new distance to this neighbor. This is the distance to the `current_node` (from the `distances` dictionary) plus the `weight` of the edge.
+    # 4. Compare this new distance with the existing distance for `neighbor_node` in the `distances` dictionary.
+    # 5. If the new distance is smaller, update the `distances` dictionary with this new, shorter distance for `neighbor_node`.
+
+    # EDIT: After the loop finishes, the `distances` dictionary will hold the shortest distances to all reachable nodes.
+    # However, any node that is unreachable will still have `float('inf')` as its distance.
+    # The final step is to replace these `float('inf')` values with `None`.
+    # Create a new result dictionary. Iterate through the `distances` dictionary's items (node and distance).
+    # If a distance is `float('inf')`, add the node to your result dictionary with a value of `None`.
+    # Otherwise, add the node and its calculated distance to the result dictionary.
+
+    # EDIT: Finally, return the result dictionary.
+```

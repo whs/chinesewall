@@ -1,0 +1,213 @@
+[4702, 4711]
+from typing import List, Literal
+
+
+class Semver:
+    def __init__(self, major: int, minor: int, patch: int):
+        self.major = major
+        self.minor = minor
+        self.patch = patch
+
+    def __str__(self):
+        return f'{self.major}.{self.minor}.{self.patch}'
+
+    def __eq__(self, other):
+        return self.major == other.major and \
+            self.minor == other.minor and \
+            self.patch == other.patch
+
+    def __lt__(self, other):
+        if self.major < other.major:
+            return True
+        elif self.major == other.major:
+            if self.minor < other.minor:
+                return True
+            elif self.minor == other.minor:
+                return self.patch < other.patch
+        return False
+
+    def __gt__(self, other):
+        if self.major > other.major:
+            return True
+        elif self.major == other.major:
+            if self.minor > other.minor:
+                return True
+            elif self.minor == other.minor:
+                return self.patch > other.patch
+        return False
+
+    def __le__(self, other):
+        return self < other or self == other
+
+    def __ge__(self, other):
+        return self > other or self == other
+
+    def __hash__(self):
+        return hash((self.major, self.minor, self.patch))
+
+
+class PackageVersion:
+    def __init__(self, version: Semver, dependencies: List["SemverConstraint"] = []):
+        # EDIT: Add an assertion to ensure that there are no duplicate dependencies.
+        # 1. Create a list containing just the names of the packages from the `dependencies` list. Each item in the `dependencies` list is a `SemverConstraint` object, which has a `package` attribute. You can use a list comprehension for this: `[d.package for d in dependencies]`.
+        # 2. Create a set from the list of package names you just created. A set only stores unique items, so any duplicates will be removed.
+        # 3. Use the `assert` keyword to check if the length of the list of package names is equal to the length of the set of package names.
+        # 4. If the lengths are not equal, it means there was a duplicate, and the assertion will stop the program. Include a helpful message in the assertion, like "Cannot have duplicate dependencies".
+        self.version = version
+        self.dependencies = dependencies
+
+
+class Package:
+    def __init__(self, name: str, versions: List[PackageVersion]):
+        # EDIT: Add an assertion to ensure that there are no duplicate versions.
+        # 1. Create a list containing just the `version` objects from the `versions` list. Each item in the `versions` list is a `PackageVersion` object, which has a `version` attribute. You can use a list comprehension for this: `[v.version for v in versions]`.
+        # 2. Create a set from the list of `version` objects you just created. A set will automatically remove any duplicates. The `Semver` object can be added to a set because it has the required `__eq__` and `__hash__` methods defined.
+        # 3. Use the `assert` keyword to check if the length of the list of `version` objects is equal to the length of the set of `version` objects.
+        # 4. If the lengths are different, it means there was a duplicate version number. Include a helpful message in the assertion, like "Cannot have duplicate versions".
+        self.name = name
+        self.versions = versions
+
+    def max_satisfying_version(self, constraints: List["SemverConstraint"]):
+        max_version = None
+        for version in self.versions:
+            if all([constraint.satisfies(version.version) for constraint in constraints]):
+                if max_version is None or version.version > max_version.version:
+                    max_version = version
+        return max_version
+
+
+class SemverConstraint:
+    def __init__(
+        self,
+        package: str,
+        constraint: Literal["==", ">=", "<=", ">", "<"],
+        version: Semver,
+    ):
+        self.package = package
+        assert constraint in ["==", ">=", "<=", ">", "<"], \
+            f'Constraint must be one of "==", ">=", "<=", ">", "<", not {constraint}'
+        self.constraint = constraint
+        self.version = version
+
+    def __str__(self):
+        return f'{self.package} {self.constraint} {self.version}'
+
+    def satisfies(self, version: Semver):
+        if self.constraint == "==":
+            return version == self.version
+        elif self.constraint == ">=":
+            return version >= self.version
+        elif self.constraint == "<=":
+            return version <= self.version
+        elif self.constraint == ">":
+            return version > self.version
+        elif self.constraint == "<":
+            return version < self.version
+
+===============
+```py
+from typing import List, Literal
+
+
+class Semver:
+    def __init__(self, major: int, minor: int, patch: int):
+        self.major = major
+        self.minor = minor
+        self.patch = patch
+
+    def __str__(self):
+        return f'{self.major}.{self.minor}.{self.patch}'
+
+    def __eq__(self, other):
+        return self.major == other.major and \
+            self.minor == other.minor and \
+            self.patch == other.patch
+
+    def __lt__(self, other):
+        if self.major < other.major:
+            return True
+        elif self.major == other.major:
+            if self.minor < other.minor:
+                return True
+            elif self.minor == other.minor:
+                return self.patch < other.patch
+        return False
+
+    def __gt__(self, other):
+        if self.major > other.major:
+            return True
+        elif self.major == other.major:
+            if self.minor > other.minor:
+                return True
+            elif self.minor == other.minor:
+                return self.patch > other.patch
+        return False
+
+    def __le__(self, other):
+        return self < other or self == other
+
+    def __ge__(self, other):
+        return self > other or self == other
+
+    def __hash__(self):
+        return hash((self.major, self.minor, self.patch))
+
+
+class PackageVersion:
+    def __init__(self, version: Semver, dependencies: List["SemverConstraint"] = []):
+        # EDIT: Add an assertion to ensure that there are no duplicate dependencies.
+        # 1. Create a list containing just the names of the packages from the `dependencies` list. Each item in the `dependencies` list is a `SemverConstraint` object, which has a `package` attribute. You can use a list comprehension for this: `[d.package for d in dependencies]`.
+        # 2. Create a set from the list of package names you just created. A set only stores unique items, so any duplicates will be removed.
+        # 3. Use the `assert` keyword to check if the length of the list of package names is equal to the length of the set of package names.
+        # 4. If the lengths are not equal, it means there was a duplicate, and the assertion will stop the program. Include a helpful message in the assertion, like "Cannot have duplicate dependencies".
+        self.version = version
+        self.dependencies = dependencies
+
+
+class Package:
+    def __init__(self, name: str, versions: List[PackageVersion]):
+        # EDIT: Add an assertion to ensure that there are no duplicate versions.
+        # 1. Create a list containing just the `version` objects from the `versions` list. Each item in the `versions` list is a `PackageVersion` object, which has a `version` attribute. You can use a list comprehension for this: `[v.version for v in versions]`.
+        # 2. Create a set from the list of `version` objects you just created. A set will automatically remove any duplicates. The `Semver` object can be added to a set because it has the required `__eq__` and `__hash__` methods defined.
+        # 3. Use the `assert` keyword to check if the length of the list of `version` objects is equal to the length of the set of `version` objects.
+        # 4. If the lengths are different, it means there was a duplicate version number. Include a helpful message in the assertion, like "Cannot have duplicate versions".
+        self.name = name
+        self.versions = versions
+
+    def max_satisfying_version(self, constraints: List["SemverConstraint"]):
+        max_version = None
+        for version in self.versions:
+            if all([constraint.satisfies(version.version) for constraint in constraints]):
+                if max_version is None or version.version > max_version.version:
+                    max_version = version
+        return max_version
+
+
+class SemverConstraint:
+    def __init__(
+        self,
+        package: str,
+        constraint: Literal["==", ">=", "<=", ">", "<"],
+        version: Semver,
+    ):
+        self.package = package
+        assert constraint in ["==", ">=", "<=", ">", "<"], \
+            f'Constraint must be one of "==", ">=", "<=", ">", "<", not {constraint}'
+        self.constraint = constraint
+        self.version = version
+
+    def __str__(self):
+        return f'{self.package} {self.constraint} {self.version}'
+
+    def satisfies(self, version: Semver):
+        if self.constraint == "==":
+            return version == self.version
+        elif self.constraint == ">=":
+            return version >= self.version
+        elif self.constraint == "<=":
+            return version <= self.version
+        elif self.constraint == ">":
+            return version > self.version
+        elif self.constraint == "<":
+            return version < self.version
+```

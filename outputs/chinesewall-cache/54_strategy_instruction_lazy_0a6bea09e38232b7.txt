@@ -1,0 +1,201 @@
+[3873, 3882]
+from abc import ABC
+from abc import abstractmethod
+from typing import List, Tuple
+
+class Strategy(ABC):
+    @abstractmethod
+    def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:
+        '''Returns a tuple(row, column) which indicates where to move 
+           in a 3x3 grid.'''
+        pass
+
+class CornerStrategy(Strategy):
+    def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:
+        if board[0][0] == None:
+            return (0, 0)
+        elif board[0][2] == None:
+            return (0, 2)
+        elif board[2][0] == None:
+            return (2, 0)
+        elif board[2][2] == None:
+            return (2, 2)
+        else:
+            raise Exception
+        
+# EDIT: Create a new class here called `GoodStrategy`. This class must inherit from the `Strategy` class.
+# For example: `class GoodStrategy(Strategy):`
+    # EDIT: Inside the `GoodStrategy` class, define the `returnMove` method.
+    # It must have the same parameters and type hints as the method in the `Strategy` class.
+    # For example: `def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:`
+        # EDIT: We will now implement a simple, hardcoded strategy to beat `CornerStrategy`.
+        # This strategy works when `GoodStrategy` is Player 1. It relies on the fact that
+        # `CornerStrategy` will always pick corners in a predictable order.
+
+        # Our winning sequence of moves is:
+        # 1. Take the center square (1, 1).
+        # 2. Take the top-middle edge square (0, 1).
+        # 3. Take the bottom-middle edge square (2, 1) to win the game by completing the middle column.
+
+        # We will use `if` statements to check the board and decide which move to make.
+
+        # EDIT: First, check if the center square at `board[1][1]` is empty. An empty square is represented by `None`.
+        # If it is, this is our first move. Return the tuple `(1, 1)`.
+
+        # EDIT: If the center is not empty, check if the top-middle square at `board[0][1]` is empty.
+        # If it is, this is our second move. Return the tuple `(0, 1)`.
+
+        # EDIT: If both of the above squares are taken, it must be time for our third and final move.
+        # We don't need to check the board state further. Simply return the winning move, which is the tuple `(2, 1)`.
+
+class Game:
+    def __init__(self, player1: Strategy, player2: Strategy):
+        self.playerOne = player1
+        self.playerTwo = player2
+        self.board = [[None for _ in range(3)] for _ in range(3)]
+
+    def player1Won(self):
+        playerTurn = True
+        while not self.playerXWon(True) and not self.playerXWon(False) and not self.gameOver():
+             strat = self.playerOne if playerTurn else self.playerTwo
+             move = strat.returnMove(self.board)
+             self.board[move[0]][move[1]] = playerTurn
+             playerTurn = not playerTurn
+        if self.gameOver():
+            return False
+        else:
+            return self.playerXWon(True)
+
+
+    def gameOver(self):
+        for row in self.board:
+            for col in row:
+                if col == None:
+                    return False
+        return True
+    
+    def playerXWon(self, x: bool):
+        for i in range(3):
+            if self.rowNX(i, x):
+                return True
+        for i in range(3):
+            if self.colNX(i, x):
+                return True
+        downDiag = self.board[0][0] == x and self.board[1][1] == x and self.board[2][2] == x
+        upDiag = self.board[2][0] == x and self.board[1][1] == x and self.board[0][2] == x
+        return downDiag or upDiag
+    
+
+
+    def rowNX(self, n: int, x: bool):
+        for col in self.board[n]:
+            if col != x:
+                return False
+        return True
+    def colNX(self, n: int, x: bool):
+        for row in self.board:
+            if row[n] != x:
+                return False
+        return True
+
+===============
+```py
+from abc import ABC
+from abc import abstractmethod
+from typing import List, Tuple
+
+class Strategy(ABC):
+    @abstractmethod
+    def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:
+        '''Returns a tuple(row, column) which indicates where to move 
+           in a 3x3 grid.'''
+        pass
+
+class CornerStrategy(Strategy):
+    def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:
+        if board[0][0] == None:
+            return (0, 0)
+        elif board[0][2] == None:
+            return (0, 2)
+        elif board[2][0] == None:
+            return (2, 0)
+        elif board[2][2] == None:
+            return (2, 2)
+        else:
+            raise Exception
+        
+# EDIT: Create a new class here called `GoodStrategy`. This class must inherit from the `Strategy` class.
+# For example: `class GoodStrategy(Strategy):`
+    # EDIT: Inside the `GoodStrategy` class, define the `returnMove` method.
+    # It must have the same parameters and type hints as the method in the `Strategy` class.
+    # For example: `def returnMove(self, board: List[List[bool]]) -> Tuple[int, int]:`
+        # EDIT: We will now implement a simple, hardcoded strategy to beat `CornerStrategy`.
+        # This strategy works when `GoodStrategy` is Player 1. It relies on the fact that
+        # `CornerStrategy` will always pick corners in a predictable order.
+
+        # Our winning sequence of moves is:
+        # 1. Take the center square (1, 1).
+        # 2. Take the top-middle edge square (0, 1).
+        # 3. Take the bottom-middle edge square (2, 1) to win the game by completing the middle column.
+
+        # We will use `if` statements to check the board and decide which move to make.
+
+        # EDIT: First, check if the center square at `board[1][1]` is empty. An empty square is represented by `None`.
+        # If it is, this is our first move. Return the tuple `(1, 1)`.
+
+        # EDIT: If the center is not empty, check if the top-middle square at `board[0][1]` is empty.
+        # If it is, this is our second move. Return the tuple `(0, 1)`.
+
+        # EDIT: If both of the above squares are taken, it must be time for our third and final move.
+        # We don't need to check the board state further. Simply return the winning move, which is the tuple `(2, 1)`.
+
+class Game:
+    def __init__(self, player1: Strategy, player2: Strategy):
+        self.playerOne = player1
+        self.playerTwo = player2
+        self.board = [[None for _ in range(3)] for _ in range(3)]
+
+    def player1Won(self):
+        playerTurn = True
+        while not self.playerXWon(True) and not self.playerXWon(False) and not self.gameOver():
+             strat = self.playerOne if playerTurn else self.playerTwo
+             move = strat.returnMove(self.board)
+             self.board[move[0]][move[1]] = playerTurn
+             playerTurn = not playerTurn
+        if self.gameOver():
+            return False
+        else:
+            return self.playerXWon(True)
+
+
+    def gameOver(self):
+        for row in self.board:
+            for col in row:
+                if col == None:
+                    return False
+        return True
+    
+    def playerXWon(self, x: bool):
+        for i in range(3):
+            if self.rowNX(i, x):
+                return True
+        for i in range(3):
+            if self.colNX(i, x):
+                return True
+        downDiag = self.board[0][0] == x and self.board[1][1] == x and self.board[2][2] == x
+        upDiag = self.board[2][0] == x and self.board[1][1] == x and self.board[0][2] == x
+        return downDiag or upDiag
+    
+
+
+    def rowNX(self, n: int, x: bool):
+        for col in self.board[n]:
+            if col != x:
+                return False
+        return True
+    def colNX(self, n: int, x: bool):
+        for row in self.board:
+            if row[n] != x:
+                return False
+        return True
+```

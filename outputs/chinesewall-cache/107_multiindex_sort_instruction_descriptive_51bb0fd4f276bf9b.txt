@@ -1,0 +1,85 @@
+[2198, 2207]
+class Comparators:
+    """
+    A class for that allows for custom comparator actions that work in conjuction with Python's default sorted function
+    Example usage: `sorted(lorem_ipsum, key=Comparators.by_length)`
+    """
+
+    def by_length(obj):
+        """Comparing by length of object"""
+        return len(obj)
+
+    def by_num_vowels(obj):
+        """Comparing by the number of vowels"""
+        vowels = "aeiou"
+        return sum(1 for char in obj if char.lower() in vowels)
+
+    def by_numerical_value(obj):
+        """Comparing by the numerical value of the object"""
+        return obj
+
+    def by_word_count(obj):
+        """Comparison by the number of words in the object"""
+        return len(obj.split())
+
+    # EDIT: Since this function will not use the instance of the class (i.e., it won't use `self`), it should be a `staticmethod`. Add the `@staticmethod` decorator on the line above the function definition.
+    # EDIT: Define a new function named `sort_with_tiebreaker`. It should accept three arguments: `items`, `primary`, and `tiebreaker`.
+    # `items` will be a list of things to sort.
+    # `primary` will be a function used for the main sorting.
+    # `tiebreaker` will be a function used to sort items that are considered equal by the `primary` function.
+    
+        # EDIT: We will use Python's built-in `sorted()` function to perform the sorting.
+        # The `sorted()` function can take a `key` argument, which is a function that tells `sorted` how to compare items.
+        # To sort by two criteria, we can make the key function return a tuple. Python will sort by the first item in the tuple, and if there's a tie, it will use the second item to break the tie.
+        #
+        # Your task is to call the `sorted()` function.
+        # The first argument to `sorted()` should be the `items` list.
+        # For the `key` argument, you will provide a small, one-line function using `lambda`.
+        # This lambda function should take one argument (let's call it `x`).
+        # For each `x` in the list, the lambda function should return a tuple: `(primary(x), tiebreaker(x))`.
+        #
+        # Finally, return the result of this `sorted()` function call.
+
+===============
+```py
+class Comparators:
+    """
+    A class for that allows for custom comparator actions that work in conjuction with Python's default sorted function
+    Example usage: `sorted(lorem_ipsum, key=Comparators.by_length)`
+    """
+
+    def by_length(obj):
+        """Comparing by length of object"""
+        return len(obj)
+
+    def by_num_vowels(obj):
+        """Comparing by the number of vowels"""
+        vowels = "aeiou"
+        return sum(1 for char in obj if char.lower() in vowels)
+
+    def by_numerical_value(obj):
+        """Comparing by the numerical value of the object"""
+        return obj
+
+    def by_word_count(obj):
+        """Comparison by the number of words in the object"""
+        return len(obj.split())
+
+    # EDIT: Since this function will not use the instance of the class (i.e., it won't use `self`), it should be a `staticmethod`. Add the `@staticmethod` decorator on the line above the function definition.
+    # EDIT: Define a new function named `sort_with_tiebreaker`. It should accept three arguments: `items`, `primary`, and `tiebreaker`.
+    # `items` will be a list of things to sort.
+    # `primary` will be a function used for the main sorting.
+    # `tiebreaker` will be a function used to sort items that are considered equal by the `primary` function.
+    
+        # EDIT: We will use Python's built-in `sorted()` function to perform the sorting.
+        # The `sorted()` function can take a `key` argument, which is a function that tells `sorted` how to compare items.
+        # To sort by two criteria, we can make the key function return a tuple. Python will sort by the first item in the tuple, and if there's a tie, it will use the second item to break the tie.
+        #
+        # Your task is to call the `sorted()` function.
+        # The first argument to `sorted()` should be the `items` list.
+        # For the `key` argument, you will provide a small, one-line function using `lambda`.
+        # This lambda function should take one argument (let's call it `x`).
+        # For each `x` in the list, the lambda function should return a tuple: `(primary(x), tiebreaker(x))`.
+        #
+        # Finally, return the result of this `sorted()` function call.
+```

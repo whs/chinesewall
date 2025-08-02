@@ -1,0 +1,87 @@
+[2186, 2195]
+import pandas as pd
+
+class StringOperations:
+    """A class containing a series of string operations"""
+
+    def remove_duplicates(text):
+        """Returns the text with only unique characters"""
+        unique = []
+        for char in text:
+            if char not in unique:
+                unique.append(char)
+        return ''.join(unique)
+    
+    def word_reversal(text):
+        """Returns the text with words reversed"""
+        sentences = text.split(' ')
+        return ' '.join(reversed(sentences))
+    
+    def remove_vowels(text):
+        """Returnes the text with vowels removed"""
+        vowels = 'aeiou'
+        return ''.join(char for char in text if char.lower() not in vowels)
+    
+# EDIT: Change the function definition to accept a second parameter called `functions`. This parameter will be a list of functions.
+def calculate_all_properties(text):
+    # EDIT: Replace the hardcoded list below.
+    # Instead, create a new list by applying each function from the `functions` parameter to the `text` parameter.
+    # For example, if you have a function `func` in the `functions` list, you should call `func(text)` and collect the result.
+    # A list comprehension is a good way to do this: `[func(text) for func in functions]`
+    properties = [StringOperations.remove_vowels(text), StringOperations.word_reversal(text), StringOperations.remove_duplicates(text)]
+    return properties
+
+# EDIT: Change the function definition to accept a fourth parameter called `functions`. This will be the list of functions to apply.
+def multi_apply(data, col, colnames):
+    # EDIT: Modify the call to the `apply` method below.
+    # The `calculate_all_properties` function now needs the `functions` list to be passed to it.
+    # You can use a lambda function to pass both the text from the column and the `functions` list.
+    # The lambda function should look like this: `lambda x: calculate_all_properties(x, functions)`, where `x` will be each piece of text from the `data[col]`.
+    properties = data[col].apply(calculate_all_properties)
+    properties_columns = pd.DataFrame(properties.tolist(), columns=colnames)
+    return pd.concat([data, properties_columns], axis=1)
+
+===============
+```py
+import pandas as pd
+
+class StringOperations:
+    """A class containing a series of string operations"""
+
+    def remove_duplicates(text):
+        """Returns the text with only unique characters"""
+        unique = []
+        for char in text:
+            if char not in unique:
+                unique.append(char)
+        return ''.join(unique)
+    
+    def word_reversal(text):
+        """Returns the text with words reversed"""
+        sentences = text.split(' ')
+        return ' '.join(reversed(sentences))
+    
+    def remove_vowels(text):
+        """Returnes the text with vowels removed"""
+        vowels = 'aeiou'
+        return ''.join(char for char in text if char.lower() not in vowels)
+    
+# EDIT: Change the function definition to accept a second parameter called `functions`. This parameter will be a list of functions.
+def calculate_all_properties(text):
+    # EDIT: Replace the hardcoded list below.
+    # Instead, create a new list by applying each function from the `functions` parameter to the `text` parameter.
+    # For example, if you have a function `func` in the `functions` list, you should call `func(text)` and collect the result.
+    # A list comprehension is a good way to do this: `[func(text) for func in functions]`
+    properties = [StringOperations.remove_vowels(text), StringOperations.word_reversal(text), StringOperations.remove_duplicates(text)]
+    return properties
+
+# EDIT: Change the function definition to accept a fourth parameter called `functions`. This will be the list of functions to apply.
+def multi_apply(data, col, colnames):
+    # EDIT: Modify the call to the `apply` method below.
+    # The `calculate_all_properties` function now needs the `functions` list to be passed to it.
+    # You can use a lambda function to pass both the text from the column and the `functions` list.
+    # The lambda function should look like this: `lambda x: calculate_all_properties(x, functions)`, where `x` will be each piece of text from the `data[col]`.
+    properties = data[col].apply(calculate_all_properties)
+    properties_columns = pd.DataFrame(properties.tolist(), columns=colnames)
+    return pd.concat([data, properties_columns], axis=1)
+```

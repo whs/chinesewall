@@ -1,0 +1,31 @@
+[1189, 1198]
+# EDIT: Define a new function called `concatenate_nums` that accepts one argument, `message`.
+# This function will reorder the words in the `message` string.
+# 1. Split the `message` string by spaces to get a list of words. For example, "I love you" becomes ["I", "love", "you"]. Store this list in a variable.
+# 2. The list of words represents a sentence in Subject-Verb-Object (SVO) order. The subject is at index 0, the verb is at index 1, and the object is at index 2.
+# 3. Create a new string by rearranging the words into Object-Verb-Subject (OVS) order. This means the word at index 2, followed by a space, then the word at index 1, a space, and finally the word at index 0.
+# 4. Return this new reordered string.
+
+def format_string(name1, name2, message):
+    # EDIT: Call the `concatenate_nums` function with the `message` as its argument.
+    # Store the result (the reordered message) in a new variable.
+    # EDIT: In the line below, replace `message` with the new variable that holds the reordered message.
+    formattedString = f'Hello, {name1.lower().capitalize()}! You have a message from {name2.lower().capitalize()}. The message is: {message}'
+    return formattedString
+
+===============
+```py
+# EDIT: Define a new function called `concatenate_nums` that accepts one argument, `message`.
+# This function will reorder the words in the `message` string.
+# 1. Split the `message` string by spaces to get a list of words. For example, "I love you" becomes ["I", "love", "you"]. Store this list in a variable.
+# 2. The list of words represents a sentence in Subject-Verb-Object (SVO) order. The subject is at index 0, the verb is at index 1, and the object is at index 2.
+# 3. Create a new string by rearranging the words into Object-Verb-Subject (OVS) order. This means the word at index 2, followed by a space, then the word at index 1, a space, and finally the word at index 0.
+# 4. Return this new reordered string.
+
+def format_string(name1, name2, message):
+    # EDIT: Call the `concatenate_nums` function with the `message` as its argument.
+    # Store the result (the reordered message) in a new variable.
+    # EDIT: In the line below, replace `message` with the new variable that holds the reordered message.
+    formattedString = f'Hello, {name1.lower().capitalize()}! You have a message from {name2.lower().capitalize()}. The message is: {message}'
+    return formattedString
+```

@@ -1,0 +1,45 @@
+[864, 873]
+class CSVParser:
+    def __init__(self, csv: str):
+        self.csv = csv
+
+    def contents(self) -> list[list[str]]:
+        lines = self.csv.split("\n")
+        output = []
+        for line in lines:
+            output.append(line.split(","))
+        return output
+
+    # EDIT: Define a new function here called `header`.
+    # It should take `self` as its only argument.
+    # It should also have a return type hint, indicating that it returns a list of strings (`list[str]`).
+    
+        # EDIT: The goal of this function is to return the first row of the CSV.
+        # You can get all the rows by calling the `self.contents()` method, which returns a list of lists.
+        
+        # EDIT: The header is the first item in the list returned by `self.contents()`.
+        # Return the first element from that list. The first element of a list is at index 0.
+
+===============
+```py
+class CSVParser:
+    def __init__(self, csv: str):
+        self.csv = csv
+
+    def contents(self) -> list[list[str]]:
+        lines = self.csv.split("\n")
+        output = []
+        for line in lines:
+            output.append(line.split(","))
+        return output
+
+    # EDIT: Define a new function here called `header`.
+    # It should take `self` as its only argument.
+    # It should also have a return type hint, indicating that it returns a list of strings (`list[str]`).
+    
+        # EDIT: The goal of this function is to return the first row of the CSV.
+        # You can get all the rows by calling the `self.contents()` method, which returns a list of lists.
+        
+        # EDIT: The header is the first item in the list returned by `self.contents()`.
+        # Return the first element from that list. The first element of a list is at index 0.
+```

@@ -1,0 +1,61 @@
+[1210, 1219]
+import numpy as np
+
+# EDIT: Add a new parameter to the function definition called `padding`. It should be placed after `kernel` and have a default value of 0.
+def cross_correlation(image, kernel):
+
+    # EDIT: Before getting the image shape, insert a new line to apply padding to the `image`.
+    # Re-assign the `image` variable to the result of calling the `np.pad` function.
+    # The `np.pad` function should be called with three arguments:
+    # 1. The `image` array to pad.
+    # 2. The `pad_width` argument, which should be set to `((padding, padding), (padding, padding))`. This specifies how much to pad on the top/bottom and left/right of the image using the `padding` variable.
+    # 3. The `mode` argument, which should be set to the string `'constant'` to pad with a constant value (which is 0 by default).
+    ih, iw = image.shape
+    kh, kw = kernel.shape
+
+    oh = ih - kh + 1
+    ow = iw - kw + 1
+
+    output = np.zeros((oh, ow))
+
+    for i in range(oh):
+        for j in range(ow):
+
+            region = image[i:i+kh, j:j+kw]
+            element_wise_product = region * kernel
+            output_value = np.sum(element_wise_product)
+            output[i, j] = output_value
+
+    return output
+
+===============
+```py
+import numpy as np
+
+# EDIT: Add a new parameter to the function definition called `padding`. It should be placed after `kernel` and have a default value of 0.
+def cross_correlation(image, kernel):
+
+    # EDIT: Before getting the image shape, insert a new line to apply padding to the `image`.
+    # Re-assign the `image` variable to the result of calling the `np.pad` function.
+    # The `np.pad` function should be called with three arguments:
+    # 1. The `image` array to pad.
+    # 2. The `pad_width` argument, which should be set to `((padding, padding), (padding, padding))`. This specifies how much to pad on the top/bottom and left/right of the image using the `padding` variable.
+    # 3. The `mode` argument, which should be set to the string `'constant'` to pad with a constant value (which is 0 by default).
+    ih, iw = image.shape
+    kh, kw = kernel.shape
+
+    oh = ih - kh + 1
+    ow = iw - kw + 1
+
+    output = np.zeros((oh, ow))
+
+    for i in range(oh):
+        for j in range(ow):
+
+            region = image[i:i+kh, j:j+kw]
+            element_wise_product = region * kernel
+            output_value = np.sum(element_wise_product)
+            output[i, j] = output_value
+
+    return output
+```

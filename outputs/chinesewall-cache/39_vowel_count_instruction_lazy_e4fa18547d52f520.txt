@@ -1,0 +1,53 @@
+[1254, 1263]
+import string
+
+def prepare_line(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line
+
+def vowel_count(line):
+    vowel_count = 0
+    # EDIT: Before counting vowels, we need to handle the diphthongs.
+    # First, let's get the cleaned-up version of the line by calling `prepare_line(line)` and storing it in a new variable, for example, `processed_line`.
+    
+    # EDIT: Now, create a list of strings. Each string in the list should be one of the diphthongs to ignore: "ae", "oe", "ei", "ea", "ia", "io", "aea".
+    
+    # EDIT: Loop through each diphthong in the list you just created.
+    # EDIT: Inside the loop, replace all occurrences of the current diphthong in your `processed_line` variable with a non-vowel character (like a single "x"). This ensures the letters in the diphthong are not counted as individual vowels.
+    
+    # EDIT: Modify the for loop below. Instead of iterating over `prepare_line(line)`, it should now iterate over your new `processed_line` variable, which has had the diphthongs removed.
+    for letter in prepare_line(line):
+        if letter in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+
+===============
+```py
+import string
+
+def prepare_line(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line
+
+def vowel_count(line):
+    vowel_count = 0
+    # EDIT: Before counting vowels, we need to handle the diphthongs.
+    # First, let's get the cleaned-up version of the line by calling `prepare_line(line)` and storing it in a new variable, for example, `processed_line`.
+    
+    # EDIT: Now, create a list of strings. Each string in the list should be one of the diphthongs to ignore: "ae", "oe", "ei", "ea", "ia", "io", "aea".
+    
+    # EDIT: Loop through each diphthong in the list you just created.
+    # EDIT: Inside the loop, replace all occurrences of the current diphthong in your `processed_line` variable with a non-vowel character (like a single "x"). This ensures the letters in the diphthong are not counted as individual vowels.
+    
+    # EDIT: Modify the for loop below. Instead of iterating over `prepare_line(line)`, it should now iterate over your new `processed_line` variable, which has had the diphthongs removed.
+    for letter in prepare_line(line):
+        if letter in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+```

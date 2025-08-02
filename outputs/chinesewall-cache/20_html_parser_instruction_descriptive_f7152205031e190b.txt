@@ -1,0 +1,203 @@
+[4671, 4680]
+from typing import List, Union
+import re
+
+
+class HTMLElement:
+    # EDIT: Add a new parameter `attributes` to the `__init__` method signature.
+    # It should be a dictionary. Give it a default value of `None`.
+    def __init__(self, name, content: List[Union[str, 'HTMLElement']]):
+        self.name = name
+        self.content = content
+        # EDIT: Initialize an instance variable `self.attributes`.
+        # If the `attributes` parameter passed to `__init__` is `None`,
+        # `self.attributes` should be an empty dictionary. Otherwise, it should be the
+        # passed `attributes` dictionary.
+
+    def __str__(self):
+        # EDIT: Modify this method to include the attributes in the opening tag.
+        # 1. Create a variable, for example `attribute_string`, to hold the formatted attributes.
+        # 2. Check if `self.attributes` has any items.
+        # 3. If it does, build a string from the attributes. Loop through each key-value pair in `self.attributes`.
+        #    For each pair, create a string like ` key="value"`. Note the leading space.
+        #    Concatenate all these strings together.
+        #    For example, for `{'id': 'my-id', 'class': 'container'}` it should produce `' id="my-id" class="container"'`.
+        # 4. If `self.attributes` is empty, `attribute_string` should be an empty string.
+        # 5. Insert `attribute_string` into the f-string below, right after `{self.name}`.
+        return f"<{self.name}>{''.join(str(c) for c in self.content)}</{self.name}>"
+
+    def __repr__(self):
+        return f"HTMLElement(name={self.name}, content={repr(self.content)})"
+
+
+def parse(content: str) -> List[HTMLElement]:
+    """
+    Parses the given HTML content and returns a list of HTMLElements.
+    """
+    tokens = tokenize(content)
+    stack = []
+    result = []
+
+    for token in tokens:
+        if is_start_tag(token):
+            # EDIT: Update this block to handle attributes in start tags.
+            # 1. Get the tag name from the token by calling `get_tag_name(token)`.
+            # 2. Get the attributes dictionary from the token by calling the new `get_attributes(token)` helper function (that you will create below).
+            # 3. When creating the `HTMLElement` instance, pass the attributes dictionary to its constructor.
+            stack.append(HTMLElement(get_tag_name(token), []))
+        elif is_end_tag(token):
+            element = stack.pop()
+            if stack:
+                stack[-1].content.append(element)
+            else:
+                result.append(element)
+        else:
+            if stack:
+                stack[-1].content.append(token)
+
+    return result
+
+
+def tokenize(content: str) -> List[str]:
+    # This regex splits the content into tags and text.
+    # It looks for anything that starts with '<' and ends with '>', and treats it as a tag.
+    # Everything else is treated as text.
+    return re.findall(r'<[^>]+>|[^<]+', content)
+
+
+def is_start_tag(token: str) -> bool:
+    # A start tag starts with '<' but does not start with '</'.
+    return token.startswith('<') and not token.startswith('</')
+
+
+def is_end_tag(token: str) -> bool:
+    # An end tag starts with '</'.
+    return token.startswith('</')
+
+
+# EDIT: Create a new helper function here called `get_attributes`.
+# This function will extract key-value attributes from a tag string.
+# 1. Define the function `get_attributes` which takes one string argument, `token`. It should return a dictionary.
+# 2. Inside the function, use the `re.findall` method to find all attribute pairs.
+#    - The regular expression should find a word, an equals sign, and a value in double quotes.
+#    - A suitable regex is: `r'(\w+)="([^"]*)"'`.
+#      - `(\w+)` captures the attribute name.
+#      - `="` matches the equals sign and opening quote.
+#      - `([^"]*)` captures the attribute value, allowing for spaces inside.
+#      - `"` matches the closing quote.
+# 3. `re.findall` will return a list of (key, value) tuples.
+# 4. Convert this list of tuples into a dictionary and return it. For example, `dict([('id', 'main')])` becomes `{'id': 'main'}`.
+
+
+def get_tag_name(token: str) -> str:
+    # Extracts the tag name from a token.
+    # EDIT: Modify this function to correctly get the tag name even if attributes are present.
+    # The tag name is the first word after the opening '<'.
+    # 1. Remove the '<' and '>' characters from the start and end of the `token`.
+    # 2. Split the resulting string by spaces.
+    # 3. The tag name is the first element of the list produced by the split. Return this element.
+    #    For example, for a token '<div id="main">', this should return 'div'.
+    return token.strip('</>')
+
+===============
+```py
+from typing import List, Union
+import re
+
+
+class HTMLElement:
+    # EDIT: Add a new parameter `attributes` to the `__init__` method signature.
+    # It should be a dictionary. Give it a default value of `None`.
+    def __init__(self, name, content: List[Union[str, 'HTMLElement']]):
+        self.name = name
+        self.content = content
+        # EDIT: Initialize an instance variable `self.attributes`.
+        # If the `attributes` parameter passed to `__init__` is `None`,
+        # `self.attributes` should be an empty dictionary. Otherwise, it should be the
+        # passed `attributes` dictionary.
+
+    def __str__(self):
+        # EDIT: Modify this method to include the attributes in the opening tag.
+        # 1. Create a variable, for example `attribute_string`, to hold the formatted attributes.
+        # 2. Check if `self.attributes` has any items.
+        # 3. If it does, build a string from the attributes. Loop through each key-value pair in `self.attributes`.
+        #    For each pair, create a string like ` key="value"`. Note the leading space.
+        #    Concatenate all these strings together.
+        #    For example, for `{'id': 'my-id', 'class': 'container'}` it should produce `' id="my-id" class="container"'`.
+        # 4. If `self.attributes` is empty, `attribute_string` should be an empty string.
+        # 5. Insert `attribute_string` into the f-string below, right after `{self.name}`.
+        return f"<{self.name}>{''.join(str(c) for c in self.content)}</{self.name}>"
+
+    def __repr__(self):
+        return f"HTMLElement(name={self.name}, content={repr(self.content)})"
+
+
+def parse(content: str) -> List[HTMLElement]:
+    """
+    Parses the given HTML content and returns a list of HTMLElements.
+    """
+    tokens = tokenize(content)
+    stack = []
+    result = []
+
+    for token in tokens:
+        if is_start_tag(token):
+            # EDIT: Update this block to handle attributes in start tags.
+            # 1. Get the tag name from the token by calling `get_tag_name(token)`.
+            # 2. Get the attributes dictionary from the token by calling the new `get_attributes(token)` helper function (that you will create below).
+            # 3. When creating the `HTMLElement` instance, pass the attributes dictionary to its constructor.
+            stack.append(HTMLElement(get_tag_name(token), []))
+        elif is_end_tag(token):
+            element = stack.pop()
+            if stack:
+                stack[-1].content.append(element)
+            else:
+                result.append(element)
+        else:
+            if stack:
+                stack[-1].content.append(token)
+
+    return result
+
+
+def tokenize(content: str) -> List[str]:
+    # This regex splits the content into tags and text.
+    # It looks for anything that starts with '<' and ends with '>', and treats it as a tag.
+    # Everything else is treated as text.
+    return re.findall(r'<[^>]+>|[^<]+', content)
+
+
+def is_start_tag(token: str) -> bool:
+    # A start tag starts with '<' but does not start with '</'.
+    return token.startswith('<') and not token.startswith('</')
+
+
+def is_end_tag(token: str) -> bool:
+    # An end tag starts with '</'.
+    return token.startswith('</')
+
+
+# EDIT: Create a new helper function here called `get_attributes`.
+# This function will extract key-value attributes from a tag string.
+# 1. Define the function `get_attributes` which takes one string argument, `token`. It should return a dictionary.
+# 2. Inside the function, use the `re.findall` method to find all attribute pairs.
+#    - The regular expression should find a word, an equals sign, and a value in double quotes.
+#    - A suitable regex is: `r'(\w+)="([^"]*)"'`.
+#      - `(\w+)` captures the attribute name.
+#      - `="` matches the equals sign and opening quote.
+#      - `([^"]*)` captures the attribute value, allowing for spaces inside.
+#      - `"` matches the closing quote.
+# 3. `re.findall` will return a list of (key, value) tuples.
+# 4. Convert this list of tuples into a dictionary and return it. For example, `dict([('id', 'main')])` becomes `{'id': 'main'}`.
+
+
+def get_tag_name(token: str) -> str:
+    # Extracts the tag name from a token.
+    # EDIT: Modify this function to correctly get the tag name even if attributes are present.
+    # The tag name is the first word after the opening '<'.
+    # 1. Remove the '<' and '>' characters from the start and end of the `token`.
+    # 2. Split the resulting string by spaces.
+    # 3. The tag name is the first element of the list produced by the split. Return this element.
+    #    For example, for a token '<div id="main">', this should return 'div'.
+    return token.strip('</>')
+```

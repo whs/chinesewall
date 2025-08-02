@@ -1,0 +1,131 @@
+[3658, 3667]
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def vowel_count(line):
+    vowel_count = 0
+    for c in line:
+        if c in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+
+def syllable_count(line):
+    syllable_count = 0
+
+    assert type(line) == str
+    line = prepare_string(line)
+
+    # EDIT: To find the syllable count, we will first count all the vowels, then subtract the number of "combos".
+    # A "combo" is when adjacent words cause two vowels to be pronounced as a single syllable.
+    # First, let's create a variable to keep track of the number of combos. Initialize `combo_count` to 0.
+
+    # EDIT: To find combos, we need to look at adjacent words. First, split the `line` into a list of `words`. The `split()` string method will be useful here.
+
+    # EDIT: Now, loop through the `words` list to compare each word with the one that follows it.
+    # A `for` loop using an index `i` from 0 to the length of the `words` list minus 2 will let you access `words[i]` and `words[i+1]` safely.
+
+        # EDIT: Inside the loop, for easier reading, assign the current word (at index `i`) to a variable `word1` and the next word (at index `i+1`) to `word2`.
+
+        # EDIT: Let's define the vowels we are looking for. Create a string variable `vowels` and assign it "aeiouy".
+
+        # EDIT: We need to check several conditions to see if a combo exists. Let's create boolean variables (flags) to store the results of these checks.
+        # IMPORTANT: When checking characters at a specific position in a word (e.g., the second character), you must first check if the word is long enough to avoid an error.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel`. This should be true if `word1` is not empty and its last character is a vowel.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel_m`. This should be true if `word1` has at least two characters, its last character is 'm', and the character before it is a vowel.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel_h`. This should be true if `word1` has at least two characters, its last character is 'h', and the character before it is a vowel.
+
+        # EDIT: Create a boolean flag `word2_starts_with_vowel`. This should be true if `word2` is not empty and its first character is a vowel.
+
+        # EDIT: Create a boolean flag `word2_starts_with_h_vowel`. This should be true if `word2` has at least two characters, its first character is 'h', and its second character is a vowel.
+
+        # EDIT: Now, use an `if` statement to check if any of the combo patterns match using the boolean flags you just created.
+        # A combo occurs if any of the following five conditions is true:
+        # 1. `word1_ends_in_vowel` and `word2_starts_with_vowel`
+        # 2. `word1_ends_in_vowel` and `word2_starts_with_h_vowel`
+        # 3. `word1_ends_in_vowel_m` and `word2_starts_with_vowel`
+        # 4. `word1_ends_in_vowel_m` and `word2_starts_with_h_vowel`
+        # 5. `word1_ends_in_vowel_h` and `word2_starts_with_vowel`
+        # If a combo is found, increment `combo_count` by 1.
+
+    # EDIT: The final syllable count is the total number of vowels minus the number of combos.
+    # The instruction "syllable_count increases by the number of 'combo'" appears to be misleading based on the examples.
+    # Change the line below to calculate `syllable_count` as the value from `vowel_count(line)` minus `combo_count`.
+    syllable_count += vowel_count(line)
+
+    return syllable_count
+
+===============
+```py
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def vowel_count(line):
+    vowel_count = 0
+    for c in line:
+        if c in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+
+def syllable_count(line):
+    syllable_count = 0
+
+    assert type(line) == str
+    line = prepare_string(line)
+
+    # EDIT: To find the syllable count, we will first count all the vowels, then subtract the number of "combos".
+    # A "combo" is when adjacent words cause two vowels to be pronounced as a single syllable.
+    # First, let's create a variable to keep track of the number of combos. Initialize `combo_count` to 0.
+
+    # EDIT: To find combos, we need to look at adjacent words. First, split the `line` into a list of `words`. The `split()` string method will be useful here.
+
+    # EDIT: Now, loop through the `words` list to compare each word with the one that follows it.
+    # A `for` loop using an index `i` from 0 to the length of the `words` list minus 2 will let you access `words[i]` and `words[i+1]` safely.
+
+        # EDIT: Inside the loop, for easier reading, assign the current word (at index `i`) to a variable `word1` and the next word (at index `i+1`) to `word2`.
+
+        # EDIT: Let's define the vowels we are looking for. Create a string variable `vowels` and assign it "aeiouy".
+
+        # EDIT: We need to check several conditions to see if a combo exists. Let's create boolean variables (flags) to store the results of these checks.
+        # IMPORTANT: When checking characters at a specific position in a word (e.g., the second character), you must first check if the word is long enough to avoid an error.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel`. This should be true if `word1` is not empty and its last character is a vowel.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel_m`. This should be true if `word1` has at least two characters, its last character is 'm', and the character before it is a vowel.
+
+        # EDIT: Create a boolean flag `word1_ends_in_vowel_h`. This should be true if `word1` has at least two characters, its last character is 'h', and the character before it is a vowel.
+
+        # EDIT: Create a boolean flag `word2_starts_with_vowel`. This should be true if `word2` is not empty and its first character is a vowel.
+
+        # EDIT: Create a boolean flag `word2_starts_with_h_vowel`. This should be true if `word2` has at least two characters, its first character is 'h', and its second character is a vowel.
+
+        # EDIT: Now, use an `if` statement to check if any of the combo patterns match using the boolean flags you just created.
+        # A combo occurs if any of the following five conditions is true:
+        # 1. `word1_ends_in_vowel` and `word2_starts_with_vowel`
+        # 2. `word1_ends_in_vowel` and `word2_starts_with_h_vowel`
+        # 3. `word1_ends_in_vowel_m` and `word2_starts_with_vowel`
+        # 4. `word1_ends_in_vowel_m` and `word2_starts_with_h_vowel`
+        # 5. `word1_ends_in_vowel_h` and `word2_starts_with_vowel`
+        # If a combo is found, increment `combo_count` by 1.
+
+    # EDIT: The final syllable count is the total number of vowels minus the number of combos.
+    # The instruction "syllable_count increases by the number of 'combo'" appears to be misleading based on the examples.
+    # Change the line below to calculate `syllable_count` as the value from `vowel_count(line)` minus `combo_count`.
+    syllable_count += vowel_count(line)
+
+    return syllable_count
+```

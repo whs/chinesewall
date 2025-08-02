@@ -1,0 +1,61 @@
+[1434, 1443]
+class Probability:
+
+    def sample_mean(self, X):
+        """Computes the sample mean of the data"""
+        return sum(X) / len(X)
+
+    def variance(self, X):
+        """Computes the variance of the data"""
+        mean = sum(X) / len(X)
+        return sum((x - mean) ** 2 for x in X) / len(X)
+
+    # EDIT: Rename this function to `covariance`.
+    # EDIT: The function's parameters should be changed to accept, in order:
+    # 1. `corr`: The correlation value.
+    # 2. `var_x`: The variance of X.
+    # 3. `var_y`: The variance of Y.
+    def correlation(self, cov, var_x, var_y):
+        # EDIT: Update the docstring to describe that the function now computes the covariance
+        # using the correlation, variance of X, and variance of Y.
+        """Computes the correlation of the data based on its Var(X). Var(Y) and Cov(X, Y)"""
+        # EDIT: The standard deviation is the square root of the variance.
+        # This line correctly calculates the standard deviation of Y. Keep it as is.
+        std_y = var_y ** 0.5
+        # EDIT: This line correctly calculates the standard deviation of X. Keep it as is.
+        std_x = var_x ** 0.5
+        # EDIT: To calculate the covariance, you need to multiply the correlation by the standard deviation of X and the standard deviation of Y.
+        # Replace the current division operation with a multiplication of `corr`, `std_x`, and `std_y`.
+        return cov / (std_x * std_y)
+
+===============
+```py
+class Probability:
+
+    def sample_mean(self, X):
+        """Computes the sample mean of the data"""
+        return sum(X) / len(X)
+
+    def variance(self, X):
+        """Computes the variance of the data"""
+        mean = sum(X) / len(X)
+        return sum((x - mean) ** 2 for x in X) / len(X)
+
+    # EDIT: Rename this function to `covariance`.
+    # EDIT: The function's parameters should be changed to accept, in order:
+    # 1. `corr`: The correlation value.
+    # 2. `var_x`: The variance of X.
+    # 3. `var_y`: The variance of Y.
+    def correlation(self, cov, var_x, var_y):
+        # EDIT: Update the docstring to describe that the function now computes the covariance
+        # using the correlation, variance of X, and variance of Y.
+        """Computes the correlation of the data based on its Var(X). Var(Y) and Cov(X, Y)"""
+        # EDIT: The standard deviation is the square root of the variance.
+        # This line correctly calculates the standard deviation of Y. Keep it as is.
+        std_y = var_y ** 0.5
+        # EDIT: This line correctly calculates the standard deviation of X. Keep it as is.
+        std_x = var_x ** 0.5
+        # EDIT: To calculate the covariance, you need to multiply the correlation by the standard deviation of X and the standard deviation of Y.
+        # Replace the current division operation with a multiplication of `corr`, `std_x`, and `std_y`.
+        return cov / (std_x * std_y)
+```

@@ -1,0 +1,115 @@
+[2215, 2224]
+from abc import ABC, abstractmethod
+
+
+class LinkedList:
+    @abstractmethod
+    def sort(self):
+        pass
+    @abstractmethod
+    def remove(self, element):
+        pass
+    @abstractmethod
+    def insert(self, element):
+        pass
+
+class Cons(LinkedList):
+    def __init__(self, first, rest: LinkedList):
+        self.first = first
+        self.rest = rest
+    def sort(self):
+        return self.rest.sort().insert(self.first)
+
+    def insert(self, element):
+        if element < self.first:
+            return Cons(element, self)
+        else:
+            return Cons(self.first, self.rest.insert(element))
+
+    # EDIT: Add a new method here called `remove` that takes `self` and `element` as arguments.
+    # This method will implement the logic for removing an element from a non-empty list.
+    # It should return a new list.
+    #
+    # First, check if the element to remove is the `first` element of this list (`self.first`).
+    # If `self.first` is equal to `element`:
+    #   You've found the element. The new list is simply the rest of the list. Return `self.rest`.
+    #
+    # Otherwise (if `self.first` is not the element to remove):
+    #   The element might be in the rest of the list. You need to build a new list.
+    #   The new list will have the same `first` element as the current one (`self.first`).
+    #   The `rest` of the new list will be the result of recursively calling `remove(element)` on the current rest (`self.rest`).
+    #   So, you should return a new `Cons` object like this: `Cons(self.first, self.rest.remove(element))`.
+
+
+class Empty(LinkedList):
+    def __init__(self):
+        pass
+    def sort(self):
+        return self
+    def insert(self, element):
+        return Cons(element, self)
+    # EDIT: Add a new method here called `remove` that takes `self` and `element` as arguments.
+    # This method handles removing an element from an empty list.
+    # Since an empty list has no elements, the `element` to be removed will never be found.
+    # The instructions state that if the element is not in the list, you should return an identical list.
+    # For an `Empty` list, an identical list is just itself.
+    # Therefore, this method should simply return `self`.
+
+===============
+```py
+from abc import ABC, abstractmethod
+
+
+class LinkedList:
+    @abstractmethod
+    def sort(self):
+        pass
+    @abstractmethod
+    def remove(self, element):
+        pass
+    @abstractmethod
+    def insert(self, element):
+        pass
+
+class Cons(LinkedList):
+    def __init__(self, first, rest: LinkedList):
+        self.first = first
+        self.rest = rest
+    def sort(self):
+        return self.rest.sort().insert(self.first)
+
+    def insert(self, element):
+        if element < self.first:
+            return Cons(element, self)
+        else:
+            return Cons(self.first, self.rest.insert(element))
+
+    # EDIT: Add a new method here called `remove` that takes `self` and `element` as arguments.
+    # This method will implement the logic for removing an element from a non-empty list.
+    # It should return a new list.
+    #
+    # First, check if the element to remove is the `first` element of this list (`self.first`).
+    # If `self.first` is equal to `element`:
+    #   You've found the element. The new list is simply the rest of the list. Return `self.rest`.
+    #
+    # Otherwise (if `self.first` is not the element to remove):
+    #   The element might be in the rest of the list. You need to build a new list.
+    #   The new list will have the same `first` element as the current one (`self.first`).
+    #   The `rest` of the new list will be the result of recursively calling `remove(element)` on the current rest (`self.rest`).
+    #   So, you should return a new `Cons` object like this: `Cons(self.first, self.rest.remove(element))`.
+
+
+class Empty(LinkedList):
+    def __init__(self):
+        pass
+    def sort(self):
+        return self
+    def insert(self, element):
+        return Cons(element, self)
+    # EDIT: Add a new method here called `remove` that takes `self` and `element` as arguments.
+    # This method handles removing an element from an empty list.
+    # Since an empty list has no elements, the `element` to be removed will never be found.
+    # The instructions state that if the element is not in the list, you should return an identical list.
+    # For an `Empty` list, an identical list is just itself.
+    # Therefore, this method should simply return `self`.
+```

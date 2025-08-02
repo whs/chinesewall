@@ -1,0 +1,53 @@
+[1214, 1223]
+from typing import List
+
+
+def binary_search(lst: List[int], x: int) -> int:
+    low = 0
+    high = len(lst) - 1
+    mid = 0
+    # EDIT: Create a new variable, for example `result_index`, and initialize it to -1. This variable will be used to store the index of the first occurrence of `x` that we find.
+    while low <= high:
+        mid = (high + low) // 2
+        if lst[mid] < x:
+            low = mid + 1
+        elif lst[mid] > x:
+            high = mid - 1
+        else:
+            # EDIT: You have found an occurrence of `x` at index `mid`.
+            # Instead of returning immediately, we need to check for earlier occurrences.
+            # 1. Save the current index `mid` into your `result_index` variable. This is now our best-found answer.
+            # 2. To look for an even earlier occurrence, continue the search on the left side of `mid`.
+            #    Do this by setting `high` to `mid - 1`.
+            # 3. Finally, remove the `return mid` statement below, so the loop can continue.
+            return mid
+    # EDIT: After the loop has finished, return your `result_index` variable. This will either be -1 if `x` was not found, or the index of the first occurrence of `x`.
+    return -1
+
+===============
+```py
+from typing import List
+
+
+def binary_search(lst: List[int], x: int) -> int:
+    low = 0
+    high = len(lst) - 1
+    mid = 0
+    # EDIT: Create a new variable, for example `result_index`, and initialize it to -1. This variable will be used to store the index of the first occurrence of `x` that we find.
+    while low <= high:
+        mid = (high + low) // 2
+        if lst[mid] < x:
+            low = mid + 1
+        elif lst[mid] > x:
+            high = mid - 1
+        else:
+            # EDIT: You have found an occurrence of `x` at index `mid`.
+            # Instead of returning immediately, we need to check for earlier occurrences.
+            # 1. Save the current index `mid` into your `result_index` variable. This is now our best-found answer.
+            # 2. To look for an even earlier occurrence, continue the search on the left side of `mid`.
+            #    Do this by setting `high` to `mid - 1`.
+            # 3. Finally, remove the `return mid` statement below, so the loop can continue.
+            return mid
+    # EDIT: After the loop has finished, return your `result_index` variable. This will either be -1 if `x` was not found, or the index of the first occurrence of `x`.
+    return -1
+```

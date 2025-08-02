@@ -1,0 +1,133 @@
+[3737, 3746]
+from abc import ABC, abstractmethod
+# EDIT: Import the `math` module to use mathematical functions like `sqrt`.
+
+class Vector(ABC):
+    def __init__(self, *args: int):
+        self.vals = args
+
+    @abstractmethod
+    def manhattan_distance(other) -> float:
+        pass
+
+    @abstractmethod
+    def cosine_similarity(other) -> float:
+        pass
+
+# EDIT: Create a new class named `MyVector` that inherits from the `Vector` class.
+# This new class will provide actual code for the abstract methods from `Vector`.
+
+    # EDIT: Implement the `manhattan_distance` method.
+    # It should accept one argument `other`, which is another vector object.
+    # Add a type hint to `other` specifying it is a `Vector` object.
+    # The method should return a `float`.
+
+        # EDIT: First, check if the number of elements in `self.vals` is different from the number of elements in `other.vals`.
+        # You can get the number of elements using the `len()` function.
+        # If they are not the same, raise a `ValueError` with the message "Vectors must have the same dimension".
+
+        # EDIT: Initialize a variable, for example `total_distance`, to 0.0. This variable will accumulate the sum of the differences.
+
+        # EDIT: Use a loop to go through the elements of both `self.vals` and `other.vals` at the same time. The `zip` function is helpful here.
+        # For each pair of values (one from `self.vals`, one from `other.vals`):
+        # 1. Calculate the absolute difference between the pair of values. The `abs()` function will do this.
+        # 2. Add this difference to your `total_distance` variable.
+
+        # EDIT: After the loop is complete, return the final `total_distance`.
+
+    # EDIT: Implement the `cosine_similarity` method.
+    # It should also accept one argument `other` of type `Vector`.
+    # The method should return a `float`.
+
+        # EDIT: Just like in the previous method, check if the number of elements in `self.vals` and `other.vals` are the same.
+        # If not, raise a `ValueError` with the message "Vectors must have the same dimension".
+
+        # EDIT: To calculate cosine similarity, you need three values: the dot product, the magnitude of `self`, and the magnitude of `other`.
+        # Let's calculate the dot product first. Initialize a variable, for example `dot_product`, to 0.
+        # Loop through `self.vals` and `other.vals` simultaneously using `zip`.
+        # In each iteration, multiply the pair of values and add the result to `dot_product`.
+
+        # EDIT: Next, calculate the magnitude of `self`.
+        # Initialize a variable, for example `self_sum_of_squares`, to 0.
+        # Loop through each value in `self.vals`. In each iteration, square the value (i.e., `value * value`) and add it to `self_sum_of_squares`.
+        # After the loop, calculate the magnitude by taking the square root of `self_sum_of_squares`. Use `math.sqrt()` for this. Store it in a variable like `self_magnitude`.
+
+        # EDIT: Now, do the same to calculate the magnitude of `other`.
+        # Initialize `other_sum_of_squares` to 0, loop through `other.vals` to sum the squares of its values, and then take the square root to get `other_magnitude`.
+
+        # EDIT: Check if either `self_magnitude` or `other_magnitude` is zero.
+        # If one of them is 0, it's impossible to divide by it.
+        # Raise a `ValueError` with the message "Cannot compute cosine similarity with a zero-magnitude vector".
+
+        # EDIT: Finally, calculate the cosine similarity by dividing the `dot_product` by the product of `self_magnitude` and `other_magnitude`.
+        # The formula is: `dot_product / (self_magnitude * other_magnitude)`.
+
+        # EDIT: Return the result of the calculation.
+
+===============
+```py
+from abc import ABC, abstractmethod
+# EDIT: Import the `math` module to use mathematical functions like `sqrt`.
+
+class Vector(ABC):
+    def __init__(self, *args: int):
+        self.vals = args
+
+    @abstractmethod
+    def manhattan_distance(other) -> float:
+        pass
+
+    @abstractmethod
+    def cosine_similarity(other) -> float:
+        pass
+
+# EDIT: Create a new class named `MyVector` that inherits from the `Vector` class.
+# This new class will provide actual code for the abstract methods from `Vector`.
+
+    # EDIT: Implement the `manhattan_distance` method.
+    # It should accept one argument `other`, which is another vector object.
+    # Add a type hint to `other` specifying it is a `Vector` object.
+    # The method should return a `float`.
+
+        # EDIT: First, check if the number of elements in `self.vals` is different from the number of elements in `other.vals`.
+        # You can get the number of elements using the `len()` function.
+        # If they are not the same, raise a `ValueError` with the message "Vectors must have the same dimension".
+
+        # EDIT: Initialize a variable, for example `total_distance`, to 0.0. This variable will accumulate the sum of the differences.
+
+        # EDIT: Use a loop to go through the elements of both `self.vals` and `other.vals` at the same time. The `zip` function is helpful here.
+        # For each pair of values (one from `self.vals`, one from `other.vals`):
+        # 1. Calculate the absolute difference between the pair of values. The `abs()` function will do this.
+        # 2. Add this difference to your `total_distance` variable.
+
+        # EDIT: After the loop is complete, return the final `total_distance`.
+
+    # EDIT: Implement the `cosine_similarity` method.
+    # It should also accept one argument `other` of type `Vector`.
+    # The method should return a `float`.
+
+        # EDIT: Just like in the previous method, check if the number of elements in `self.vals` and `other.vals` are the same.
+        # If not, raise a `ValueError` with the message "Vectors must have the same dimension".
+
+        # EDIT: To calculate cosine similarity, you need three values: the dot product, the magnitude of `self`, and the magnitude of `other`.
+        # Let's calculate the dot product first. Initialize a variable, for example `dot_product`, to 0.
+        # Loop through `self.vals` and `other.vals` simultaneously using `zip`.
+        # In each iteration, multiply the pair of values and add the result to `dot_product`.
+
+        # EDIT: Next, calculate the magnitude of `self`.
+        # Initialize a variable, for example `self_sum_of_squares`, to 0.
+        # Loop through each value in `self.vals`. In each iteration, square the value (i.e., `value * value`) and add it to `self_sum_of_squares`.
+        # After the loop, calculate the magnitude by taking the square root of `self_sum_of_squares`. Use `math.sqrt()` for this. Store it in a variable like `self_magnitude`.
+
+        # EDIT: Now, do the same to calculate the magnitude of `other`.
+        # Initialize `other_sum_of_squares` to 0, loop through `other.vals` to sum the squares of its values, and then take the square root to get `other_magnitude`.
+
+        # EDIT: Check if either `self_magnitude` or `other_magnitude` is zero.
+        # If one of them is 0, it's impossible to divide by it.
+        # Raise a `ValueError` with the message "Cannot compute cosine similarity with a zero-magnitude vector".
+
+        # EDIT: Finally, calculate the cosine similarity by dividing the `dot_product` by the product of `self_magnitude` and `other_magnitude`.
+        # The formula is: `dot_product / (self_magnitude * other_magnitude)`.
+
+        # EDIT: Return the result of the calculation.
+```

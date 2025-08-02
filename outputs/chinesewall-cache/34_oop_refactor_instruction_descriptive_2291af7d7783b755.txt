@@ -1,0 +1,93 @@
+[2552, 2561]
+# EDIT: Import the `ABC` class and the `abstractmethod` decorator from the `abc` module. These are used to create abstract classes.
+
+# EDIT: Define an abstract class named `Message` that inherits from `ABC`.
+# An abstract class serves as a template for other classes.
+
+    # EDIT: Define the initializer method, `__init__`.
+    # It should accept `self` and a string parameter `content`.
+    # Inside this method, assign the `content` parameter to an instance attribute, e.g., `self.content`.
+
+    # EDIT: Define an abstract method named `process`.
+    # This method should be decorated with `@abstractmethod`.
+    # It should only accept `self` as a parameter.
+    # An abstract method doesn't contain any implementation, so you can just write `pass` in its body.
+
+# EDIT: Define a new class named `TextMessage` that inherits from the `Message` class.
+
+    # EDIT: Implement the `process` method here.
+    # This method should return the string f"Processed text message: {self.content}".
+    # It uses the `content` attribute from the parent `Message` class.
+
+# EDIT: Define another new class named `ImageMessage` that also inherits from the `Message` class.
+
+    # EDIT: Implement the `process` method here as well.
+    # This method should return the string f"Processed image message with description: {self.content}".
+
+# EDIT: Define a class named `MessageFactory`. This class will not be instantiated. It will only hold a static method.
+
+    # EDIT: Define a static method named `get_message` inside the `MessageFactory` class.
+    # Remember to add the `@staticmethod` decorator on the line just before the method definition.
+    # This method should accept two parameters: `message_type` (a string) and `content` (a string).
+    # It should also have a return type hint `-> Message`.
+
+        # EDIT: Inside the `get_message` method, check the value of the `message_type` parameter.
+        # 1. If `message_type` is "text", return a new instance of `TextMessage`, passing `content` to it.
+        # 2. Else if `message_type` is "image", return a new instance of `ImageMessage`, passing `content` to it.
+        # 3. Otherwise, if the `message_type` is neither "text" nor "image", raise a `ValueError` with an informative error message like "Invalid message type".
+
+def process_message(message, message_type):
+    if message_type == "text":
+        return f"Processed text message: {message}"
+    elif message_type == "image":
+        return f"Processed image message with description: {message}"
+    else:
+        return "Unknown message type"
+
+===============
+```py
+# EDIT: Import the `ABC` class and the `abstractmethod` decorator from the `abc` module. These are used to create abstract classes.
+
+# EDIT: Define an abstract class named `Message` that inherits from `ABC`.
+# An abstract class serves as a template for other classes.
+
+    # EDIT: Define the initializer method, `__init__`.
+    # It should accept `self` and a string parameter `content`.
+    # Inside this method, assign the `content` parameter to an instance attribute, e.g., `self.content`.
+
+    # EDIT: Define an abstract method named `process`.
+    # This method should be decorated with `@abstractmethod`.
+    # It should only accept `self` as a parameter.
+    # An abstract method doesn't contain any implementation, so you can just write `pass` in its body.
+
+# EDIT: Define a new class named `TextMessage` that inherits from the `Message` class.
+
+    # EDIT: Implement the `process` method here.
+    # This method should return the string f"Processed text message: {self.content}".
+    # It uses the `content` attribute from the parent `Message` class.
+
+# EDIT: Define another new class named `ImageMessage` that also inherits from the `Message` class.
+
+    # EDIT: Implement the `process` method here as well.
+    # This method should return the string f"Processed image message with description: {self.content}".
+
+# EDIT: Define a class named `MessageFactory`. This class will not be instantiated. It will only hold a static method.
+
+    # EDIT: Define a static method named `get_message` inside the `MessageFactory` class.
+    # Remember to add the `@staticmethod` decorator on the line just before the method definition.
+    # This method should accept two parameters: `message_type` (a string) and `content` (a string).
+    # It should also have a return type hint `-> Message`.
+
+        # EDIT: Inside the `get_message` method, check the value of the `message_type` parameter.
+        # 1. If `message_type` is "text", return a new instance of `TextMessage`, passing `content` to it.
+        # 2. Else if `message_type` is "image", return a new instance of `ImageMessage`, passing `content` to it.
+        # 3. Otherwise, if the `message_type` is neither "text" nor "image", raise a `ValueError` with an informative error message like "Invalid message type".
+
+def process_message(message, message_type):
+    if message_type == "text":
+        return f"Processed text message: {message}"
+    elif message_type == "image":
+        return f"Processed image message with description: {message}"
+    else:
+        return "Unknown message type"
+```

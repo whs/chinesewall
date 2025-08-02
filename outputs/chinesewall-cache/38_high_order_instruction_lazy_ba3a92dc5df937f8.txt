@@ -1,0 +1,109 @@
+[2914, 2923]
+class Student:
+    def __init__(self, name, gpa) -> None:
+        self.name = name
+        self.gpa = gpa
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Student):
+            return False
+        else:
+            return __value.name == self.name
+
+class Course:
+
+    def __init__(self, students) -> None:
+        self.students = students
+
+    def average_gpa(self):
+        # EDIT: Before doing any calculations, check if the `self.students` list is empty. If it is, return `None`.
+        # EDIT: Remove the for loop and the `total` variable.
+        for student in self.students:
+            total += student.gpa
+
+        # EDIT: Calculate the sum of all student GPAs. A good way to do this without a loop is to first create a list of just the GPAs from the student objects (e.g., using a list comprehension: `[s.gpa for s in self.students]`) and then use the built-in `sum()` function on that list.
+        # EDIT: The existing division is correct, but make sure it uses the new sum you just calculated.
+        return total / len(self.students)
+    
+    def raise_grade_all(self):
+        # EDIT: First, add a check at the beginning of the method. If the `self.students` list is empty, `return` immediately since there is nothing to do.
+        # EDIT: Remove the existing for loop.
+        for student in self.students:
+            student.gpa += 1
+        # EDIT: To modify each student without a loop, we can use a technique called recursion.
+        # We can define a small helper function inside this method that takes an index `i`.
+        # This helper function will do the following:
+        # 1. Check if the index `i` has reached the end of the list. If `i == len(self.students)`, it should `return`. This is the stopping condition.
+        # 2. If it's not at the end, get the student at index `i` (`self.students[i]`) and add 1 to their `gpa`.
+        # 3. Call itself for the next index (`i + 1`).
+        # After defining this helper function, you need to start the process by calling it with the first index, `0`.
+
+    def best_student(self):
+        # EDIT: Add a check at the very beginning. If the `self.students` list is empty, return `None`. This will also prevent an error on the next line.
+
+        # EDIT: Remove the line that initializes `best` and also remove the entire for loop.
+        best = self.students[0]
+        for student in self.students:
+            if student.gpa > best.gpa:
+                best = student
+
+        # EDIT: Replace the removed code with a single call to the built-in `max()` function.
+        # The `max()` function can find the largest item in a list. To tell it to compare students by their GPA, you need to provide a `key` argument.
+        # The key should be a simple function that takes a student and returns their GPA. A `lambda` function is perfect for this: `lambda student: student.gpa`.
+        return best
+
+===============
+```py
+class Student:
+    def __init__(self, name, gpa) -> None:
+        self.name = name
+        self.gpa = gpa
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Student):
+            return False
+        else:
+            return __value.name == self.name
+
+class Course:
+
+    def __init__(self, students) -> None:
+        self.students = students
+
+    def average_gpa(self):
+        # EDIT: Before doing any calculations, check if the `self.students` list is empty. If it is, return `None`.
+        # EDIT: Remove the for loop and the `total` variable.
+        for student in self.students:
+            total += student.gpa
+
+        # EDIT: Calculate the sum of all student GPAs. A good way to do this without a loop is to first create a list of just the GPAs from the student objects (e.g., using a list comprehension: `[s.gpa for s in self.students]`) and then use the built-in `sum()` function on that list.
+        # EDIT: The existing division is correct, but make sure it uses the new sum you just calculated.
+        return total / len(self.students)
+    
+    def raise_grade_all(self):
+        # EDIT: First, add a check at the beginning of the method. If the `self.students` list is empty, `return` immediately since there is nothing to do.
+        # EDIT: Remove the existing for loop.
+        for student in self.students:
+            student.gpa += 1
+        # EDIT: To modify each student without a loop, we can use a technique called recursion.
+        # We can define a small helper function inside this method that takes an index `i`.
+        # This helper function will do the following:
+        # 1. Check if the index `i` has reached the end of the list. If `i == len(self.students)`, it should `return`. This is the stopping condition.
+        # 2. If it's not at the end, get the student at index `i` (`self.students[i]`) and add 1 to their `gpa`.
+        # 3. Call itself for the next index (`i + 1`).
+        # After defining this helper function, you need to start the process by calling it with the first index, `0`.
+
+    def best_student(self):
+        # EDIT: Add a check at the very beginning. If the `self.students` list is empty, return `None`. This will also prevent an error on the next line.
+
+        # EDIT: Remove the line that initializes `best` and also remove the entire for loop.
+        best = self.students[0]
+        for student in self.students:
+            if student.gpa > best.gpa:
+                best = student
+
+        # EDIT: Replace the removed code with a single call to the built-in `max()` function.
+        # The `max()` function can find the largest item in a list. To tell it to compare students by their GPA, you need to provide a `key` argument.
+        # The key should be a simple function that takes a student and returns their GPA. A `lambda` function is perfect for this: `lambda student: student.gpa`.
+        return best
+```

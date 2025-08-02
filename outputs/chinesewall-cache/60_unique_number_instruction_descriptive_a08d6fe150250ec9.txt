@@ -1,0 +1,57 @@
+[1235, 1244]
+from typing import List
+
+
+def find_non_pair(numbers: List[int]) -> int:
+    # EDIT: The current implementation uses a dictionary which is not memory-efficient for this problem.
+    # We will replace the entire logic of this function.
+    # Please delete the four lines of code below this comment.
+    count = {}
+    for number in numbers:
+        count[number] = count.get(number, 0) + 1
+    for number, occurrence in count.items():
+        if occurrence != 2:
+            return number
+    
+    # EDIT: In place of the deleted code, first, declare a variable called `result` and initialize it to 0.
+    # This variable will be used to accumulate the XOR of all the numbers in the list.
+
+    # EDIT: Next, create a `for` loop that iterates through each `number` in the `numbers` list.
+
+    # EDIT: Inside the for loop, update the `result` variable by performing a bitwise XOR operation with the current `number`.
+    # The bitwise XOR operator in Python is `^`.
+    # For example: `result = result ^ number`.
+
+    # EDIT: After the loop finishes, the `result` will hold the unique number because all the paired numbers will have cancelled each other out.
+    # Change the return statement to return the `result` variable.
+    return 0
+
+===============
+```py
+from typing import List
+
+
+def find_non_pair(numbers: List[int]) -> int:
+    # EDIT: The current implementation uses a dictionary which is not memory-efficient for this problem.
+    # We will replace the entire logic of this function.
+    # Please delete the four lines of code below this comment.
+    count = {}
+    for number in numbers:
+        count[number] = count.get(number, 0) + 1
+    for number, occurrence in count.items():
+        if occurrence != 2:
+            return number
+    
+    # EDIT: In place of the deleted code, first, declare a variable called `result` and initialize it to 0.
+    # This variable will be used to accumulate the XOR of all the numbers in the list.
+
+    # EDIT: Next, create a `for` loop that iterates through each `number` in the `numbers` list.
+
+    # EDIT: Inside the for loop, update the `result` variable by performing a bitwise XOR operation with the current `number`.
+    # The bitwise XOR operator in Python is `^`.
+    # For example: `result = result ^ number`.
+
+    # EDIT: After the loop finishes, the `result` will hold the unique number because all the paired numbers will have cancelled each other out.
+    # Change the return statement to return the `result` variable.
+    return 0
+```

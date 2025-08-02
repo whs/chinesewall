@@ -1,0 +1,49 @@
+[917, 926]
+from typing import List
+
+
+def binary_search(lst: List[int], x: int) -> int:
+    low = 0
+    high = len(lst) - 1
+    mid = 0
+    # EDIT: Create a variable called `result` and initialize it to -1. This will store the index of the first occurrence of the item.
+    while low <= high:
+        mid = (high + low) // 2
+        if lst[mid] < x:
+            low = mid + 1
+        elif lst[mid] > x:
+            high = mid - 1
+        else:
+            # EDIT: When an item is found, it might not be the first one.
+            # 1. Store the current `mid` index in the `result` variable.
+            # 2. To find an even earlier occurrence, continue searching in the left part of the list.
+            #    Update `high` to be `mid - 1`.
+            return mid
+    # EDIT: Instead of returning -1, return the `result` variable. It will contain the index of the first occurrence, or -1 if the item was not found.
+    return -1
+
+===============
+```py
+from typing import List
+
+
+def binary_search(lst: List[int], x: int) -> int:
+    low = 0
+    high = len(lst) - 1
+    mid = 0
+    # EDIT: Create a variable called `result` and initialize it to -1. This will store the index of the first occurrence of the item.
+    while low <= high:
+        mid = (high + low) // 2
+        if lst[mid] < x:
+            low = mid + 1
+        elif lst[mid] > x:
+            high = mid - 1
+        else:
+            # EDIT: When an item is found, it might not be the first one.
+            # 1. Store the current `mid` index in the `result` variable.
+            # 2. To find an even earlier occurrence, continue searching in the left part of the list.
+            #    Update `high` to be `mid - 1`.
+            return mid
+    # EDIT: Instead of returning -1, return the `result` variable. It will contain the index of the first occurrence, or -1 if the item was not found.
+    return -1
+```

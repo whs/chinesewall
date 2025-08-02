@@ -1,0 +1,19 @@
+[468, 477]
+def fahrenheit_to_celsius(temperature):
+    return ((temperature - 32)*5)/9
+
+# EDIT: Define a new function called 'celsius_to_fahrenheit' below this comment.
+# EDIT: The function should accept one parameter named 'temperature'.
+# EDIT: You can also add type hints. The 'temperature' parameter can be an 'int' or a 'float', and the function should return a 'float'.
+    # EDIT: Inside the function, return the result of the calculation: `((temperature * 9) / 5) + 32`.
+
+===============
+```py
+def fahrenheit_to_celsius(temperature):
+    return ((temperature - 32)*5)/9
+
+# EDIT: Define a new function called 'celsius_to_fahrenheit' below this comment.
+# EDIT: The function should accept one parameter named 'temperature'.
+# EDIT: You can also add type hints. The 'temperature' parameter can be an 'int' or a 'float', and the function should return a 'float'.
+    # EDIT: Inside the function, return the result of the calculation: `((temperature * 9) / 5) + 32`.
+```

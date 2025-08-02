@@ -1,0 +1,287 @@
+[6726, 6735]
+from typing import List, Dict
+
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+
+    def __init__(self, id: int):
+        self.id = id
+        self.out_edges = []
+        self.in_edges = []
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Node):
+            return False
+        else:
+            return self.id == __value.id
+
+    def __hash__(self) -> int:
+        return self.id
+
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+
+    def add_edge(self, src: Node, dest: Node):
+        assert src not in dest.in_edges
+        assert dest not in src.out_edges
+        src.out_edges.append(dest)
+        dest.in_edges.append(src)
+
+    def reverse_edges(self):
+        reversed = Graph(list(map(lambda x: Node(x.id), self.nodes)))
+        for i, node in enumerate(self.nodes):
+            reversed.nodes[i].in_edges = node.out_edges
+            reversed.nodes[i].out_edges = node.in_edges
+        return reversed
+
+    def DFS(self, src: Node) -> List[Node]:
+        assert src in self.nodes
+
+        visited = []
+        to_visit = []
+        to_visit.append(src)
+
+        while len(to_visit) != 0:
+            first = to_visit.pop()
+            if first in visited:
+                continue
+            for n in first.out_edges:
+                to_visit.append(n)
+
+            visited.append(first)
+
+        return visited
+
+    # EDIT: Add the new method `strongly_connected_components` here.
+    # The method signature should be `def strongly_connected_components(self) -> Dict[Node, int]:`
+    # The body of the function will be the implementation of Kosaraju's algorithm.
+    # Kosaraju's algorithm works in three main steps.
+
+    # --- STEP 1: First DFS to get node finishing order ---
+    # We need to perform a DFS on the original graph. The goal is to create a list
+    # of nodes, ordered by their "finishing time". A node is "finished" after
+    # all of its descendants in the DFS tree have been visited.
+
+    # 1a. Create a set to keep track of nodes visited in this first pass. Call it `visited`.
+    # 1b. Create a list to store the nodes in the order they finish. Call it `finish_order`.
+
+    # 1c. Define a nested helper function for the DFS, let's call it `visit(node)`.
+    #     - Inside `visit(node)`:
+    #     - Mark `node` as visited by adding it to the `visited` set.
+    #     - Loop through each `neighbor` in `node.out_edges`.
+    #     - If a `neighbor` is not in the `visited` set, recursively call `visit(neighbor)`.
+    #     - After the loop, all descendants of `node` have been visited. Now, add `node`
+    #       to the end of the `finish_order` list.
+
+    # 1d. Iterate through all `node` in `self.nodes`.
+    #     - If the `node` has not been visited yet (i.e., it's not in `visited`),
+    #       call the helper function `visit(node)`.
+
+    # --- STEP 2: Transpose the graph ---
+    # We need to work with a version of the graph where all edge directions are reversed.
+    # The provided `reverse_edges` method creates this.
+
+    # 2a. Call `self.reverse_edges()` and store the result in a variable, e.g., `reversed_graph`.
+    # 2b. The nodes in `reversed_graph` are new objects. We need a way to find a node
+    #     in the reversed graph that corresponds to a node in the original graph.
+    #     Create a dictionary mapping node IDs to the new node objects in the reversed graph.
+    #     Let's call it `reversed_node_map`.
+    #     - Iterate through `reversed_graph.nodes` and for each `rev_node`, add an entry
+    #       to the map: `reversed_node_map[rev_node.id] = rev_node`.
+
+    # --- STEP 3: Second DFS on the transposed graph to find components ---
+    # Now we'll do a DFS on the reversed graph. We'll process nodes in the reverse
+    # of the `finish_order` we found in Step 1. Each DFS tree in this pass
+    # will correspond to one strongly connected component.
+
+    # 3a. Create the dictionary that will store the final result. Call it `scc_map`.
+    # 3b. Create a new set for visited nodes for this second pass. Call it `visited_scc`.
+    # 3c. Initialize a counter for the component ID, e.g., `component_id = 0`.
+    # 3d. For convenience, create a map from node ID to the original node object.
+    #     Let's call it `original_node_map`. Iterate through `self.nodes` to populate it.
+
+    # 3e. Define another nested helper function, let's call it `assign_component(node, current_component_id)`.
+    #     This function will run a DFS on the reversed graph.
+    #     - Inside `assign_component(node, current_component_id)`:
+    #     - Mark `node` as visited by adding it to the `visited_scc` set.
+    #     - The `scc_map` should map original nodes to their component ID. Use the `original_node_map`
+    #       from Step 3d to get the original node object from the current `node.id`.
+    #     - Assign the component ID: `scc_map[original_node] = current_component_id`.
+    #     - Now, traverse the edges of the reversed graph. Loop through each `neighbor`
+    #       in `node.out_edges`.
+    #     - IMPORTANT: The `neighbor` node in `node.out_edges` is an object from the *original* graph
+    #       due to how `reverse_edges` is implemented. We need to find its corresponding node
+    #       in the *reversed* graph to continue the traversal.
+    #     - Use the `reversed_node_map` from Step 2b to get the corresponding reversed graph node:
+    #       `reversed_neighbor = reversed_node_map[neighbor.id]`.
+    #     - If `reversed_neighbor` has not been visited yet (is not in `visited_scc`),
+    #       recursively call `assign_component(reversed_neighbor, current_component_id)`.
+
+    # 3f. Now, start the second pass. Iterate through the `finish_order` list in REVERSE.
+    #     - For each `original_node` from the (reversed) `finish_order`:
+    #     - Find its corresponding node in the reversed graph using the map from Step 2b:
+    #       `node_in_reversed_graph = reversed_node_map[original_node.id]`.
+    #     - If `node_in_reversed_graph` has not been visited yet (is not in `visited_scc`):
+    #         - This node is the root of a new strongly connected component.
+    #         - Call `assign_component(node_in_reversed_graph, component_id)`.
+    #         - After the call returns, all nodes in that component have been found.
+    #           Increment `component_id` for the next component.
+
+    # --- STEP 4: Return the result ---
+    # 4a. Return the `scc_map` dictionary.
+
+===============
+```py
+from typing import List, Dict
+
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+
+    def __init__(self, id: int):
+        self.id = id
+        self.out_edges = []
+        self.in_edges = []
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Node):
+            return False
+        else:
+            return self.id == __value.id
+
+    def __hash__(self) -> int:
+        return self.id
+
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+
+    def add_edge(self, src: Node, dest: Node):
+        assert src not in dest.in_edges
+        assert dest not in src.out_edges
+        src.out_edges.append(dest)
+        dest.in_edges.append(src)
+
+    def reverse_edges(self):
+        reversed = Graph(list(map(lambda x: Node(x.id), self.nodes)))
+        for i, node in enumerate(self.nodes):
+            reversed.nodes[i].in_edges = node.out_edges
+            reversed.nodes[i].out_edges = node.in_edges
+        return reversed
+
+    def DFS(self, src: Node) -> List[Node]:
+        assert src in self.nodes
+
+        visited = []
+        to_visit = []
+        to_visit.append(src)
+
+        while len(to_visit) != 0:
+            first = to_visit.pop()
+            if first in visited:
+                continue
+            for n in first.out_edges:
+                to_visit.append(n)
+
+            visited.append(first)
+
+        return visited
+
+    # EDIT: Add the new method `strongly_connected_components` here.
+    # The method signature should be `def strongly_connected_components(self) -> Dict[Node, int]:`
+    # The body of the function will be the implementation of Kosaraju's algorithm.
+    # Kosaraju's algorithm works in three main steps.
+
+    # --- STEP 1: First DFS to get node finishing order ---
+    # We need to perform a DFS on the original graph. The goal is to create a list
+    # of nodes, ordered by their "finishing time". A node is "finished" after
+    # all of its descendants in the DFS tree have been visited.
+
+    # 1a. Create a set to keep track of nodes visited in this first pass. Call it `visited`.
+    # 1b. Create a list to store the nodes in the order they finish. Call it `finish_order`.
+
+    # 1c. Define a nested helper function for the DFS, let's call it `visit(node)`.
+    #     - Inside `visit(node)`:
+    #     - Mark `node` as visited by adding it to the `visited` set.
+    #     - Loop through each `neighbor` in `node.out_edges`.
+    #     - If a `neighbor` is not in the `visited` set, recursively call `visit(neighbor)`.
+    #     - After the loop, all descendants of `node` have been visited. Now, add `node`
+    #       to the end of the `finish_order` list.
+
+    # 1d. Iterate through all `node` in `self.nodes`.
+    #     - If the `node` has not been visited yet (i.e., it's not in `visited`),
+    #       call the helper function `visit(node)`.
+
+    # --- STEP 2: Transpose the graph ---
+    # We need to work with a version of the graph where all edge directions are reversed.
+    # The provided `reverse_edges` method creates this.
+
+    # 2a. Call `self.reverse_edges()` and store the result in a variable, e.g., `reversed_graph`.
+    # 2b. The nodes in `reversed_graph` are new objects. We need a way to find a node
+    #     in the reversed graph that corresponds to a node in the original graph.
+    #     Create a dictionary mapping node IDs to the new node objects in the reversed graph.
+    #     Let's call it `reversed_node_map`.
+    #     - Iterate through `reversed_graph.nodes` and for each `rev_node`, add an entry
+    #       to the map: `reversed_node_map[rev_node.id] = rev_node`.
+
+    # --- STEP 3: Second DFS on the transposed graph to find components ---
+    # Now we'll do a DFS on the reversed graph. We'll process nodes in the reverse
+    # of the `finish_order` we found in Step 1. Each DFS tree in this pass
+    # will correspond to one strongly connected component.
+
+    # 3a. Create the dictionary that will store the final result. Call it `scc_map`.
+    # 3b. Create a new set for visited nodes for this second pass. Call it `visited_scc`.
+    # 3c. Initialize a counter for the component ID, e.g., `component_id = 0`.
+    # 3d. For convenience, create a map from node ID to the original node object.
+    #     Let's call it `original_node_map`. Iterate through `self.nodes` to populate it.
+
+    # 3e. Define another nested helper function, let's call it `assign_component(node, current_component_id)`.
+    #     This function will run a DFS on the reversed graph.
+    #     - Inside `assign_component(node, current_component_id)`:
+    #     - Mark `node` as visited by adding it to the `visited_scc` set.
+    #     - The `scc_map` should map original nodes to their component ID. Use the `original_node_map`
+    #       from Step 3d to get the original node object from the current `node.id`.
+    #     - Assign the component ID: `scc_map[original_node] = current_component_id`.
+    #     - Now, traverse the edges of the reversed graph. Loop through each `neighbor`
+    #       in `node.out_edges`.
+    #     - IMPORTANT: The `neighbor` node in `node.out_edges` is an object from the *original* graph
+    #       due to how `reverse_edges` is implemented. We need to find its corresponding node
+    #       in the *reversed* graph to continue the traversal.
+    #     - Use the `reversed_node_map` from Step 2b to get the corresponding reversed graph node:
+    #       `reversed_neighbor = reversed_node_map[neighbor.id]`.
+    #     - If `reversed_neighbor` has not been visited yet (is not in `visited_scc`),
+    #       recursively call `assign_component(reversed_neighbor, current_component_id)`.
+
+    # 3f. Now, start the second pass. Iterate through the `finish_order` list in REVERSE.
+    #     - For each `original_node` from the (reversed) `finish_order`:
+    #     - Find its corresponding node in the reversed graph using the map from Step 2b:
+    #       `node_in_reversed_graph = reversed_node_map[original_node.id]`.
+    #     - If `node_in_reversed_graph` has not been visited yet (is not in `visited_scc`):
+    #         - This node is the root of a new strongly connected component.
+    #         - Call `assign_component(node_in_reversed_graph, component_id)`.
+    #         - After the call returns, all nodes in that component have been found.
+    #           Increment `component_id` for the next component.
+
+    # --- STEP 4: Return the result ---
+    # 4a. Return the `scc_map` dictionary.
+```

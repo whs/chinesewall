@@ -1,0 +1,67 @@
+[1633, 1642]
+from typing import List
+
+def merge_sort(lst: List[int]) -> List[int]:
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        L = lst[:mid]
+        R = lst[mid:]
+        merge_sort(L)
+        merge_sort(R)
+        # EDIT: To add the optimization, we will check if the two sorted halves, `L` and `R`, are already in the correct order relative to each other. If so, we can skip the complex merge logic below.
+        # 1. Add an `if` statement at this location. The condition for the `if` statement should check if the last element of the `L` list is less than or equal to the first element of the `R` list.
+        # 2. Inside the `if` block, since the halves are already in order, we just need to update the main list `lst`. Add a line of code to assign the concatenation of `L` and `R` to a full slice of `lst`. This looks like: `lst[:] = L + R`.
+        # 3. On the next line inside the `if` block, add a `return` statement. This will exit the function early, skipping the merge logic.
+        # 4. The existing merge logic (all the code from the `i = j = k = 0` line to the end of the function) should only run if the condition in step 1 is false. To ensure this, wrap all of that existing code in an `else` block.
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                lst[k] = L[i]
+                i += 1
+            else:
+                lst[k] = R[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            lst[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            lst[k] = R[j]
+            j += 1
+            k += 1
+
+===============
+```py
+from typing import List
+
+def merge_sort(lst: List[int]) -> List[int]:
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        L = lst[:mid]
+        R = lst[mid:]
+        merge_sort(L)
+        merge_sort(R)
+        # EDIT: To add the optimization, we will check if the two sorted halves, `L` and `R`, are already in the correct order relative to each other. If so, we can skip the complex merge logic below.
+        # 1. Add an `if` statement at this location. The condition for the `if` statement should check if the last element of the `L` list is less than or equal to the first element of the `R` list.
+        # 2. Inside the `if` block, since the halves are already in order, we just need to update the main list `lst`. Add a line of code to assign the concatenation of `L` and `R` to a full slice of `lst`. This looks like: `lst[:] = L + R`.
+        # 3. On the next line inside the `if` block, add a `return` statement. This will exit the function early, skipping the merge logic.
+        # 4. The existing merge logic (all the code from the `i = j = k = 0` line to the end of the function) should only run if the condition in step 1 is false. To ensure this, wrap all of that existing code in an `else` block.
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                lst[k] = L[i]
+                i += 1
+            else:
+                lst[k] = R[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            lst[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            lst[k] = R[j]
+            j += 1
+            k += 1
+```

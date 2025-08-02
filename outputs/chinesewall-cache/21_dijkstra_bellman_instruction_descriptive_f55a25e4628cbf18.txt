@@ -1,0 +1,125 @@
+[3491, 3500]
+import heapq
+
+
+class Graph:
+    def __init__(self):
+        self.nodes = set()
+        self.edges = {}
+
+    def add_node(self, value):
+        self.nodes.add(value)
+        self.edges[value] = []
+
+    def add_edge(self, from_node, to_node, weight):
+        self.edges[from_node].append((to_node, weight))
+        self.edges[to_node].append((from_node, weight))
+
+    def distances_to(self, start):
+        # EDIT: Update the docstring to indicate that the function now supports negative weights and will raise an error for negative cycles.
+        """
+        Computes the shortest distances from start to all other nodes in the graph.
+        Note: does not work for negative weights.
+        """
+        if start not in self.nodes:
+            raise ValueError('Start node not in graph')
+
+        # EDIT: Let's rename `shortest_path` to `distances` which is more conventional for the Bellman-Ford algorithm.
+        shortest_path = {node: float('infinity') for node in self.nodes}
+        shortest_path[start] = 0
+        # EDIT: The Bellman-Ford algorithm does not use a priority queue, so the `unvisited_nodes` list and the `heapq` library are no longer needed here. Please remove this line.
+        unvisited_nodes = [(0, start)]
+
+        # EDIT: The `while` loop below implements Dijkstra's algorithm. It needs to be completely replaced with the Bellman-Ford algorithm.
+        # EDIT: The Bellman-Ford algorithm iterates V-1 times, where V is the number of nodes.
+        # EDIT: Start by creating a `for` loop that iterates `len(self.nodes) - 1` times.
+        while unvisited_nodes:
+            # EDIT: Inside this loop, you need to iterate over every edge in the graph.
+            # EDIT: To do this, create a nested `for` loop that iterates through each `node` in `self.nodes`.
+            current_dist, current_node = heapq.heappop(unvisited_nodes)
+
+            # EDIT: Inside the loop over nodes, create another nested `for` loop to iterate through the `neighbor` and `weight` of each edge connected to the current `node`.
+            for neighbor, weight in self.edges[current_node]:
+                # EDIT: This is the "relaxation" step.
+                # EDIT: Check if the distance to the current `node` plus the edge `weight` is less than the known distance to the `neighbor`.
+                distance = current_dist + weight
+
+                # EDIT: If a shorter path is found, update the distance to the `neighbor`.
+                if distance < shortest_path[neighbor]:
+                    shortest_path[neighbor] = distance
+                    # EDIT: The `heapq.heappush` is part of Dijkstra's algorithm and should be removed.
+                    heapq.heappush(unvisited_nodes, (distance, neighbor))
+
+        # EDIT: After the main relaxation loop, add a new section to check for negative-weight cycles.
+        # EDIT: To do this, iterate through all the edges one more time.
+        # EDIT: Create a `for` loop that iterates through each `node` in `self.nodes`.
+            # EDIT: Inside this loop, create another `for` loop for each `neighbor` and `weight` connected to the `node`.
+                # EDIT: Check if any path can still be shortened. If `distances[node] + weight < distances[neighbor]`, a negative cycle exists.
+                    # EDIT: If the condition is true, raise a `ValueError` with the message "Graph contains a negative weight cycle".
+
+        # EDIT: Return the dictionary containing the shortest distances.
+        return shortest_path
+
+===============
+```py
+import heapq
+
+
+class Graph:
+    def __init__(self):
+        self.nodes = set()
+        self.edges = {}
+
+    def add_node(self, value):
+        self.nodes.add(value)
+        self.edges[value] = []
+
+    def add_edge(self, from_node, to_node, weight):
+        self.edges[from_node].append((to_node, weight))
+        self.edges[to_node].append((from_node, weight))
+
+    def distances_to(self, start):
+        # EDIT: Update the docstring to indicate that the function now supports negative weights and will raise an error for negative cycles.
+        """
+        Computes the shortest distances from start to all other nodes in the graph.
+        Note: does not work for negative weights.
+        """
+        if start not in self.nodes:
+            raise ValueError('Start node not in graph')
+
+        # EDIT: Let's rename `shortest_path` to `distances` which is more conventional for the Bellman-Ford algorithm.
+        shortest_path = {node: float('infinity') for node in self.nodes}
+        shortest_path[start] = 0
+        # EDIT: The Bellman-Ford algorithm does not use a priority queue, so the `unvisited_nodes` list and the `heapq` library are no longer needed here. Please remove this line.
+        unvisited_nodes = [(0, start)]
+
+        # EDIT: The `while` loop below implements Dijkstra's algorithm. It needs to be completely replaced with the Bellman-Ford algorithm.
+        # EDIT: The Bellman-Ford algorithm iterates V-1 times, where V is the number of nodes.
+        # EDIT: Start by creating a `for` loop that iterates `len(self.nodes) - 1` times.
+        while unvisited_nodes:
+            # EDIT: Inside this loop, you need to iterate over every edge in the graph.
+            # EDIT: To do this, create a nested `for` loop that iterates through each `node` in `self.nodes`.
+            current_dist, current_node = heapq.heappop(unvisited_nodes)
+
+            # EDIT: Inside the loop over nodes, create another nested `for` loop to iterate through the `neighbor` and `weight` of each edge connected to the current `node`.
+            for neighbor, weight in self.edges[current_node]:
+                # EDIT: This is the "relaxation" step.
+                # EDIT: Check if the distance to the current `node` plus the edge `weight` is less than the known distance to the `neighbor`.
+                distance = current_dist + weight
+
+                # EDIT: If a shorter path is found, update the distance to the `neighbor`.
+                if distance < shortest_path[neighbor]:
+                    shortest_path[neighbor] = distance
+                    # EDIT: The `heapq.heappush` is part of Dijkstra's algorithm and should be removed.
+                    heapq.heappush(unvisited_nodes, (distance, neighbor))
+
+        # EDIT: After the main relaxation loop, add a new section to check for negative-weight cycles.
+        # EDIT: To do this, iterate through all the edges one more time.
+        # EDIT: Create a `for` loop that iterates through each `node` in `self.nodes`.
+            # EDIT: Inside this loop, create another `for` loop for each `neighbor` and `weight` connected to the `node`.
+                # EDIT: Check if any path can still be shortened. If `distances[node] + weight < distances[neighbor]`, a negative cycle exists.
+                    # EDIT: If the condition is true, raise a `ValueError` with the message "Graph contains a negative weight cycle".
+
+        # EDIT: Return the dictionary containing the shortest distances.
+        return shortest_path
+```

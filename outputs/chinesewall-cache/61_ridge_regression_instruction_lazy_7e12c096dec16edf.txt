@@ -1,0 +1,57 @@
+[1704, 1713]
+# EDIT: Import RidgeCV from sklearn.linear_model. RidgeCV is a model that performs Ridge Regression (which uses L2 regularization) and has built-in cross-validation to find the best hyperparameter value (alpha).
+from sklearn.linear_model import LinearRegression
+# EDIT: Import the numpy library, which is useful for numerical operations. We will use it to create the sequence of alpha values. You can import it with the alias `np` by writing `import numpy as np`.
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize_data(data, scaler):
+    """Normalizes the columns with float values"""
+    numeric = data.select_dtypes(include=['float64']).columns
+    data_copy = data.copy()
+    data_copy[numeric] = scaler.fit_transform(data[numeric])
+    return data_copy
+
+def regression(X, y):
+    """Normalizes the features of the data, and fits a linear regression model on it."""
+    scaler = MinMaxScaler()
+    normalized = normalize_data(X, scaler)
+    # EDIT: Create a sequence of numbers for the alpha values to test.
+    # The sequence should start at 1, end at 2 (inclusive), and increase in steps of 0.01.
+    # Use the `arange` function from the numpy library. For example: `np.arange(start, stop, step)`.
+    # Note that `arange` does not include the `stop` value, so to include 2.0, the `stop` value should be slightly larger, like 2.01.
+    # EDIT: Replace the `LinearRegression` model with the `RidgeCV` model.
+    # When you create the `RidgeCV` model, pass the list of alpha values you just created as an argument. The name of the parameter is `alphas`.
+    # For example: `RidgeCV(alphas=your_list_of_alphas)`.
+    model = LinearRegression()
+    model.fit(normalized, y)
+    return model
+
+===============
+```py
+# EDIT: Import RidgeCV from sklearn.linear_model. RidgeCV is a model that performs Ridge Regression (which uses L2 regularization) and has built-in cross-validation to find the best hyperparameter value (alpha).
+from sklearn.linear_model import LinearRegression
+# EDIT: Import the numpy library, which is useful for numerical operations. We will use it to create the sequence of alpha values. You can import it with the alias `np` by writing `import numpy as np`.
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize_data(data, scaler):
+    """Normalizes the columns with float values"""
+    numeric = data.select_dtypes(include=['float64']).columns
+    data_copy = data.copy()
+    data_copy[numeric] = scaler.fit_transform(data[numeric])
+    return data_copy
+
+def regression(X, y):
+    """Normalizes the features of the data, and fits a linear regression model on it."""
+    scaler = MinMaxScaler()
+    normalized = normalize_data(X, scaler)
+    # EDIT: Create a sequence of numbers for the alpha values to test.
+    # The sequence should start at 1, end at 2 (inclusive), and increase in steps of 0.01.
+    # Use the `arange` function from the numpy library. For example: `np.arange(start, stop, step)`.
+    # Note that `arange` does not include the `stop` value, so to include 2.0, the `stop` value should be slightly larger, like 2.01.
+    # EDIT: Replace the `LinearRegression` model with the `RidgeCV` model.
+    # When you create the `RidgeCV` model, pass the list of alpha values you just created as an argument. The name of the parameter is `alphas`.
+    # For example: `RidgeCV(alphas=your_list_of_alphas)`.
+    model = LinearRegression()
+    model.fit(normalized, y)
+    return model
+```

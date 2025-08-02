@@ -1,0 +1,75 @@
+[1222, 1231]
+from typing import Optional
+
+class MyBox:
+    def __init__(self, data: str):
+        self.data = data
+
+    def lock(self, pin: int) -> 'LockedMyBox':
+        return LockedMyBox(self.data, pin)
+
+    # EDIT: Add a new method here called 'peek'.
+    # It should not take any arguments other than 'self'.
+    # This method should return the 'self.data' attribute.
+
+    # EDIT: Delete the entire 'duplicate' method below, from the 'def' line to its 'return' line.
+    def duplicate(self) -> 'MyBox':
+        return MyBox(self.data)
+
+
+class LockedMyBox(MyBox):
+    def __init__(self, data: str, pin: int):
+        super().__init__(data)
+        self._pin = pin
+
+    def unlock(self, pin: int) -> Optional[MyBox]:
+        if self._pin == pin:
+            return MyBox(self.data)
+        return None
+
+    # EDIT: Add a new method here called 'peek'.
+    # It should not take any arguments other than 'self'.
+    # This method should raise an Exception. You can do this by using the line: `raise Exception("Cannot peek into a locked box.")`
+
+    # EDIT: Delete the entire 'duplicate' method below, from the 'def' line to its 'return' line.
+    def duplicate(self) -> 'LockedMyBox':
+        return LockedMyBox(self.data, self._pin)
+
+===============
+```py
+from typing import Optional
+
+class MyBox:
+    def __init__(self, data: str):
+        self.data = data
+
+    def lock(self, pin: int) -> 'LockedMyBox':
+        return LockedMyBox(self.data, pin)
+
+    # EDIT: Add a new method here called 'peek'.
+    # It should not take any arguments other than 'self'.
+    # This method should return the 'self.data' attribute.
+
+    # EDIT: Delete the entire 'duplicate' method below, from the 'def' line to its 'return' line.
+    def duplicate(self) -> 'MyBox':
+        return MyBox(self.data)
+
+
+class LockedMyBox(MyBox):
+    def __init__(self, data: str, pin: int):
+        super().__init__(data)
+        self._pin = pin
+
+    def unlock(self, pin: int) -> Optional[MyBox]:
+        if self._pin == pin:
+            return MyBox(self.data)
+        return None
+
+    # EDIT: Add a new method here called 'peek'.
+    # It should not take any arguments other than 'self'.
+    # This method should raise an Exception. You can do this by using the line: `raise Exception("Cannot peek into a locked box.")`
+
+    # EDIT: Delete the entire 'duplicate' method below, from the 'def' line to its 'return' line.
+    def duplicate(self) -> 'LockedMyBox':
+        return LockedMyBox(self.data, self._pin)
+```

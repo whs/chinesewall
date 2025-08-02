@@ -1,0 +1,37 @@
+[597, 606]
+def dnaToRna(base):
+    if base == "T":
+        return "A"
+    elif base == "A":
+        return "U"
+    elif base == "C":
+        return "G"
+    elif base == "G":
+        return "C"
+
+def transcribe(dna):
+    rna = ""
+    # EDIT: This loop is currently set to run from the first character up to the second-to-last character because `range(len(dna)-1)` stops one item early. To process every character in the `dna` string, the loop needs to go up to the full length of the string. You can fix this by removing the `-1`.
+    for i in range(len(dna)-1):
+        rna += dnaToRna(dna[i])
+    return rna
+
+===============
+```py
+def dnaToRna(base):
+    if base == "T":
+        return "A"
+    elif base == "A":
+        return "U"
+    elif base == "C":
+        return "G"
+    elif base == "G":
+        return "C"
+
+def transcribe(dna):
+    rna = ""
+    # EDIT: This loop is currently set to run from the first character up to the second-to-last character because `range(len(dna)-1)` stops one item early. To process every character in the `dna` string, the loop needs to go up to the full length of the string. You can fix this by removing the `-1`.
+    for i in range(len(dna)-1):
+        rna += dnaToRna(dna[i])
+    return rna
+```

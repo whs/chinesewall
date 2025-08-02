@@ -1,0 +1,79 @@
+[1898, 1907]
+import numpy as np
+import pandas as pd
+from scipy.cluster.hierarchy import linkage, fcluster
+from scipy.spatial.distance import squareform 
+
+class FeatureSelector:
+    """Selects features from a set of data according to their correlations"""
+
+    def __init__(self, data: pd.DataFrame, columns: list[str]):
+        self.data = data
+        self.columns = columns 
+
+    def corr_matrix(self):
+        features = self.data[self.columns]
+        return features.corr()
+    
+    def cluster(self, threshold):
+        corr = self.corr_matrix()
+        dissimilarity = 1 - abs(corr)
+        # EDIT: The `linkage` function requires the dissimilarity matrix to be symmetric. A matrix is symmetric if the value at row `i`, column `j` is the same as the value at row `j`, column `i`.
+        # The `for` loop below is incorrect and needs to be replaced to enforce this symmetry, which can be lost due to small computational errors.
+        # Please replace the loop below with two nested `for` loops to copy the upper half of the matrix to the lower half.
+        # 1. The outer loop should iterate with a variable `i` from 0 up to (but not including) the number of columns in `corr`.
+        # 2. The inner loop should iterate with a variable `j` from 0 up to (and including) `i`.
+        # 3. Inside the inner loop, set the value at `dissimilarity.iloc[i, j]` to be equal to the value at `dissimilarity.iloc[j, i]`.
+        for i in range(1, len(corr)):
+            dissimilarity.iloc[i, i] = 0 
+        Z = linkage(squareform(dissimilarity.values), 'complete')
+        labels = fcluster(Z, threshold, criterion='distance')
+        clusters = {}
+        for c, l in zip(self.columns, labels):
+            if l in clusters: clusters[l].append(c)
+            else: clusters[l] = [c]
+        return list(clusters.values())
+    
+    def select_features(self, clusters):
+        return [c[0] for c in clusters]
+
+===============
+```py
+import numpy as np
+import pandas as pd
+from scipy.cluster.hierarchy import linkage, fcluster
+from scipy.spatial.distance import squareform 
+
+class FeatureSelector:
+    """Selects features from a set of data according to their correlations"""
+
+    def __init__(self, data: pd.DataFrame, columns: list[str]):
+        self.data = data
+        self.columns = columns 
+
+    def corr_matrix(self):
+        features = self.data[self.columns]
+        return features.corr()
+    
+    def cluster(self, threshold):
+        corr = self.corr_matrix()
+        dissimilarity = 1 - abs(corr)
+        # EDIT: The `linkage` function requires the dissimilarity matrix to be symmetric. A matrix is symmetric if the value at row `i`, column `j` is the same as the value at row `j`, column `i`.
+        # The `for` loop below is incorrect and needs to be replaced to enforce this symmetry, which can be lost due to small computational errors.
+        # Please replace the loop below with two nested `for` loops to copy the upper half of the matrix to the lower half.
+        # 1. The outer loop should iterate with a variable `i` from 0 up to (but not including) the number of columns in `corr`.
+        # 2. The inner loop should iterate with a variable `j` from 0 up to (and including) `i`.
+        # 3. Inside the inner loop, set the value at `dissimilarity.iloc[i, j]` to be equal to the value at `dissimilarity.iloc[j, i]`.
+        for i in range(1, len(corr)):
+            dissimilarity.iloc[i, i] = 0 
+        Z = linkage(squareform(dissimilarity.values), 'complete')
+        labels = fcluster(Z, threshold, criterion='distance')
+        clusters = {}
+        for c, l in zip(self.columns, labels):
+            if l in clusters: clusters[l].append(c)
+            else: clusters[l] = [c]
+        return list(clusters.values())
+    
+    def select_features(self, clusters):
+        return [c[0] for c in clusters]
+```

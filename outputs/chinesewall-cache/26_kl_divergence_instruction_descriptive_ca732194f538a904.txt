@@ -1,0 +1,31 @@
+[1101, 1110]
+import torch
+
+
+# EDIT: Add a new parameter to the function definition called `num_samples`. It should be an integer with a default value of 100000.
+def kl_div(q: torch.distributions.Distribution, p: torch.distributions.Distribution) -> torch.Tensor:
+    # EDIT: Replace the line below with a Monte Carlo approximation of the KL divergence.
+    # The formula for this approximation is the average of `log(q(x)) - log(p(x))` where x are samples drawn from the distribution q.
+    # 1. Draw `num_samples` from the distribution `q`. Use the `rsample` method with a sample shape of `(num_samples,)`. Store the resulting tensor in a variable named `samples`.
+    # 2. Calculate the log probability of `samples` under distribution `q`. You can do this by calling `q.log_prob(samples)`.
+    # 3. Calculate the log probability of `samples` under distribution `p`. You can do this by calling `p.log_prob(samples)`.
+    # 4. Compute the difference between the log probabilities from step 2 and step 3.
+    # 5. Return the mean of this difference tensor.
+    return torch.distributions.kl_divergence(q, p).mean()
+
+===============
+```py
+import torch
+
+
+# EDIT: Add a new parameter to the function definition called `num_samples`. It should be an integer with a default value of 100000.
+def kl_div(q: torch.distributions.Distribution, p: torch.distributions.Distribution) -> torch.Tensor:
+    # EDIT: Replace the line below with a Monte Carlo approximation of the KL divergence.
+    # The formula for this approximation is the average of `log(q(x)) - log(p(x))` where x are samples drawn from the distribution q.
+    # 1. Draw `num_samples` from the distribution `q`. Use the `rsample` method with a sample shape of `(num_samples,)`. Store the resulting tensor in a variable named `samples`.
+    # 2. Calculate the log probability of `samples` under distribution `q`. You can do this by calling `q.log_prob(samples)`.
+    # 3. Calculate the log probability of `samples` under distribution `p`. You can do this by calling `p.log_prob(samples)`.
+    # 4. Compute the difference between the log probabilities from step 2 and step 3.
+    # 5. Return the mean of this difference tensor.
+    return torch.distributions.kl_divergence(q, p).mean()
+```

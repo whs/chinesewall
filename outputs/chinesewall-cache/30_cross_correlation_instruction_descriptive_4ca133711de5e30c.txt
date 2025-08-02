@@ -1,0 +1,63 @@
+[1260, 1269]
+import numpy as np
+
+# EDIT: Add a new parameter to the function definition called `padding`.
+def cross_correlation(image, kernel):
+    # EDIT: Create a new variable called `padded_image`.
+    # EDIT: Use the `np.pad` function to add padding to the original `image`.
+    # EDIT: The first argument for `np.pad` is the array you want to pad, which is `image`.
+    # EDIT: The second argument is `pad_width`. Set it to `((padding, padding), (padding, padding))` to pad the top, bottom, left, and right sides by the amount specified in the `padding` variable.
+    # EDIT: Assign the result of this function call to your new `padded_image` variable.
+
+    # EDIT: Change `image.shape` to `padded_image.shape` to get the dimensions of the new padded image.
+    ih, iw = image.shape
+    kh, kw = kernel.shape
+
+    oh = ih - kh + 1
+    ow = iw - kw + 1
+
+    output = np.zeros((oh, ow))
+
+    for i in range(oh):
+        for j in range(ow):
+
+            # EDIT: Change `image` to `padded_image` here to make sure you are taking the region from the padded image.
+            region = image[i:i+kh, j:j+kw]
+            element_wise_product = region * kernel
+            output_value = np.sum(element_wise_product)
+            output[i, j] = output_value
+
+    return output
+
+===============
+```py
+import numpy as np
+
+# EDIT: Add a new parameter to the function definition called `padding`.
+def cross_correlation(image, kernel):
+    # EDIT: Create a new variable called `padded_image`.
+    # EDIT: Use the `np.pad` function to add padding to the original `image`.
+    # EDIT: The first argument for `np.pad` is the array you want to pad, which is `image`.
+    # EDIT: The second argument is `pad_width`. Set it to `((padding, padding), (padding, padding))` to pad the top, bottom, left, and right sides by the amount specified in the `padding` variable.
+    # EDIT: Assign the result of this function call to your new `padded_image` variable.
+
+    # EDIT: Change `image.shape` to `padded_image.shape` to get the dimensions of the new padded image.
+    ih, iw = image.shape
+    kh, kw = kernel.shape
+
+    oh = ih - kh + 1
+    ow = iw - kw + 1
+
+    output = np.zeros((oh, ow))
+
+    for i in range(oh):
+        for j in range(ow):
+
+            # EDIT: Change `image` to `padded_image` here to make sure you are taking the region from the padded image.
+            region = image[i:i+kh, j:j+kw]
+            element_wise_product = region * kernel
+            output_value = np.sum(element_wise_product)
+            output[i, j] = output_value
+
+    return output
+```

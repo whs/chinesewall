@@ -1,0 +1,161 @@
+[3438, 3447]
+from typing import Callable, List
+from abc import ABC, abstractmethod
+
+
+class File(ABC):
+    """
+    Represents a file in the file system.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str):
+        assert 0 <= permissions <= 0o777, "Invalid permissions..."
+        self.name = name
+        self.permissions = permissions
+        self.owner = owner
+
+    @abstractmethod
+    def map_content(self, function: Callable[[str], str]) -> "File":
+        """
+        Maps over the content of regular files, and just traverses the rest of the file system.
+        Does not follow links. The function is applied to the content of the file.
+        """
+        pass
+
+    @abstractmethod
+    def map_files(self, function: Callable[["File"], None]):
+        """
+        Maps over all the files and directories in the file system. Does not follow links.
+        Changes are done in-place.
+        """
+        pass
+
+
+class RegularFile(File):
+    """
+    Represents a regular file in the file system, which is just a file with some content inside.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str, content: str):
+        super().__init__(name, permissions, owner)
+        self.content = content
+
+    def map_content(self, function: Callable[[str], str]) -> "RegularFile":
+        return RegularFile(self.name, self.permissions, self.owner, function(self.content))
+
+    def map_files(self, function: Callable[["File"], None]):
+        function(self)
+
+    def __eq__(self, other):
+        return self.name == other.name and self.permissions == other.permissions and self.owner == other.owner and self.content == other.content
+
+
+class Directory(File):
+    """
+    Represents a directory in the file system, which is basically a file with a list of files.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str, files: List[File]):
+        super().__init__(name, permissions, owner)
+        self.files = files
+
+    def map_content(self, function: Callable[[str], str]) -> "Directory":
+        # EDIT: The goal of this method is to apply the `function` to the content of every regular file within this directory and any subdirectories.
+        # The current code `function(file)` is incorrect because it tries to apply the function directly to a `File` object, not its content.
+        # To fix this, you must call the `map_content` method on each `file` in the list. This is called recursion.
+        # Change `function(file)` to `file.map_content(function)`.
+        return Directory(self.name, self.permissions, self.owner, [function(file) for file in self.files])
+
+    def map_files(self, function: Callable[["File"], None]):
+        function(self)
+        # EDIT: This function should apply the `function` to this directory AND every file and subdirectory within it.
+        # The current code only applies the function to the directory itself (`self`).
+        # To visit all the files inside this directory:
+        # 1. Add a `for` loop that iterates over each `file` in `self.files`.
+        # 2. Inside the loop, call the `map_files` method on the `file` object, passing the `function` as the argument. This will ensure the function is applied recursively down the file tree.
+
+    def __eq__(self, other):
+        return self.name == other.name and self.permissions == other.permissions and self.owner == other.owner and all(
+            a == b for a, b in zip(self.files, other.files))
+
+===============
+```py
+from typing import Callable, List
+from abc import ABC, abstractmethod
+
+
+class File(ABC):
+    """
+    Represents a file in the file system.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str):
+        assert 0 <= permissions <= 0o777, "Invalid permissions..."
+        self.name = name
+        self.permissions = permissions
+        self.owner = owner
+
+    @abstractmethod
+    def map_content(self, function: Callable[[str], str]) -> "File":
+        """
+        Maps over the content of regular files, and just traverses the rest of the file system.
+        Does not follow links. The function is applied to the content of the file.
+        """
+        pass
+
+    @abstractmethod
+    def map_files(self, function: Callable[["File"], None]):
+        """
+        Maps over all the files and directories in the file system. Does not follow links.
+        Changes are done in-place.
+        """
+        pass
+
+
+class RegularFile(File):
+    """
+    Represents a regular file in the file system, which is just a file with some content inside.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str, content: str):
+        super().__init__(name, permissions, owner)
+        self.content = content
+
+    def map_content(self, function: Callable[[str], str]) -> "RegularFile":
+        return RegularFile(self.name, self.permissions, self.owner, function(self.content))
+
+    def map_files(self, function: Callable[["File"], None]):
+        function(self)
+
+    def __eq__(self, other):
+        return self.name == other.name and self.permissions == other.permissions and self.owner == other.owner and self.content == other.content
+
+
+class Directory(File):
+    """
+    Represents a directory in the file system, which is basically a file with a list of files.
+    """
+
+    def __init__(self, name: str, permissions: int, owner: str, files: List[File]):
+        super().__init__(name, permissions, owner)
+        self.files = files
+
+    def map_content(self, function: Callable[[str], str]) -> "Directory":
+        # EDIT: The goal of this method is to apply the `function` to the content of every regular file within this directory and any subdirectories.
+        # The current code `function(file)` is incorrect because it tries to apply the function directly to a `File` object, not its content.
+        # To fix this, you must call the `map_content` method on each `file` in the list. This is called recursion.
+        # Change `function(file)` to `file.map_content(function)`.
+        return Directory(self.name, self.permissions, self.owner, [function(file) for file in self.files])
+
+    def map_files(self, function: Callable[["File"], None]):
+        function(self)
+        # EDIT: This function should apply the `function` to this directory AND every file and subdirectory within it.
+        # The current code only applies the function to the directory itself (`self`).
+        # To visit all the files inside this directory:
+        # 1. Add a `for` loop that iterates over each `file` in `self.files`.
+        # 2. Inside the loop, call the `map_files` method on the `file` object, passing the `function` as the argument. This will ensure the function is applied recursively down the file tree.
+
+    def __eq__(self, other):
+        return self.name == other.name and self.permissions == other.permissions and self.owner == other.owner and all(
+            a == b for a, b in zip(self.files, other.files))
+```

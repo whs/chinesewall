@@ -1,0 +1,213 @@
+[4496, 4505]
+class Employer:
+    """
+    Represents an entity that employs workers.
+    """
+
+    def __init__(self, name, funds):
+        self.name = name
+        self.funds = funds
+
+
+class Worker:
+    """
+    Represents a person who does work for an employer.
+    Name should be "[first name] [last name]" and pay 
+    should be positive.
+    """
+
+    def __init__(self, name, pay, company):
+        self.name = name
+        self.pay = pay
+        self.company = company
+        self.money = 0
+
+    def lastName(self):
+        """
+        Returns the last name of the worker.
+        """
+        return self.name.split()[-1]
+
+    def givePay(self):
+        """
+        Pays the worker, which adds to the worker's money.
+        and removes from the company's funds.
+        """
+        self.money += self.pay
+        self.company.funds -= self.pay
+
+    def giveRaise(self, percent):
+        """
+        Gives the worker a raise in pay, given as a percentage of
+        the current pay.
+        """
+        self.pay *= (1.0 + percent)
+
+
+class PublicWorker(Worker):
+    """
+    Represents a worker who works for the government.
+    People who work for the government are special
+    because they are paid with public funds, which
+    are virtually unlimited because of public debt.
+    """
+
+    def givePay(self):
+        """
+        Pays the worker, which adds to the worker's money.
+        and removes from the company's funds.
+        """
+        self.money += self.pay
+
+# EDIT: Define a new function named `test_worker_invariants`. It should accept one argument, `w`, with a type hint of `Worker`.
+# EDIT: Inside the function, we will use `assert` statements to check rules that should always be true for any `Worker` object.
+
+# EDIT: First, check the name. A worker's name should be a first and last name separated by a space.
+# A simple way to check this is to assert that the name string contains a space character.
+
+# EDIT: Second, check the pay. A worker's pay should not be a negative number.
+# Assert that the worker's `pay` attribute is greater than or equal to 0.
+
+# EDIT: Third, let's test the `givePay` method. We need to check the state before and after calling it.
+# 1. Store the worker's current money in a new variable, e.g., `initial_money`.
+# 2. Store the company's current funds in a new variable, e.g., `initial_funds`.
+# 3. Call the `givePay` method on the worker `w`.
+# 4. Assert that the worker's `money` is now equal to `initial_money` plus the worker's `pay`.
+# 5. Assert that the company's `funds` are now equal to `initial_funds` minus the worker's `pay`.
+
+# EDIT: Fourth, let's test the `giveRaise` method.
+# 1. Store the worker's current pay in a new variable, e.g., `initial_pay`.
+# 2. Create a variable for the raise percentage, for example, `raise_percent = 0.10` for a 10% raise.
+# 3. Call the `giveRaise` method on `w`, passing `raise_percent` as the argument.
+# 4. Assert that the worker's `pay` is now equal to `initial_pay * (1.0 + raise_percent)`.
+
+
+# EDIT: Define a second function named `test_public_worker_invariants`. It should accept one argument, `w`, with a type hint of `PublicWorker`.
+# EDIT: Inside this function, we will check the rules for `PublicWorker` objects.
+
+# EDIT: First, check the name invariant, which is the same as for a regular Worker.
+# Assert that the worker's name string contains a space character.
+
+# EDIT: Second, check the pay invariant, also the same as for a regular Worker.
+# Assert that the worker's `pay` attribute is greater than or equal to 0.
+
+# EDIT: Third, test the `givePay` method for a `PublicWorker`. This is different from a regular Worker.
+# 1. Store the worker's current money in a new variable, e.g., `initial_money`.
+# 2. Store the company's current funds in a new variable, e.g., `initial_funds`.
+# 3. Call the `givePay` method on the public worker `w`.
+# 4. Assert that the worker's `money` is now equal to `initial_money` plus the worker's `pay`.
+# 5. Assert that the company's `funds` are now equal to `initial_funds`. The company's funds should NOT change for a PublicWorker.
+
+# EDIT: Fourth, test the `giveRaise` method. It is inherited from `Worker` and behaves identically.
+# 1. Store the worker's current pay in a new variable, e.g., `initial_pay`.
+# 2. Create a variable for the raise percentage, for example, `raise_percent = 0.10`.
+# 3. Call the `giveRaise` method on `w`, passing `raise_percent` as the argument.
+# 4. Assert that the worker's `pay` is now equal to `initial_pay * (1.0 + raise_percent)`.
+
+===============
+```py
+class Employer:
+    """
+    Represents an entity that employs workers.
+    """
+
+    def __init__(self, name, funds):
+        self.name = name
+        self.funds = funds
+
+
+class Worker:
+    """
+    Represents a person who does work for an employer.
+    Name should be "[first name] [last name]" and pay 
+    should be positive.
+    """
+
+    def __init__(self, name, pay, company):
+        self.name = name
+        self.pay = pay
+        self.company = company
+        self.money = 0
+
+    def lastName(self):
+        """
+        Returns the last name of the worker.
+        """
+        return self.name.split()[-1]
+
+    def givePay(self):
+        """
+        Pays the worker, which adds to the worker's money.
+        and removes from the company's funds.
+        """
+        self.money += self.pay
+        self.company.funds -= self.pay
+
+    def giveRaise(self, percent):
+        """
+        Gives the worker a raise in pay, given as a percentage of
+        the current pay.
+        """
+        self.pay *= (1.0 + percent)
+
+
+class PublicWorker(Worker):
+    """
+    Represents a worker who works for the government.
+    People who work for the government are special
+    because they are paid with public funds, which
+    are virtually unlimited because of public debt.
+    """
+
+    def givePay(self):
+        """
+        Pays the worker, which adds to the worker's money.
+        and removes from the company's funds.
+        """
+        self.money += self.pay
+
+# EDIT: Define a new function named `test_worker_invariants`. It should accept one argument, `w`, with a type hint of `Worker`.
+# EDIT: Inside the function, we will use `assert` statements to check rules that should always be true for any `Worker` object.
+
+# EDIT: First, check the name. A worker's name should be a first and last name separated by a space.
+# A simple way to check this is to assert that the name string contains a space character.
+
+# EDIT: Second, check the pay. A worker's pay should not be a negative number.
+# Assert that the worker's `pay` attribute is greater than or equal to 0.
+
+# EDIT: Third, let's test the `givePay` method. We need to check the state before and after calling it.
+# 1. Store the worker's current money in a new variable, e.g., `initial_money`.
+# 2. Store the company's current funds in a new variable, e.g., `initial_funds`.
+# 3. Call the `givePay` method on the worker `w`.
+# 4. Assert that the worker's `money` is now equal to `initial_money` plus the worker's `pay`.
+# 5. Assert that the company's `funds` are now equal to `initial_funds` minus the worker's `pay`.
+
+# EDIT: Fourth, let's test the `giveRaise` method.
+# 1. Store the worker's current pay in a new variable, e.g., `initial_pay`.
+# 2. Create a variable for the raise percentage, for example, `raise_percent = 0.10` for a 10% raise.
+# 3. Call the `giveRaise` method on `w`, passing `raise_percent` as the argument.
+# 4. Assert that the worker's `pay` is now equal to `initial_pay * (1.0 + raise_percent)`.
+
+
+# EDIT: Define a second function named `test_public_worker_invariants`. It should accept one argument, `w`, with a type hint of `PublicWorker`.
+# EDIT: Inside this function, we will check the rules for `PublicWorker` objects.
+
+# EDIT: First, check the name invariant, which is the same as for a regular Worker.
+# Assert that the worker's name string contains a space character.
+
+# EDIT: Second, check the pay invariant, also the same as for a regular Worker.
+# Assert that the worker's `pay` attribute is greater than or equal to 0.
+
+# EDIT: Third, test the `givePay` method for a `PublicWorker`. This is different from a regular Worker.
+# 1. Store the worker's current money in a new variable, e.g., `initial_money`.
+# 2. Store the company's current funds in a new variable, e.g., `initial_funds`.
+# 3. Call the `givePay` method on the public worker `w`.
+# 4. Assert that the worker's `money` is now equal to `initial_money` plus the worker's `pay`.
+# 5. Assert that the company's `funds` are now equal to `initial_funds`. The company's funds should NOT change for a PublicWorker.
+
+# EDIT: Fourth, test the `giveRaise` method. It is inherited from `Worker` and behaves identically.
+# 1. Store the worker's current pay in a new variable, e.g., `initial_pay`.
+# 2. Create a variable for the raise percentage, for example, `raise_percent = 0.10`.
+# 3. Call the `giveRaise` method on `w`, passing `raise_percent` as the argument.
+# 4. Assert that the worker's `pay` is now equal to `initial_pay * (1.0 + raise_percent)`.
+```

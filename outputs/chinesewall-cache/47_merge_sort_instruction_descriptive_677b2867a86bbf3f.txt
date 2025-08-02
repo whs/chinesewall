@@ -1,0 +1,77 @@
+[1333, 1342]
+from typing import List
+
+def merge_sort(lst: List[int]) -> List[int]:
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        L = lst[:mid]
+        R = lst[mid:]
+        merge_sort(L)
+        merge_sort(R)
+
+        # EDIT: Add an optimization to skip the merge process if the sub-arrays are already in order.
+        # At this point, both `L` and `R` are sorted. If the largest element in `L`
+        # is already less than or equal to the smallest element in `R`, then the
+        # entire list segment is already sorted, and we can skip the merge.
+        # 1. Check if the last element of the left sub-array `L` is less than or equal to the first element of the right sub-array `R`.
+        #    - The last element of `L` is at index `len(L) - 1`.
+        #    - The first element of `R` is at index `0`.
+        # 2. If the condition is true, `return` from the function to avoid the unnecessary merge work below.
+
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                lst[k] = L[i]
+                i += 1
+            else:
+                lst[k] = R[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            lst[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            lst[k] = R[j]
+            j += 1
+            k += 1
+
+===============
+```py
+from typing import List
+
+def merge_sort(lst: List[int]) -> List[int]:
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        L = lst[:mid]
+        R = lst[mid:]
+        merge_sort(L)
+        merge_sort(R)
+
+        # EDIT: Add an optimization to skip the merge process if the sub-arrays are already in order.
+        # At this point, both `L` and `R` are sorted. If the largest element in `L`
+        # is already less than or equal to the smallest element in `R`, then the
+        # entire list segment is already sorted, and we can skip the merge.
+        # 1. Check if the last element of the left sub-array `L` is less than or equal to the first element of the right sub-array `R`.
+        #    - The last element of `L` is at index `len(L) - 1`.
+        #    - The first element of `R` is at index `0`.
+        # 2. If the condition is true, `return` from the function to avoid the unnecessary merge work below.
+
+        i = j = k = 0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                lst[k] = L[i]
+                i += 1
+            else:
+                lst[k] = R[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            lst[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(R):
+            lst[k] = R[j]
+            j += 1
+            k += 1
+```

@@ -1,0 +1,91 @@
+[3491, 3500]
+# EDIT: To use `frozenset` as a type hint, you need to import it from the `typing` module.
+from typing import Literal, List
+
+# EDIT: A DFA does not have empty string transitions. Remove `""` from the `Literal` to reflect that the only valid inputs are "a" and "b".
+Input = Literal["a", "b", ""]
+State = Literal[0, 1, 2]
+# EDIT: Add a new type alias to represent a state in the DFA. A DFA state is a set of one or more NFA states. Since these states will be used as keys in a dictionary, they must be immutable. A `frozenset` is an immutable set. Define a new type alias called `DFAState` which is a `frozenset[State]`.
+
+
+# EDIT: Rename the class from `NFA` to `DFA` to reflect its new purpose.
+class NFA:
+    def __init__(self) -> None:
+        # EDIT: The `current` state of the DFA is a set of NFA states. Change the type hint for `self.current` to the `DFAState` type you defined above.
+        # EDIT: The initial state of the DFA is the set of NFA states reachable from the NFA's start state (0) using only empty string transitions. In this NFA, only state 0 is reachable from state 0 via empty string transitions. Therefore, the DFA's initial state is the set containing just 0. Initialize `self.current` to `frozenset({0})`.
+        self.current: State = 0
+        # EDIT: The `accept` states of the DFA are all DFA states that contain at least one of the original NFA's accept states (`{1, 2}`). After analyzing the NFA, the reachable DFA states that are accepting are `{1, 2}` and `{2}`. Update this set to contain the frozenset versions of these states: `{frozenset({1, 2}), frozenset({2})}`.
+        self.accept: set[State] = {1, 2}
+
+    # EDIT: Change the method's signature. A DFA transition results in exactly one state, not a list of them. Change the return type hint from `List[State]` to `DFAState`.
+    def transition(self, input: Input) -> List[State]:
+        # EDIT: The transition logic must be replaced with the DFA's equivalent logic. This involves creating a new transition table for the DFA.
+        # 1. To make the table readable, first define variables for each DFA state (which are frozensets).
+        #    - q0 = frozenset({0})  (the start state)
+        #    - q1 = frozenset({1, 2})
+        #    - q2 = frozenset({2})
+        #    - q_empty = frozenset() (a non-accepting "trap" state)
+        # 2. Now, replace the NFA transition table below with the new DFA transition table. This will be a dictionary where keys are the DFA state variables and values are another dictionary mapping an input to the next DFA state.
+        #    The transitions are as follows:
+        #    - from q0: 'a' -> q1, 'b' -> q_empty
+        #    - from q1: 'a' -> q_empty, 'b' -> q2
+        #    - from q2: 'a' -> q_empty, 'b' -> q2
+        #    - from q_empty: 'a' -> q_empty, 'b' -> q_empty
+        table = {
+            0: {"a": [1, 2], "b": [], "": [0]},
+            1: {"a": [], "b": [], "": [1]},
+            2: {"a": [], "b": [2], "": [2]},
+        }
+        # EDIT: Update this line to use the new DFA transition table. It should look up the next state using the DFA's current state (`self.current`) and the `input`, and return the resulting DFA state.
+        return table[self.current][input]
+
+    def accepted(self):
+        # EDIT: No change is needed here. The logic `self.current in self.accept` works correctly for the DFA because you updated `self.current` and `self.accept` in the `__init__` method to use DFA states.
+        return self.current in self.accept
+
+===============
+```py
+# EDIT: To use `frozenset` as a type hint, you need to import it from the `typing` module.
+from typing import Literal, List
+
+# EDIT: A DFA does not have empty string transitions. Remove `""` from the `Literal` to reflect that the only valid inputs are "a" and "b".
+Input = Literal["a", "b", ""]
+State = Literal[0, 1, 2]
+# EDIT: Add a new type alias to represent a state in the DFA. A DFA state is a set of one or more NFA states. Since these states will be used as keys in a dictionary, they must be immutable. A `frozenset` is an immutable set. Define a new type alias called `DFAState` which is a `frozenset[State]`.
+
+
+# EDIT: Rename the class from `NFA` to `DFA` to reflect its new purpose.
+class NFA:
+    def __init__(self) -> None:
+        # EDIT: The `current` state of the DFA is a set of NFA states. Change the type hint for `self.current` to the `DFAState` type you defined above.
+        # EDIT: The initial state of the DFA is the set of NFA states reachable from the NFA's start state (0) using only empty string transitions. In this NFA, only state 0 is reachable from state 0 via empty string transitions. Therefore, the DFA's initial state is the set containing just 0. Initialize `self.current` to `frozenset({0})`.
+        self.current: State = 0
+        # EDIT: The `accept` states of the DFA are all DFA states that contain at least one of the original NFA's accept states (`{1, 2}`). After analyzing the NFA, the reachable DFA states that are accepting are `{1, 2}` and `{2}`. Update this set to contain the frozenset versions of these states: `{frozenset({1, 2}), frozenset({2})}`.
+        self.accept: set[State] = {1, 2}
+
+    # EDIT: Change the method's signature. A DFA transition results in exactly one state, not a list of them. Change the return type hint from `List[State]` to `DFAState`.
+    def transition(self, input: Input) -> List[State]:
+        # EDIT: The transition logic must be replaced with the DFA's equivalent logic. This involves creating a new transition table for the DFA.
+        # 1. To make the table readable, first define variables for each DFA state (which are frozensets).
+        #    - q0 = frozenset({0})  (the start state)
+        #    - q1 = frozenset({1, 2})
+        #    - q2 = frozenset({2})
+        #    - q_empty = frozenset() (a non-accepting "trap" state)
+        # 2. Now, replace the NFA transition table below with the new DFA transition table. This will be a dictionary where keys are the DFA state variables and values are another dictionary mapping an input to the next DFA state.
+        #    The transitions are as follows:
+        #    - from q0: 'a' -> q1, 'b' -> q_empty
+        #    - from q1: 'a' -> q_empty, 'b' -> q2
+        #    - from q2: 'a' -> q_empty, 'b' -> q2
+        #    - from q_empty: 'a' -> q_empty, 'b' -> q_empty
+        table = {
+            0: {"a": [1, 2], "b": [], "": [0]},
+            1: {"a": [], "b": [], "": [1]},
+            2: {"a": [], "b": [2], "": [2]},
+        }
+        # EDIT: Update this line to use the new DFA transition table. It should look up the next state using the DFA's current state (`self.current`) and the `input`, and return the resulting DFA state.
+        return table[self.current][input]
+
+    def accepted(self):
+        # EDIT: No change is needed here. The logic `self.current in self.accept` works correctly for the DFA because you updated `self.current` and `self.accept` in the `__init__` method to use DFA states.
+        return self.current in self.accept
+```

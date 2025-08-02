@@ -1,0 +1,85 @@
+[2134, 2143]
+import math
+
+def gcd(a : int, b : int) -> int:
+    """Compute the Greatest Common Divisor (GCD) of a and b."""
+    assert a > 0 and b > 0
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def euler_totient(n : int) -> int:
+    """Compute the Euler's Totient function of n."""
+    assert n > 0 
+    if n == 1 : return 1
+    count = 0
+    for i in range(1, n):
+        if gcd(i, n) == 1:
+            count += 1
+    return count
+
+# EDIT: Define a new function here called `powermod`.
+# EDIT: It should accept three integer arguments: `base`, `exponent`, and `modulus`.
+# EDIT: It should be type-hinted to return an integer.
+# EDIT: Inside the function, you will calculate (base^exponent) % modulus.
+# EDIT: 1. Initialize a variable, let's call it `result`, to 1. This will store the final answer.
+# EDIT: 2. Reduce the `base` modulo `modulus` to keep numbers small. Update `base` to be `base % modulus`.
+# EDIT: 3. Start a `while` loop that continues as long as `exponent` is greater than 0.
+# EDIT: 4. Inside the loop, check if the `exponent` is an odd number. You can do this with the condition `exponent % 2 == 1`.
+# EDIT: 5. If it is odd, update `result` by multiplying it with `base` and taking the modulus. The formula is `result = (result * base) % modulus`.
+# EDIT: 6. In every loop iteration, you need to halve the exponent. Use integer division: `exponent = exponent // 2`.
+# EDIT: 7. Also in every loop iteration, square the base and take the modulus. The formula is `base = (base * base) % modulus`.
+# EDIT: 8. After the loop finishes, return the `result`.
+
+def check_coprime_euler(a : int, b : int):
+    assert a > 0 and b > 0
+    # EDIT: Replace the calculation `math.pow(a,euler_totient(b)) % b` with a call to your new `powermod` function.
+    # EDIT: The first argument (base) should be `a`.
+    # EDIT: The second argument (exponent) should be the result of `euler_totient(b)`.
+    # EDIT: The third argument (modulus) should be `b`.
+    # EDIT: The result of `powermod` will be an integer, so compare it to the integer `1`, not the floating-point number `1.0`.
+    return math.pow(a,euler_totient(b)) % b == 1.0
+
+===============
+```py
+import math
+
+def gcd(a : int, b : int) -> int:
+    """Compute the Greatest Common Divisor (GCD) of a and b."""
+    assert a > 0 and b > 0
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def euler_totient(n : int) -> int:
+    """Compute the Euler's Totient function of n."""
+    assert n > 0 
+    if n == 1 : return 1
+    count = 0
+    for i in range(1, n):
+        if gcd(i, n) == 1:
+            count += 1
+    return count
+
+# EDIT: Define a new function here called `powermod`.
+# EDIT: It should accept three integer arguments: `base`, `exponent`, and `modulus`.
+# EDIT: It should be type-hinted to return an integer.
+# EDIT: Inside the function, you will calculate (base^exponent) % modulus.
+# EDIT: 1. Initialize a variable, let's call it `result`, to 1. This will store the final answer.
+# EDIT: 2. Reduce the `base` modulo `modulus` to keep numbers small. Update `base` to be `base % modulus`.
+# EDIT: 3. Start a `while` loop that continues as long as `exponent` is greater than 0.
+# EDIT: 4. Inside the loop, check if the `exponent` is an odd number. You can do this with the condition `exponent % 2 == 1`.
+# EDIT: 5. If it is odd, update `result` by multiplying it with `base` and taking the modulus. The formula is `result = (result * base) % modulus`.
+# EDIT: 6. In every loop iteration, you need to halve the exponent. Use integer division: `exponent = exponent // 2`.
+# EDIT: 7. Also in every loop iteration, square the base and take the modulus. The formula is `base = (base * base) % modulus`.
+# EDIT: 8. After the loop finishes, return the `result`.
+
+def check_coprime_euler(a : int, b : int):
+    assert a > 0 and b > 0
+    # EDIT: Replace the calculation `math.pow(a,euler_totient(b)) % b` with a call to your new `powermod` function.
+    # EDIT: The first argument (base) should be `a`.
+    # EDIT: The second argument (exponent) should be the result of `euler_totient(b)`.
+    # EDIT: The third argument (modulus) should be `b`.
+    # EDIT: The result of `powermod` will be an integer, so compare it to the integer `1`, not the floating-point number `1.0`.
+    return math.pow(a,euler_totient(b)) % b == 1.0
+```

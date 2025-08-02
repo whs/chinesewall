@@ -1,0 +1,81 @@
+[1502, 1511]
+from typing import Optional
+
+class MyBox:
+    def __init__(self, data: str):
+        self.data = data
+
+    def lock(self, pin: int) -> 'LockedMyBox':
+        return LockedMyBox(self.data, pin)
+
+    # EDIT: The `duplicate` method is no longer needed. Please remove the entire method definition below.
+    def duplicate(self) -> 'MyBox':
+        return MyBox(self.data)
+
+    # EDIT: Add a new method here called `peek`.
+    # 1. The method should not take any arguments besides `self`.
+    # 2. It should return the value of the `self.data` attribute.
+    # 3. For good practice, add a type hint to show it returns a string (`-> str`).
+
+
+class LockedMyBox(MyBox):
+    def __init__(self, data: str, pin: int):
+        super().__init__(data)
+        self._pin = pin
+
+    def unlock(self, pin: int) -> Optional[MyBox]:
+        if self._pin == pin:
+            return MyBox(self.data)
+        return None
+
+    # EDIT: The `duplicate` method is no longer needed. Please remove the entire method definition below.
+    def duplicate(self) -> 'LockedMyBox':
+        return LockedMyBox(self.data, self._pin)
+
+    # EDIT: Add a new method here called `peek`.
+    # 1. The method should not take any arguments besides `self`.
+    # 2. This method should always indicate an error because you cannot look inside a locked box.
+    # 3. To do this, use the `raise` keyword to create a new `Exception`.
+    # 4. The exception should have a descriptive message, for example: `Exception("Cannot peek into a locked box.")`
+
+===============
+```py
+from typing import Optional
+
+class MyBox:
+    def __init__(self, data: str):
+        self.data = data
+
+    def lock(self, pin: int) -> 'LockedMyBox':
+        return LockedMyBox(self.data, pin)
+
+    # EDIT: The `duplicate` method is no longer needed. Please remove the entire method definition below.
+    def duplicate(self) -> 'MyBox':
+        return MyBox(self.data)
+
+    # EDIT: Add a new method here called `peek`.
+    # 1. The method should not take any arguments besides `self`.
+    # 2. It should return the value of the `self.data` attribute.
+    # 3. For good practice, add a type hint to show it returns a string (`-> str`).
+
+
+class LockedMyBox(MyBox):
+    def __init__(self, data: str, pin: int):
+        super().__init__(data)
+        self._pin = pin
+
+    def unlock(self, pin: int) -> Optional[MyBox]:
+        if self._pin == pin:
+            return MyBox(self.data)
+        return None
+
+    # EDIT: The `duplicate` method is no longer needed. Please remove the entire method definition below.
+    def duplicate(self) -> 'LockedMyBox':
+        return LockedMyBox(self.data, self._pin)
+
+    # EDIT: Add a new method here called `peek`.
+    # 1. The method should not take any arguments besides `self`.
+    # 2. This method should always indicate an error because you cannot look inside a locked box.
+    # 3. To do this, use the `raise` keyword to create a new `Exception`.
+    # 4. The exception should have a descriptive message, for example: `Exception("Cannot peek into a locked box.")`
+```

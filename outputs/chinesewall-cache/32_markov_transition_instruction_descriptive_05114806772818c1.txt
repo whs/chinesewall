@@ -1,0 +1,85 @@
+[2578, 2587]
+import numpy as np
+# EDIT: Import `Dict` and `List` from the `typing` module to be used for type hinting.
+
+class MarkovChain:
+
+    def create_transition_matrix(self, matrix):
+        
+        matrix = np.array(matrix)
+        column_sums = np.sum(matrix, axis=0)
+        # EDIT: Before performing the division, we need to handle cases where a column sum is zero to avoid a division-by-zero error.
+        # If a column sum is 0, it means that node has no outgoing edges. We should keep the column as all zeros.
+        # A simple way to avoid the error is to replace any 0s in `column_sums` with 1s before the division.
+        # This way, `x / 1 = x`, so any column that was all zeros will remain all zeros, and we prevent the error.
+        # You can use `np.where(column_sums == 0, 1, column_sums)` to create a new array where zeros are replaced by ones.
+        normalized_matrix = matrix / column_sums
+        return normalized_matrix.tolist()
+
+    # EDIT: Add a new method here called `translate_from_list`.
+    # This method should accept `self` and one argument `adj_list`.
+    # Use type hints: `adj_list` should be `Dict[int, List[int]]` and the method should return a `List[List[float]]`.
+    #
+    # Inside this new method, perform the following steps:
+    # 1. Determine the size of the matrix. The number of states (nodes) is one more than the largest node index found in the adjacency list.
+    #    - Find the largest key in the `adj_list` dictionary.
+    #    - Find the largest value within all the lists in the `adj_list` values.
+    #    - The number of states is `max(largest_key, largest_value_in_lists) + 1`.
+    #
+    # 2. Create an empty square matrix of the calculated size, filled with zeros.
+    #    - For example, if there are `N` states, create an `N x N` matrix. `np.zeros((N, N))` is a good way to do this.
+    #
+    # 3. Populate the matrix based on the `adj_list`.
+    #    - Iterate through each item (key-value pair) in the `adj_list`. Let's call the key `node_from` and the value `connected_nodes`.
+    #    - For each `node_to` in the `connected_nodes` list:
+    #        - Set the value at `matrix[node_to][node_from]` to 1. This represents a directed edge from `node_from` to `node_to`.
+    #        - Since the edges are undirected, also set the value at `matrix[node_from][node_to]` to 1.
+    #
+    # 4. Normalize the matrix so that each column sums to 1.
+    #    - You can do this by calling the existing `self.create_transition_matrix` method with the matrix you just created.
+    #
+    # 5. Return the resulting normalized matrix.
+
+===============
+```py
+import numpy as np
+# EDIT: Import `Dict` and `List` from the `typing` module to be used for type hinting.
+
+class MarkovChain:
+
+    def create_transition_matrix(self, matrix):
+        
+        matrix = np.array(matrix)
+        column_sums = np.sum(matrix, axis=0)
+        # EDIT: Before performing the division, we need to handle cases where a column sum is zero to avoid a division-by-zero error.
+        # If a column sum is 0, it means that node has no outgoing edges. We should keep the column as all zeros.
+        # A simple way to avoid the error is to replace any 0s in `column_sums` with 1s before the division.
+        # This way, `x / 1 = x`, so any column that was all zeros will remain all zeros, and we prevent the error.
+        # You can use `np.where(column_sums == 0, 1, column_sums)` to create a new array where zeros are replaced by ones.
+        normalized_matrix = matrix / column_sums
+        return normalized_matrix.tolist()
+
+    # EDIT: Add a new method here called `translate_from_list`.
+    # This method should accept `self` and one argument `adj_list`.
+    # Use type hints: `adj_list` should be `Dict[int, List[int]]` and the method should return a `List[List[float]]`.
+    #
+    # Inside this new method, perform the following steps:
+    # 1. Determine the size of the matrix. The number of states (nodes) is one more than the largest node index found in the adjacency list.
+    #    - Find the largest key in the `adj_list` dictionary.
+    #    - Find the largest value within all the lists in the `adj_list` values.
+    #    - The number of states is `max(largest_key, largest_value_in_lists) + 1`.
+    #
+    # 2. Create an empty square matrix of the calculated size, filled with zeros.
+    #    - For example, if there are `N` states, create an `N x N` matrix. `np.zeros((N, N))` is a good way to do this.
+    #
+    # 3. Populate the matrix based on the `adj_list`.
+    #    - Iterate through each item (key-value pair) in the `adj_list`. Let's call the key `node_from` and the value `connected_nodes`.
+    #    - For each `node_to` in the `connected_nodes` list:
+    #        - Set the value at `matrix[node_to][node_from]` to 1. This represents a directed edge from `node_from` to `node_to`.
+    #        - Since the edges are undirected, also set the value at `matrix[node_from][node_to]` to 1.
+    #
+    # 4. Normalize the matrix so that each column sums to 1.
+    #    - You can do this by calling the existing `self.create_transition_matrix` method with the matrix you just created.
+    #
+    # 5. Return the resulting normalized matrix.
+```

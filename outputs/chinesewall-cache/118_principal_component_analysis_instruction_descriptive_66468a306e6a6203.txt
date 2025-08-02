@@ -1,0 +1,63 @@
+[1382, 1391]
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+import pandas as pd
+
+
+class PCAFeatureReducer:
+    """Reduces the dimensionality of a dataset using their principal components."""
+
+    def __init__(self, data: pd.DataFrame, n_components: int = 2):
+        self.data = data
+        self.n_components = n_components
+        self.pca = PCA(n_components=self.n_components)
+
+    def apply_pca(self):
+        # EDIT: Before scaling the data, we need to remove features that have almost no variance.
+        # This prevents potential errors in the PCA calculation.
+        # First, calculate the variance for each column in `self.data`. You can use the `.var()` method on the DataFrame.
+        # Store the result in a variable named `variances`.
+        
+        # EDIT: Now, create a new DataFrame that includes only the columns from `self.data` whose variance is greater than 0.0.
+        # You can use the `variances` you just calculated to select the columns.
+        # Store this new filtered DataFrame in a variable, for example, `filtered_data`.
+
+        scaler = StandardScaler()
+        # EDIT: Modify the line below to use your new `filtered_data` DataFrame instead of `self.data`.
+        data_scaled = scaler.fit_transform(self.data)
+        principal_components = self.pca.fit_transform(data_scaled)
+        return principal_components
+
+===============
+```py
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+import pandas as pd
+
+
+class PCAFeatureReducer:
+    """Reduces the dimensionality of a dataset using their principal components."""
+
+    def __init__(self, data: pd.DataFrame, n_components: int = 2):
+        self.data = data
+        self.n_components = n_components
+        self.pca = PCA(n_components=self.n_components)
+
+    def apply_pca(self):
+        # EDIT: Before scaling the data, we need to remove features that have almost no variance.
+        # This prevents potential errors in the PCA calculation.
+        # First, calculate the variance for each column in `self.data`. You can use the `.var()` method on the DataFrame.
+        # Store the result in a variable named `variances`.
+        
+        # EDIT: Now, create a new DataFrame that includes only the columns from `self.data` whose variance is greater than 0.0.
+        # You can use the `variances` you just calculated to select the columns.
+        # Store this new filtered DataFrame in a variable, for example, `filtered_data`.
+
+        scaler = StandardScaler()
+        # EDIT: Modify the line below to use your new `filtered_data` DataFrame instead of `self.data`.
+        data_scaled = scaler.fit_transform(self.data)
+        principal_components = self.pca.fit_transform(data_scaled)
+        return principal_components
+```

@@ -1,0 +1,89 @@
+[2309, 2318]
+import pandas as pd
+
+class StringOperations:
+    """A class containing a series of string operations"""
+
+    def remove_duplicates(text):
+        """Returns the text with only unique characters"""
+        unique = []
+        for char in text:
+            if char not in unique:
+                unique.append(char)
+        return ''.join(unique)
+    
+    def word_reversal(text):
+        """Returns the text with words reversed"""
+        sentences = text.split(' ')
+        return ' '.join(reversed(sentences))
+    
+    def remove_vowels(text):
+        """Returnes the text with vowels removed"""
+        vowels = 'aeiou'
+        return ''.join(char for char in text if char.lower() not in vowels)
+    
+# EDIT: Add a new parameter to the function definition called `functions`. This will be a list of functions.
+def calculate_all_properties(text):
+    # EDIT: Replace the hardcoded list below with a list comprehension.
+    # The list comprehension should do the following:
+    # 1. Iterate through each function `func` in the `functions` list (the new parameter you just added).
+    # 2. For each `func`, call it with `text` as the argument (e.g., `func(text)`).
+    # 3. The results of these function calls should be collected into a new list and assigned to the `properties` variable.
+    properties = [StringOperations.remove_vowels(text), StringOperations.word_reversal(text), StringOperations.remove_duplicates(text)]
+    return properties
+
+# EDIT: Add a new parameter to the function definition called `functions`.
+def multi_apply(data, col, colnames):
+    # EDIT: The `calculate_all_properties` function now needs a second argument (`functions`), but the `apply` method only passes one argument (the text from the column) by default.
+    # To solve this, you need to change how `calculate_all_properties` is called.
+    # Replace `calculate_all_properties` with a lambda function: `lambda x: calculate_all_properties(x, functions)`.
+    # This lambda function will receive the text from the column (we'll call it `x`) and then call `calculate_all_properties` with both the text `x` and the `functions` list.
+    properties = data[col].apply(calculate_all_properties)
+    properties_columns = pd.DataFrame(properties.tolist(), columns=colnames)
+    return pd.concat([data, properties_columns], axis=1)
+
+===============
+```py
+import pandas as pd
+
+class StringOperations:
+    """A class containing a series of string operations"""
+
+    def remove_duplicates(text):
+        """Returns the text with only unique characters"""
+        unique = []
+        for char in text:
+            if char not in unique:
+                unique.append(char)
+        return ''.join(unique)
+    
+    def word_reversal(text):
+        """Returns the text with words reversed"""
+        sentences = text.split(' ')
+        return ' '.join(reversed(sentences))
+    
+    def remove_vowels(text):
+        """Returnes the text with vowels removed"""
+        vowels = 'aeiou'
+        return ''.join(char for char in text if char.lower() not in vowels)
+    
+# EDIT: Add a new parameter to the function definition called `functions`. This will be a list of functions.
+def calculate_all_properties(text):
+    # EDIT: Replace the hardcoded list below with a list comprehension.
+    # The list comprehension should do the following:
+    # 1. Iterate through each function `func` in the `functions` list (the new parameter you just added).
+    # 2. For each `func`, call it with `text` as the argument (e.g., `func(text)`).
+    # 3. The results of these function calls should be collected into a new list and assigned to the `properties` variable.
+    properties = [StringOperations.remove_vowels(text), StringOperations.word_reversal(text), StringOperations.remove_duplicates(text)]
+    return properties
+
+# EDIT: Add a new parameter to the function definition called `functions`.
+def multi_apply(data, col, colnames):
+    # EDIT: The `calculate_all_properties` function now needs a second argument (`functions`), but the `apply` method only passes one argument (the text from the column) by default.
+    # To solve this, you need to change how `calculate_all_properties` is called.
+    # Replace `calculate_all_properties` with a lambda function: `lambda x: calculate_all_properties(x, functions)`.
+    # This lambda function will receive the text from the column (we'll call it `x`) and then call `calculate_all_properties` with both the text `x` and the `functions` list.
+    properties = data[col].apply(calculate_all_properties)
+    properties_columns = pd.DataFrame(properties.tolist(), columns=colnames)
+    return pd.concat([data, properties_columns], axis=1)
+```

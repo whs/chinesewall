@@ -1,0 +1,85 @@
+[2315, 2324]
+from typing import Literal, List
+
+Op = Literal["+", "-", "*", "/"]
+Token = int | Op
+
+
+class PostfixParser:
+    def parse(self, inputs: List[Token]) -> float:
+        """parses a sequence of input tokens using postfix notation and computes the result"""
+
+        def parseHelp(inputs: List[Token], stack: List[float]) -> float:
+            if not inputs:
+                # EDIT: After processing all the input tokens, the stack should contain exactly one value, which is the final result.
+                # If the stack has more than one value, it means the original expression had too many numbers.
+                # If the stack is empty, it means the original expression was empty.
+                # In either case, the expression is malformed.
+                # 1. Check if the number of items in the `stack` is not equal to 1.
+                # 2. If it's not, raise a generic `Exception` with a descriptive error message like "Malformed expression: check operands and operators."
+                return stack[0]
+            next = inputs.pop()
+            # EDIT: An operator like '+' or '-' needs two numbers (operands) from the stack to perform its calculation.
+            # If there aren't enough numbers on the stack (e.g., for an expression like `[5, '+']`), trying to `pop()` from the stack will cause an `IndexError`.
+            # We need to catch this error and raise our own `Exception` to signal that the input is malformed.
+            # 1. Put the entire `match` statement inside a `try` block.
+            match next:
+                case "+":
+                    stack.insert(0, stack.pop() + stack.pop())
+                case "-":
+                    stack.insert(0, stack.pop() - stack.pop())
+                case "*":
+                    stack.insert(0, stack.pop() * stack.pop())
+                case "/":
+                    stack.insert(0, stack.pop() / stack.pop())
+                case _:
+                    stack.insert(0, next)
+            # EDIT: 2. After the `match` statement, add an `except` block to catch the `IndexError`.
+            # 3. Inside the `except` block, `raise` a new, generic `Exception` with a descriptive message like "Malformed expression: not enough operands for an operator."
+            return parseHelp(inputs, stack)
+
+        return parseHelp(inputs, [])
+
+===============
+```py
+from typing import Literal, List
+
+Op = Literal["+", "-", "*", "/"]
+Token = int | Op
+
+
+class PostfixParser:
+    def parse(self, inputs: List[Token]) -> float:
+        """parses a sequence of input tokens using postfix notation and computes the result"""
+
+        def parseHelp(inputs: List[Token], stack: List[float]) -> float:
+            if not inputs:
+                # EDIT: After processing all the input tokens, the stack should contain exactly one value, which is the final result.
+                # If the stack has more than one value, it means the original expression had too many numbers.
+                # If the stack is empty, it means the original expression was empty.
+                # In either case, the expression is malformed.
+                # 1. Check if the number of items in the `stack` is not equal to 1.
+                # 2. If it's not, raise a generic `Exception` with a descriptive error message like "Malformed expression: check operands and operators."
+                return stack[0]
+            next = inputs.pop()
+            # EDIT: An operator like '+' or '-' needs two numbers (operands) from the stack to perform its calculation.
+            # If there aren't enough numbers on the stack (e.g., for an expression like `[5, '+']`), trying to `pop()` from the stack will cause an `IndexError`.
+            # We need to catch this error and raise our own `Exception` to signal that the input is malformed.
+            # 1. Put the entire `match` statement inside a `try` block.
+            match next:
+                case "+":
+                    stack.insert(0, stack.pop() + stack.pop())
+                case "-":
+                    stack.insert(0, stack.pop() - stack.pop())
+                case "*":
+                    stack.insert(0, stack.pop() * stack.pop())
+                case "/":
+                    stack.insert(0, stack.pop() / stack.pop())
+                case _:
+                    stack.insert(0, next)
+            # EDIT: 2. After the `match` statement, add an `except` block to catch the `IndexError`.
+            # 3. Inside the `except` block, `raise` a new, generic `Exception` with a descriptive message like "Malformed expression: not enough operands for an operator."
+            return parseHelp(inputs, stack)
+
+        return parseHelp(inputs, [])
+```

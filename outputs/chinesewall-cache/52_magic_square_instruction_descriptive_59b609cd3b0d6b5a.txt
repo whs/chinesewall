@@ -1,0 +1,63 @@
+[1990, 1999]
+from z3 import Sum, Distinct, Solver, Int, And, sat
+from typing import List, Union
+
+# EDIT: Add a parameter to the function called `order` with a type hint of `int`. This will represent the side length of the magic square.
+def magic_square() -> Union[str, List[List[int]]]:
+    # EDIT: In the nested list comprehension below, replace both instances of `range(3)` with `range(order)`. This will create a square grid of variables with dimensions `order` by `order`.
+    y = [[Int(f'x_{i}_{j}') for j in range(3)] for i in range(3)]
+    s = Solver()
+    # EDIT: In the constraint below, the numbers in the square must be between 1 and `order * order`. Change the `9` to `order * order`.
+    s.add([And(x > 0, x <= 9) for row in y for x in row])
+    s.add(Distinct([x for row in y for x in row]))
+    magic_sum = Sum(y[0])
+    # EDIT: The loop below needs to iterate over each row and column. Change `range(3)` to `range(order)`.
+    for i in range(3):
+        s.add(Sum(y[i]) == magic_sum)
+        # EDIT: To sum up the columns correctly for any size, change `range(3)` inside the list comprehension to `range(order)`.
+        s.add(Sum([y[j][i] for j in range(3)]) == magic_sum)
+    # EDIT: To sum the main diagonal (from top-left to bottom-right), change `range(3)` to `range(order)`.
+    s.add(Sum([y[i][i] for i in range(3)]) == magic_sum)
+    # EDIT: To sum the anti-diagonal (from top-right to bottom-left), you need to make two changes.
+    # 1. Change the index `2 - i` to `order - 1 - i`. This correctly calculates the column index for any square size.
+    # 2. Change the loop's `range(3)` to `range(order)`.
+    s.add(Sum([y[i][2 - i] for i in range(3)]) == magic_sum)
+    if s.check() == sat:
+        m = s.model()
+        # EDIT: To build the final result matrix of the correct size, replace both instances of `range(3)` with `range(order)`.
+        return [[int(m.evaluate(y[i][j]).as_string()) for j in range(3)] for i in range(3)]
+    else:
+        return "No solution exists"
+
+===============
+```py
+from z3 import Sum, Distinct, Solver, Int, And, sat
+from typing import List, Union
+
+# EDIT: Add a parameter to the function called `order` with a type hint of `int`. This will represent the side length of the magic square.
+def magic_square() -> Union[str, List[List[int]]]:
+    # EDIT: In the nested list comprehension below, replace both instances of `range(3)` with `range(order)`. This will create a square grid of variables with dimensions `order` by `order`.
+    y = [[Int(f'x_{i}_{j}') for j in range(3)] for i in range(3)]
+    s = Solver()
+    # EDIT: In the constraint below, the numbers in the square must be between 1 and `order * order`. Change the `9` to `order * order`.
+    s.add([And(x > 0, x <= 9) for row in y for x in row])
+    s.add(Distinct([x for row in y for x in row]))
+    magic_sum = Sum(y[0])
+    # EDIT: The loop below needs to iterate over each row and column. Change `range(3)` to `range(order)`.
+    for i in range(3):
+        s.add(Sum(y[i]) == magic_sum)
+        # EDIT: To sum up the columns correctly for any size, change `range(3)` inside the list comprehension to `range(order)`.
+        s.add(Sum([y[j][i] for j in range(3)]) == magic_sum)
+    # EDIT: To sum the main diagonal (from top-left to bottom-right), change `range(3)` to `range(order)`.
+    s.add(Sum([y[i][i] for i in range(3)]) == magic_sum)
+    # EDIT: To sum the anti-diagonal (from top-right to bottom-left), you need to make two changes.
+    # 1. Change the index `2 - i` to `order - 1 - i`. This correctly calculates the column index for any square size.
+    # 2. Change the loop's `range(3)` to `range(order)`.
+    s.add(Sum([y[i][2 - i] for i in range(3)]) == magic_sum)
+    if s.check() == sat:
+        m = s.model()
+        # EDIT: To build the final result matrix of the correct size, replace both instances of `range(3)` with `range(order)`.
+        return [[int(m.evaluate(y[i][j]).as_string()) for j in range(3)] for i in range(3)]
+    else:
+        return "No solution exists"
+```

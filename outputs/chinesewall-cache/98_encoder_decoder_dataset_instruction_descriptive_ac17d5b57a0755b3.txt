@@ -1,0 +1,237 @@
+[5154, 5163]
+import torch
+from typing import List, Tuple
+from torch.nn.utils.rnn import pad_sequence
+from abc import ABC, abstractmethod
+
+
+def tokens_to_tensor(token_ids, sp):
+    return torch.cat((torch.tensor([sp.bos_id()]),
+                      torch.tensor(token_ids),
+                      torch.tensor([sp.eos_id()])))
+
+
+class DecoderDataset(torch.utils.data.Dataset, ABC):
+    def __init__(self, data: List[str], tokenizer):
+        self.tokenizer = tokenizer
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    @abstractmethod
+    def collate_fn(self, batch: List[torch.Tensor]) -> torch.Tensor:
+        pass
+
+    @abstractmethod
+    def __getitem__(self, idx: int) -> torch.Tensor:
+        pass
+
+
+class EncoderDecoderDataset(torch.utils.data.Dataset, ABC):
+    def __init__(self, data: List[str], input_tokenizer, output_tokenizer, split="="):
+        self.tok_in = input_tokenizer
+        self.tok_out = output_tokenizer
+        self.data = data
+        # where to split the input and output
+        # should be added back to the input after splitting
+        self.split = split
+
+    def __len__(self):
+        return len(self.data)
+
+    @abstractmethod
+    def collate_fn(self, batch: List[Tuple[torch.Tensor, torch.Tensor]]) -> Tuple[torch.Tensor, torch.Tensor]:
+        pass
+
+    @abstractmethod
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        pass
+
+class DecoderDatasetImpl(DecoderDataset):
+    def collate_fn(self, batch):
+        res_batch = []
+        for ex in batch:
+            res_batch.append(ex)
+
+        res_batch = pad_sequence(
+            res_batch, padding_value=self.tokenizer.pad_id())
+        return res_batch
+
+    def __getitem__(self, idx):
+        ex = self.data[idx]
+        ids = self.tokenizer.encode_as_ids(ex)
+        return tokens_to_tensor(ids, self.tokenizer)
+
+# EDIT: Create a new class named `EncoderDecoderDatasetImpl` that inherits from `EncoderDecoderDataset`.
+# This class will handle the data processing for an encoder-decoder model.
+
+    # EDIT: Define the `collate_fn` method. This method takes a `batch` of data samples (which are tuples of tensors)
+    # and prepares them for the model. It should pad the input and output sequences separately.
+    # The method signature should be: `def collate_fn(self, batch):`
+
+        # EDIT: Create two empty lists, `in_batch` to store input tensors and `out_batch` to store output tensors.
+
+        # EDIT: Loop through each example (`ex`) in the input `batch`.
+        # Each `ex` is a tuple containing an input tensor and an output tensor.
+
+            # EDIT: Append the first element of `ex` (the input tensor) to the `in_batch` list.
+
+            # EDIT: Append the second element of `ex` (the output tensor) to the `out_batch` list.
+
+        # EDIT: Pad the sequences in `in_batch` using the `pad_sequence` function.
+        # Set the `padding_value` to the padding token ID from the input tokenizer (`self.tok_in.pad_id()`).
+        # Store the result back in `in_batch`.
+
+        # EDIT: Pad the sequences in `out_batch` using the `pad_sequence` function.
+        # Set the `padding_value` to the padding token ID from the output tokenizer (`self.tok_out.pad_id()`).
+        # Store the result back in `out_batch`.
+
+        # EDIT: Return a tuple containing the padded `in_batch` and `out_batch`.
+
+    # EDIT: Define the `__getitem__` method. This method retrieves a single data item at a given index `idx`,
+    # splits it into an input and output part, tokenizes them, and returns them as tensors.
+    # The method signature should be: `def __getitem__(self, idx):`
+
+        # EDIT: Get the data string at the specified index `idx` from `self.data`. Store it in a variable `ex`.
+
+        # EDIT: Split the string `ex` into three parts: the part before the split character, the split character itself,
+        # and the part after. Use the `partition` method with `self.split` as the separator.
+        # Store the result in three variables, for example, `in_str`, `sep`, and `out_str`.
+
+        # EDIT: Tokenize the input part. The input part should include the original string and the separator.
+        # Concatenate `in_str` and `sep`, then encode it into token IDs using the input tokenizer (`self.tok_in.encode_as_ids`).
+        # Store the resulting list of IDs in a variable, for example, `in_ids`.
+
+        # EDIT: Tokenize the output part (`out_str`) into token IDs using the output tokenizer (`self.tok_out.encode_as_ids`).
+        # Store the resulting list of IDs in a variable, for example, `out_ids`.
+
+        # EDIT: Convert the `in_ids` list into a tensor using the `tokens_to_tensor` helper function.
+        # Pass `in_ids` and the input tokenizer `self.tok_in` to the function.
+        # Store the result in a variable, for example, `in_tensor`.
+
+        # EDIT: Convert the `out_ids` list into a tensor using the `tokens_to_tensor` helper function.
+        # Pass `out_ids` and the output tokenizer `self.tok_out` to the function.
+        # Store the result in a variable, for example, `out_tensor`.
+
+        # EDIT: Return a tuple containing the `in_tensor` and `out_tensor`.
+
+===============
+```py
+import torch
+from typing import List, Tuple
+from torch.nn.utils.rnn import pad_sequence
+from abc import ABC, abstractmethod
+
+
+def tokens_to_tensor(token_ids, sp):
+    return torch.cat((torch.tensor([sp.bos_id()]),
+                      torch.tensor(token_ids),
+                      torch.tensor([sp.eos_id()])))
+
+
+class DecoderDataset(torch.utils.data.Dataset, ABC):
+    def __init__(self, data: List[str], tokenizer):
+        self.tokenizer = tokenizer
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    @abstractmethod
+    def collate_fn(self, batch: List[torch.Tensor]) -> torch.Tensor:
+        pass
+
+    @abstractmethod
+    def __getitem__(self, idx: int) -> torch.Tensor:
+        pass
+
+
+class EncoderDecoderDataset(torch.utils.data.Dataset, ABC):
+    def __init__(self, data: List[str], input_tokenizer, output_tokenizer, split="="):
+        self.tok_in = input_tokenizer
+        self.tok_out = output_tokenizer
+        self.data = data
+        # where to split the input and output
+        # should be added back to the input after splitting
+        self.split = split
+
+    def __len__(self):
+        return len(self.data)
+
+    @abstractmethod
+    def collate_fn(self, batch: List[Tuple[torch.Tensor, torch.Tensor]]) -> Tuple[torch.Tensor, torch.Tensor]:
+        pass
+
+    @abstractmethod
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        pass
+
+class DecoderDatasetImpl(DecoderDataset):
+    def collate_fn(self, batch):
+        res_batch = []
+        for ex in batch:
+            res_batch.append(ex)
+
+        res_batch = pad_sequence(
+            res_batch, padding_value=self.tokenizer.pad_id())
+        return res_batch
+
+    def __getitem__(self, idx):
+        ex = self.data[idx]
+        ids = self.tokenizer.encode_as_ids(ex)
+        return tokens_to_tensor(ids, self.tokenizer)
+
+# EDIT: Create a new class named `EncoderDecoderDatasetImpl` that inherits from `EncoderDecoderDataset`.
+# This class will handle the data processing for an encoder-decoder model.
+
+    # EDIT: Define the `collate_fn` method. This method takes a `batch` of data samples (which are tuples of tensors)
+    # and prepares them for the model. It should pad the input and output sequences separately.
+    # The method signature should be: `def collate_fn(self, batch):`
+
+        # EDIT: Create two empty lists, `in_batch` to store input tensors and `out_batch` to store output tensors.
+
+        # EDIT: Loop through each example (`ex`) in the input `batch`.
+        # Each `ex` is a tuple containing an input tensor and an output tensor.
+
+            # EDIT: Append the first element of `ex` (the input tensor) to the `in_batch` list.
+
+            # EDIT: Append the second element of `ex` (the output tensor) to the `out_batch` list.
+
+        # EDIT: Pad the sequences in `in_batch` using the `pad_sequence` function.
+        # Set the `padding_value` to the padding token ID from the input tokenizer (`self.tok_in.pad_id()`).
+        # Store the result back in `in_batch`.
+
+        # EDIT: Pad the sequences in `out_batch` using the `pad_sequence` function.
+        # Set the `padding_value` to the padding token ID from the output tokenizer (`self.tok_out.pad_id()`).
+        # Store the result back in `out_batch`.
+
+        # EDIT: Return a tuple containing the padded `in_batch` and `out_batch`.
+
+    # EDIT: Define the `__getitem__` method. This method retrieves a single data item at a given index `idx`,
+    # splits it into an input and output part, tokenizes them, and returns them as tensors.
+    # The method signature should be: `def __getitem__(self, idx):`
+
+        # EDIT: Get the data string at the specified index `idx` from `self.data`. Store it in a variable `ex`.
+
+        # EDIT: Split the string `ex` into three parts: the part before the split character, the split character itself,
+        # and the part after. Use the `partition` method with `self.split` as the separator.
+        # Store the result in three variables, for example, `in_str`, `sep`, and `out_str`.
+
+        # EDIT: Tokenize the input part. The input part should include the original string and the separator.
+        # Concatenate `in_str` and `sep`, then encode it into token IDs using the input tokenizer (`self.tok_in.encode_as_ids`).
+        # Store the resulting list of IDs in a variable, for example, `in_ids`.
+
+        # EDIT: Tokenize the output part (`out_str`) into token IDs using the output tokenizer (`self.tok_out.encode_as_ids`).
+        # Store the resulting list of IDs in a variable, for example, `out_ids`.
+
+        # EDIT: Convert the `in_ids` list into a tensor using the `tokens_to_tensor` helper function.
+        # Pass `in_ids` and the input tokenizer `self.tok_in` to the function.
+        # Store the result in a variable, for example, `in_tensor`.
+
+        # EDIT: Convert the `out_ids` list into a tensor using the `tokens_to_tensor` helper function.
+        # Pass `out_ids` and the output tokenizer `self.tok_out` to the function.
+        # Store the result in a variable, for example, `out_tensor`.
+
+        # EDIT: Return a tuple containing the `in_tensor` and `out_tensor`.
+```

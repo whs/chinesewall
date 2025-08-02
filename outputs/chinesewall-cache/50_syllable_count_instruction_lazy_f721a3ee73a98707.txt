@@ -1,0 +1,105 @@
+[2951, 2960]
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def vowel_count(line):
+    vowel_count = 0
+    for c in line:
+        if c in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+
+def syllable_count(line):
+    syllable_count = 0
+
+    assert type(line) == str
+    line = prepare_string(line)
+
+    syllable_count += vowel_count(line)
+
+    # EDIT: Define a string variable named `vowels` containing "aeiouy". This will be used to check for vowels.
+    # EDIT: Split the `line` into a list of words using spaces as the separator. Store this in a variable called `words`.
+    
+    # EDIT: Create a `for` loop that iterates through the `words` list using an index, but stops at the second-to-last word. This allows you to compare a word with the one that follows it. For example: `for i in range(len(words) - 1):`
+        # EDIT: Inside the loop, create two variables, `word1` for the current word (at index `i`) and `word2` for the next word (at index `i + 1`).
+        
+        # EDIT: Add a check to skip the rest of the loop iteration if `word1` or `word2` is an empty string. This prevents errors from multiple spaces between words. Use `if not word1 or not word2: continue`.
+
+        # EDIT: Now, we will check for the four types of "combos". A combo means two adjacent vowels across words are counted as one syllable. Since we already counted all vowels, finding a combo means we overcounted by one, so we must subtract 1 from `syllable_count`.
+        
+        # EDIT: Create a condition to check for Combo 1: `word1` ends in a vowel AND `word2` starts with a vowel. If true, decrement `syllable_count` by 1.
+        # For example, in "la ola", the 'a' and 'o' form a combo.
+        
+        # EDIT: Add an `elif` (else if) condition to check for Combo 2: `word1` ends with a vowel followed by 'm' (e.g., "um") AND `word2` starts with a vowel.
+        # This requires checking that `word1` has at least 2 characters. If true, decrement `syllable_count` by 1.
+        # For example, in "cum aqua", the "um a" forms a combo.
+
+        # EDIT: Add an `elif` condition to check for Combo 3: `word1` ends with a vowel followed by 'h' (e.g., "ah") AND `word2` starts with a vowel.
+        # This requires checking that `word1` has at least 2 characters. If true, decrement `syllable_count` by 1.
+        # For example, in "mihi est", the "i e" forms a combo (the 'h' is effectively ignored).
+
+        # EDIT: Add an `elif` condition to check for Combo 4: `word1` ends with a vowel followed by 'm' AND `word2` starts with 'h' followed by a vowel (e.g., "ho").
+        # This requires checking the lengths of both words (at least 2 characters each). If true, decrement `syllable_count` by 1.
+        # For example, in "bonum hostis", the "um ho" forms a combo.
+
+    return syllable_count
+
+===============
+```py
+import string
+
+def prepare_string(line):
+    for char in string.punctuation:
+        line = line.replace(char, "")
+    for char in string.digits:
+        line = line.replace(char, "")
+    return line.lower()
+
+def vowel_count(line):
+    vowel_count = 0
+    for c in line:
+        if c in "aeiouy":
+            vowel_count += 1
+    return vowel_count
+
+def syllable_count(line):
+    syllable_count = 0
+
+    assert type(line) == str
+    line = prepare_string(line)
+
+    syllable_count += vowel_count(line)
+
+    # EDIT: Define a string variable named `vowels` containing "aeiouy". This will be used to check for vowels.
+    # EDIT: Split the `line` into a list of words using spaces as the separator. Store this in a variable called `words`.
+    
+    # EDIT: Create a `for` loop that iterates through the `words` list using an index, but stops at the second-to-last word. This allows you to compare a word with the one that follows it. For example: `for i in range(len(words) - 1):`
+        # EDIT: Inside the loop, create two variables, `word1` for the current word (at index `i`) and `word2` for the next word (at index `i + 1`).
+        
+        # EDIT: Add a check to skip the rest of the loop iteration if `word1` or `word2` is an empty string. This prevents errors from multiple spaces between words. Use `if not word1 or not word2: continue`.
+
+        # EDIT: Now, we will check for the four types of "combos". A combo means two adjacent vowels across words are counted as one syllable. Since we already counted all vowels, finding a combo means we overcounted by one, so we must subtract 1 from `syllable_count`.
+        
+        # EDIT: Create a condition to check for Combo 1: `word1` ends in a vowel AND `word2` starts with a vowel. If true, decrement `syllable_count` by 1.
+        # For example, in "la ola", the 'a' and 'o' form a combo.
+        
+        # EDIT: Add an `elif` (else if) condition to check for Combo 2: `word1` ends with a vowel followed by 'm' (e.g., "um") AND `word2` starts with a vowel.
+        # This requires checking that `word1` has at least 2 characters. If true, decrement `syllable_count` by 1.
+        # For example, in "cum aqua", the "um a" forms a combo.
+
+        # EDIT: Add an `elif` condition to check for Combo 3: `word1` ends with a vowel followed by 'h' (e.g., "ah") AND `word2` starts with a vowel.
+        # This requires checking that `word1` has at least 2 characters. If true, decrement `syllable_count` by 1.
+        # For example, in "mihi est", the "i e" forms a combo (the 'h' is effectively ignored).
+
+        # EDIT: Add an `elif` condition to check for Combo 4: `word1` ends with a vowel followed by 'm' AND `word2` starts with 'h' followed by a vowel (e.g., "ho").
+        # This requires checking the lengths of both words (at least 2 characters each). If true, decrement `syllable_count` by 1.
+        # For example, in "bonum hostis", the "um ho" forms a combo.
+
+    return syllable_count
+```

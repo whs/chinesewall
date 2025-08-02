@@ -1,0 +1,63 @@
+[2089, 2098]
+from z3 import Sum, Distinct, Solver, Int, And, sat
+from typing import List, Union
+
+# EDIT: Add a parameter to the function called `order` with a type hint of `int`.
+def magic_square() -> Union[str, List[List[int]]]:
+    # EDIT: The two `range(3)` calls create a 3x3 grid. To make the grid size dynamic, replace both `3`s with the `order` parameter.
+    y = [[Int(f'x_{i}_{j}') for j in range(3)] for i in range(3)]
+    s = Solver()
+    # EDIT: The numbers in a magic square of side length `order` go from 1 to `order` squared. Replace the number `9` with `order * order` to set the correct upper limit for the numbers.
+    s.add([And(x > 0, x <= 9) for row in y for x in row])
+    s.add(Distinct([x for row in y for x in row]))
+    magic_sum = Sum(y[0])
+    # EDIT: This loop sets the constraints for the sum of each row and column. It should iterate `order` times. Replace `3` with the `order` parameter.
+    for i in range(3):
+        s.add(Sum(y[i]) == magic_sum)
+        # EDIT: This inner part calculates the sum of a column. It needs to sum up `order` elements. Replace `3` with the `order` parameter.
+        s.add(Sum([y[j][i] for j in range(3)]) == magic_sum)
+    # EDIT: This line calculates the sum of the main diagonal. It should sum `order` elements. Replace `3` with the `order` parameter.
+    s.add(Sum([y[i][i] for i in range(3)]) == magic_sum)
+    # EDIT: This line calculates the sum of the anti-diagonal (from top-right to bottom-left).
+    # 1. The loop should iterate `order` times. Replace `3` with the `order` parameter.
+    # 2. The column index for the anti-diagonal is `order - 1 - i`. Replace `2` with `order - 1`.
+    s.add(Sum([y[i][2 - i] for i in range(3)]) == magic_sum)
+    if s.check() == sat:
+        m = s.model()
+        # EDIT: This part builds the final grid of numbers from the solution. The loops should iterate `order` times to build a grid of the correct size. Replace both `3`s with the `order` parameter.
+        return [[int(m.evaluate(y[i][j]).as_string()) for j in range(3)] for i in range(3)]
+    else:
+        return "No solution exists"
+
+===============
+```py
+from z3 import Sum, Distinct, Solver, Int, And, sat
+from typing import List, Union
+
+# EDIT: Add a parameter to the function called `order` with a type hint of `int`.
+def magic_square() -> Union[str, List[List[int]]]:
+    # EDIT: The two `range(3)` calls create a 3x3 grid. To make the grid size dynamic, replace both `3`s with the `order` parameter.
+    y = [[Int(f'x_{i}_{j}') for j in range(3)] for i in range(3)]
+    s = Solver()
+    # EDIT: The numbers in a magic square of side length `order` go from 1 to `order` squared. Replace the number `9` with `order * order` to set the correct upper limit for the numbers.
+    s.add([And(x > 0, x <= 9) for row in y for x in row])
+    s.add(Distinct([x for row in y for x in row]))
+    magic_sum = Sum(y[0])
+    # EDIT: This loop sets the constraints for the sum of each row and column. It should iterate `order` times. Replace `3` with the `order` parameter.
+    for i in range(3):
+        s.add(Sum(y[i]) == magic_sum)
+        # EDIT: This inner part calculates the sum of a column. It needs to sum up `order` elements. Replace `3` with the `order` parameter.
+        s.add(Sum([y[j][i] for j in range(3)]) == magic_sum)
+    # EDIT: This line calculates the sum of the main diagonal. It should sum `order` elements. Replace `3` with the `order` parameter.
+    s.add(Sum([y[i][i] for i in range(3)]) == magic_sum)
+    # EDIT: This line calculates the sum of the anti-diagonal (from top-right to bottom-left).
+    # 1. The loop should iterate `order` times. Replace `3` with the `order` parameter.
+    # 2. The column index for the anti-diagonal is `order - 1 - i`. Replace `2` with `order - 1`.
+    s.add(Sum([y[i][2 - i] for i in range(3)]) == magic_sum)
+    if s.check() == sat:
+        m = s.model()
+        # EDIT: This part builds the final grid of numbers from the solution. The loops should iterate `order` times to build a grid of the correct size. Replace both `3`s with the `order` parameter.
+        return [[int(m.evaluate(y[i][j]).as_string()) for j in range(3)] for i in range(3)]
+    else:
+        return "No solution exists"
+```

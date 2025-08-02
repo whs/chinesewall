@@ -1,0 +1,49 @@
+[853, 862]
+def find_cycles(permutation):
+
+    cycles = []
+    visited = set()
+
+    # EDIT: To work with 1-based indices, this loop should iterate through the numbers from 1 up to the length of the permutation. Change the `range` to start from 1 and go up to `len(permutation) + 1`.
+    for i in range(len(permutation)):
+        
+        if i not in visited:
+            cycle = []
+            current = i
+
+            while current not in visited:
+                visited.add(current)
+                cycle.append(current)
+                # EDIT: The `current` variable holds a 1-based number, but Python lists use 0-based indexing. To get the correct next element from the `permutation` list, you need to access the index `current - 1`.
+                current = permutation[current]
+
+            if cycle:
+                cycles.append(cycle)
+
+    return cycles
+
+===============
+```py
+def find_cycles(permutation):
+
+    cycles = []
+    visited = set()
+
+    # EDIT: To work with 1-based indices, this loop should iterate through the numbers from 1 up to the length of the permutation. Change the `range` to start from 1 and go up to `len(permutation) + 1`.
+    for i in range(len(permutation)):
+        
+        if i not in visited:
+            cycle = []
+            current = i
+
+            while current not in visited:
+                visited.add(current)
+                cycle.append(current)
+                # EDIT: The `current` variable holds a 1-based number, but Python lists use 0-based indexing. To get the correct next element from the `permutation` list, you need to access the index `current - 1`.
+                current = permutation[current]
+
+            if cycle:
+                cycles.append(cycle)
+
+    return cycles
+```

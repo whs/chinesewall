@@ -1,0 +1,21 @@
+[536, 545]
+def simpleInterest(principal, rate, periods):
+    return principal * rate * periods
+
+def compoundInterest(principal, rate, compoundFreq, periods):
+    # EDIT: The formula for compound interest requires an exponent. In Python, the exponent operator is `**`.
+    # The current code uses a multiplication operator `*` where it should use an exponent operator.
+    # Change the `*` between `(1 + (rate / compoundFreq))` and `(compoundFreq * periods)` to `**`.
+    return principal * ((1 + (rate / compoundFreq)) * (compoundFreq * periods))
+
+===============
+```py
+def simpleInterest(principal, rate, periods):
+    return principal * rate * periods
+
+def compoundInterest(principal, rate, compoundFreq, periods):
+    # EDIT: The formula for compound interest requires an exponent. In Python, the exponent operator is `**`.
+    # The current code uses a multiplication operator `*` where it should use an exponent operator.
+    # Change the `*` between `(1 + (rate / compoundFreq))` and `(compoundFreq * periods)` to `**`.
+    return principal * ((1 + (rate / compoundFreq)) * (compoundFreq * periods))
+```

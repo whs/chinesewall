@@ -1,0 +1,101 @@
+[2070, 2079]
+import math
+
+def gcd(a : int, b : int) -> int:
+    """Compute the Greatest Common Divisor (GCD) of a and b."""
+    assert a > 0 and b > 0
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def euler_totient(n : int) -> int:
+    """Compute the Euler's Totient function of n."""
+    assert n > 0 
+    if n == 1 : return 1
+    count = 0
+    for i in range(1, n):
+        if gcd(i, n) == 1:
+            count += 1
+    return count
+
+# EDIT: Define a new function here called `powermod`.
+# It should accept three integer arguments: `base`, `exp`, and `mod`.
+# It should be type-hinted to return an integer.
+# This function will calculate (base^exp) % mod.
+
+    # EDIT: First, handle the base case for the recursion.
+    # If the exponent `exp` is equal to 0, the result of any number raised to the power of 0 is 1.
+    # In that case, return 1.
+
+    # EDIT: Now, handle the recursive step.
+    # 1. Call the `powermod` function again (a recursive call) to compute the value for the exponent divided by 2.
+    #    Use `base` for the base, `exp // 2` for the exponent (note the integer division), and `mod` for the modulus.
+    #    Store the result in a temporary variable, for example, `half`.
+
+    # EDIT: 2. Check if the exponent `exp` is an even number. You can check this with `exp % 2 == 0`.
+    #    If it is even, the result is `(half * half) % mod`. Return this value.
+
+    # EDIT: 3. If the exponent `exp` is not even, it must be odd.
+    #    In this case, the result is `(base * half * half) % mod`. Return this value.
+
+
+def check_coprime_euler(a : int, b : int):
+    assert a > 0 and b > 0
+    # EDIT: Replace the expression `math.pow(a,euler_totient(b)) % b` with a call to your new `powermod` function.
+    # The `base` for `powermod` should be `a`.
+    # The `exp` for `powermod` should be the result of calling `euler_totient(b)`.
+    # The `mod` for `powermod` should be `b`.
+    # Since `powermod` will return an integer, you should also change the comparison from the float `1.0` to the integer `1`.
+    return math.pow(a,euler_totient(b)) % b == 1.0
+
+===============
+```py
+import math
+
+def gcd(a : int, b : int) -> int:
+    """Compute the Greatest Common Divisor (GCD) of a and b."""
+    assert a > 0 and b > 0
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def euler_totient(n : int) -> int:
+    """Compute the Euler's Totient function of n."""
+    assert n > 0 
+    if n == 1 : return 1
+    count = 0
+    for i in range(1, n):
+        if gcd(i, n) == 1:
+            count += 1
+    return count
+
+# EDIT: Define a new function here called `powermod`.
+# It should accept three integer arguments: `base`, `exp`, and `mod`.
+# It should be type-hinted to return an integer.
+# This function will calculate (base^exp) % mod.
+
+    # EDIT: First, handle the base case for the recursion.
+    # If the exponent `exp` is equal to 0, the result of any number raised to the power of 0 is 1.
+    # In that case, return 1.
+
+    # EDIT: Now, handle the recursive step.
+    # 1. Call the `powermod` function again (a recursive call) to compute the value for the exponent divided by 2.
+    #    Use `base` for the base, `exp // 2` for the exponent (note the integer division), and `mod` for the modulus.
+    #    Store the result in a temporary variable, for example, `half`.
+
+    # EDIT: 2. Check if the exponent `exp` is an even number. You can check this with `exp % 2 == 0`.
+    #    If it is even, the result is `(half * half) % mod`. Return this value.
+
+    # EDIT: 3. If the exponent `exp` is not even, it must be odd.
+    #    In this case, the result is `(base * half * half) % mod`. Return this value.
+
+
+def check_coprime_euler(a : int, b : int):
+    assert a > 0 and b > 0
+    # EDIT: Replace the expression `math.pow(a,euler_totient(b)) % b` with a call to your new `powermod` function.
+    # The `base` for `powermod` should be `a`.
+    # The `exp` for `powermod` should be the result of calling `euler_totient(b)`.
+    # The `mod` for `powermod` should be `b`.
+    # Since `powermod` will return an integer, you should also change the comparison from the float `1.0` to the integer `1`.
+    return math.pow(a,euler_totient(b)) % b == 1.0
+```

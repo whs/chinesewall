@@ -1,0 +1,43 @@
+[879, 888]
+class CSVParser:
+    def __init__(self, csv: str):
+        self.csv = csv
+
+    def contents(self) -> list[list[str]]:
+        lines = self.csv.split("\n")
+        output = []
+        for line in lines:
+            output.append(line.split(","))
+        return output
+
+    # EDIT: Define a new method here called `header`.
+    # It should not take any arguments other than `self`.
+    # It should have a return type hint of `list[str]`.
+        # EDIT: The header is the first line of the CSV file.
+        # 1. Get all the lines from the CSV by splitting the `self.csv` string by the newline character `\n`.
+        # 2. The first line is the first element in the list of lines you just created. Get this line.
+        # 3. The header needs to be returned as a list of strings. Split the header line by the comma character `,`.
+        # 4. Return the resulting list of strings.
+
+===============
+```py
+class CSVParser:
+    def __init__(self, csv: str):
+        self.csv = csv
+
+    def contents(self) -> list[list[str]]:
+        lines = self.csv.split("\n")
+        output = []
+        for line in lines:
+            output.append(line.split(","))
+        return output
+
+    # EDIT: Define a new method here called `header`.
+    # It should not take any arguments other than `self`.
+    # It should have a return type hint of `list[str]`.
+        # EDIT: The header is the first line of the CSV file.
+        # 1. Get all the lines from the CSV by splitting the `self.csv` string by the newline character `\n`.
+        # 2. The first line is the first element in the list of lines you just created. Get this line.
+        # 3. The header needs to be returned as a list of strings. Split the header line by the comma character `,`.
+        # 4. Return the resulting list of strings.
+```

@@ -1,0 +1,35 @@
+[1906, 1915]
+# EDIT: Define a new helper function here, before the 'format_string' function. Name it 'concatenate_nums'. It should take three arguments: 'message', 'subject', and 'object'.
+# EDIT: Inside 'concatenate_nums', we need to find the verb. The 'message' string is composed of the subject, verb, and object. We can isolate the verb by removing the subject and object from the message string.
+# EDIT: First, use the string's .replace() method to create a new string where the 'subject' part of the 'message' is replaced with an empty string ("").
+# EDIT: Then, on that new string, use the .replace() method again to replace the 'object' part with an empty string.
+# EDIT: The result is the verb, but it might have extra spaces around it. Use the .strip() method to remove any leading or trailing whitespace. Store this cleaned-up verb in a variable (e.g., 'verb').
+# EDIT: Now, create the new message string in the "object verb subject" order. Use an f-string to combine the 'object', 'verb', and 'subject' variables. Make sure there is a single space between each part, like this: f"{object} {verb} {subject}".
+# EDIT: Return the new reordered string.
+
+def format_string(name1, name2, message):
+    # EDIT: Before creating 'formattedString', we need to reorder the 'message'. Call the 'concatenate_nums' helper function you defined above.
+    # EDIT: Pass 'message' as the first argument, 'name1' as the 'subject' argument, and 'name2' as the 'object' argument.
+    # EDIT: Store the result returned by the function in a new variable, for example, 'reordered_message'.
+    # EDIT: In the f-string below, replace the 'message' variable with your new 'reordered_message' variable. This will insert the reordered message into the final string.
+    formattedString = f'Hello, {name1.lower().capitalize()}! You have a message from {name2.lower().capitalize()}. The message is: {message}'
+    return formattedString
+
+===============
+```py
+# EDIT: Define a new helper function here, before the 'format_string' function. Name it 'concatenate_nums'. It should take three arguments: 'message', 'subject', and 'object'.
+# EDIT: Inside 'concatenate_nums', we need to find the verb. The 'message' string is composed of the subject, verb, and object. We can isolate the verb by removing the subject and object from the message string.
+# EDIT: First, use the string's .replace() method to create a new string where the 'subject' part of the 'message' is replaced with an empty string ("").
+# EDIT: Then, on that new string, use the .replace() method again to replace the 'object' part with an empty string.
+# EDIT: The result is the verb, but it might have extra spaces around it. Use the .strip() method to remove any leading or trailing whitespace. Store this cleaned-up verb in a variable (e.g., 'verb').
+# EDIT: Now, create the new message string in the "object verb subject" order. Use an f-string to combine the 'object', 'verb', and 'subject' variables. Make sure there is a single space between each part, like this: f"{object} {verb} {subject}".
+# EDIT: Return the new reordered string.
+
+def format_string(name1, name2, message):
+    # EDIT: Before creating 'formattedString', we need to reorder the 'message'. Call the 'concatenate_nums' helper function you defined above.
+    # EDIT: Pass 'message' as the first argument, 'name1' as the 'subject' argument, and 'name2' as the 'object' argument.
+    # EDIT: Store the result returned by the function in a new variable, for example, 'reordered_message'.
+    # EDIT: In the f-string below, replace the 'message' variable with your new 'reordered_message' variable. This will insert the reordered message into the final string.
+    formattedString = f'Hello, {name1.lower().capitalize()}! You have a message from {name2.lower().capitalize()}. The message is: {message}'
+    return formattedString
+```

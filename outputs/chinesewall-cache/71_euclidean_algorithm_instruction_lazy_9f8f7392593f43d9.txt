@@ -1,0 +1,19 @@
+[599, 608]
+def gcd(a, b):
+    # EDIT: The arguments in the recursive call are in the wrong order, which causes the function to run forever. To fix this, the first argument should be `b`, and the second argument should be the remainder of `a` divided by `b` (written as `a % b`).
+    return a if b == 0 else gcd(a % b, b)
+
+def lcm(a, b):
+    # EDIT: The division operator `/` can produce a number with a decimal point (a float). The Least Common Multiple (LCM) should be a whole number (an integer). To ensure the result is a whole number, use the integer division operator `//`.
+    return (a * b) / gcd(a, b)
+
+===============
+```py
+def gcd(a, b):
+    # EDIT: The arguments in the recursive call are in the wrong order, which causes the function to run forever. To fix this, the first argument should be `b`, and the second argument should be the remainder of `a` divided by `b` (written as `a % b`).
+    return a if b == 0 else gcd(a % b, b)
+
+def lcm(a, b):
+    # EDIT: The division operator `/` can produce a number with a decimal point (a float). The Least Common Multiple (LCM) should be a whole number (an integer). To ensure the result is a whole number, use the integer division operator `//`.
+    return (a * b) / gcd(a, b)
+```

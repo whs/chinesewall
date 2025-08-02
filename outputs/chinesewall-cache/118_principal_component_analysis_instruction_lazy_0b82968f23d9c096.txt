@@ -1,0 +1,57 @@
+[1343, 1352]
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+import pandas as pd
+
+
+class PCAFeatureReducer:
+    """Reduces the dimensionality of a dataset using their principal components."""
+
+    def __init__(self, data: pd.DataFrame, n_components: int = 2):
+        self.data = data
+        self.n_components = n_components
+        self.pca = PCA(n_components=self.n_components)
+
+    def apply_pca(self):
+        # EDIT: Before scaling the data, we must remove any columns that have zero variance.
+        # A column with zero variance has the same value in all rows, which provides no useful information
+        # for PCA and will cause an error during the scaling step (division by zero).
+        # 1. Calculate the variance for each column of `self.data`. You can use the `.var()` method on the DataFrame.
+        # 2. Identify the columns where the variance is greater than 0.
+        # 3. Create a new DataFrame, let's call it `filtered_data`, that only includes these columns with non-zero variance.
+        scaler = StandardScaler()
+        # EDIT: Modify the line below to use the `filtered_data` DataFrame you just created, instead of `self.data`.
+        data_scaled = scaler.fit_transform(self.data)
+        principal_components = self.pca.fit_transform(data_scaled)
+        return principal_components
+
+===============
+```py
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+import pandas as pd
+
+
+class PCAFeatureReducer:
+    """Reduces the dimensionality of a dataset using their principal components."""
+
+    def __init__(self, data: pd.DataFrame, n_components: int = 2):
+        self.data = data
+        self.n_components = n_components
+        self.pca = PCA(n_components=self.n_components)
+
+    def apply_pca(self):
+        # EDIT: Before scaling the data, we must remove any columns that have zero variance.
+        # A column with zero variance has the same value in all rows, which provides no useful information
+        # for PCA and will cause an error during the scaling step (division by zero).
+        # 1. Calculate the variance for each column of `self.data`. You can use the `.var()` method on the DataFrame.
+        # 2. Identify the columns where the variance is greater than 0.
+        # 3. Create a new DataFrame, let's call it `filtered_data`, that only includes these columns with non-zero variance.
+        scaler = StandardScaler()
+        # EDIT: Modify the line below to use the `filtered_data` DataFrame you just created, instead of `self.data`.
+        data_scaled = scaler.fit_transform(self.data)
+        principal_components = self.pca.fit_transform(data_scaled)
+        return principal_components
+```

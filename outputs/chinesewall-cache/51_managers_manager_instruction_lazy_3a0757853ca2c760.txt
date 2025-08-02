@@ -1,0 +1,105 @@
+[3687, 3696]
+from typing import List, Union
+
+class Manager:
+    def __init__(self, name: str, direct_reports: List[Union["Manager", "IC"]]):
+        self.name = name
+        self.team = direct_reports
+    
+    # EDIT: Rename this method to `find_manager_n`.
+    # EDIT: Add a new parameter `n` with a type hint of `int` to this method, right after the `name` parameter. This parameter will specify how many levels up the management chain to search.
+    def find_managers_manager(self, name: str) -> List[str]:
+        all_managers_managers_names = []
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call from `find_managers_manager_help` to `find_manager_n_help`.
+                # EDIT: Pass the new parameter `n` to the `find_manager_n_help` method call, between `name` and the path list `[self.name]`.
+                all_managers_managers_names.extend(direct_report.find_managers_manager_help(name, [self.name]))
+        return sorted(list(set(all_managers_managers_names)))
+    
+    # EDIT: Rename this method to `find_manager_n_help`.
+    # EDIT: Add a new parameter `n` with a type hint of `int` to this method, right after the `name` parameter. This will carry the number of levels to search up.
+    def find_managers_manager_help(self, name: str, path: List[str]) -> List[str]:
+        # EDIT: The logic of this function needs to be completely replaced to handle the variable `n`.
+        # 1. Create an empty list to store the names of the managers we find. Let's call it `found_managers`.
+        # 2. Check if the current manager's name (`self.name`) is the target `name`.
+        #    - If it is, we need to find the manager `n` levels up. The list of managers above the current one is `path`.
+        #    - Before trying to get the manager, check if the `path` is long enough (i.e., `len(path) >= n`).
+        #    - If it is long enough, the manager we want is at index `-n` in the `path` list. Add this manager's name to `found_managers`.
+        # 3. Loop through each `direct_report` in the current manager's team (`self.team`).
+        # 4. Inside the loop, check if the `direct_report` is a `Manager`.
+        #    - If it is, we need to search deeper. Call this same method (`find_manager_n_help`) on the `direct_report`.
+        #    - Pass the original `name` and `n`. The new path will be the current `path` plus the current manager's name (`self.name`).
+        #    - Add all the names returned from this call to your `found_managers` list.
+        # 5. As an alternative check (`elif`), see if the `direct_report` is an `IC` AND its name matches the target `name`.
+        #    - If it is, we've found the employee. The path to this employee is the current `path` plus the current manager's name (`self.name`).
+        #    - Check if this new path to the employee is long enough (i.e., its length is `>= n`).
+        #    - If it is, the manager we want is at index `-n` of this new path. Add this manager's name to `found_managers`.
+        # 6. After the loop finishes, return the `found_managers` list.
+        managers_managers_names = []
+        if self.name == name and len(path) >= 2:
+            managers_managers_names.append(path[-2])
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                managers_managers_names.extend(direct_report.find_managers_manager_help(name, path + [self.name]))
+            elif direct_report.name == name and len(path) >= 1:
+                managers_managers_names.append(path[-1])
+        return managers_managers_names
+    
+class IC:
+    def __init__(self, name: str):
+        self.name = name
+
+===============
+```py
+from typing import List, Union
+
+class Manager:
+    def __init__(self, name: str, direct_reports: List[Union["Manager", "IC"]]):
+        self.name = name
+        self.team = direct_reports
+    
+    # EDIT: Rename this method to `find_manager_n`.
+    # EDIT: Add a new parameter `n` with a type hint of `int` to this method, right after the `name` parameter. This parameter will specify how many levels up the management chain to search.
+    def find_managers_manager(self, name: str) -> List[str]:
+        all_managers_managers_names = []
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                # EDIT: Change the method call from `find_managers_manager_help` to `find_manager_n_help`.
+                # EDIT: Pass the new parameter `n` to the `find_manager_n_help` method call, between `name` and the path list `[self.name]`.
+                all_managers_managers_names.extend(direct_report.find_managers_manager_help(name, [self.name]))
+        return sorted(list(set(all_managers_managers_names)))
+    
+    # EDIT: Rename this method to `find_manager_n_help`.
+    # EDIT: Add a new parameter `n` with a type hint of `int` to this method, right after the `name` parameter. This will carry the number of levels to search up.
+    def find_managers_manager_help(self, name: str, path: List[str]) -> List[str]:
+        # EDIT: The logic of this function needs to be completely replaced to handle the variable `n`.
+        # 1. Create an empty list to store the names of the managers we find. Let's call it `found_managers`.
+        # 2. Check if the current manager's name (`self.name`) is the target `name`.
+        #    - If it is, we need to find the manager `n` levels up. The list of managers above the current one is `path`.
+        #    - Before trying to get the manager, check if the `path` is long enough (i.e., `len(path) >= n`).
+        #    - If it is long enough, the manager we want is at index `-n` in the `path` list. Add this manager's name to `found_managers`.
+        # 3. Loop through each `direct_report` in the current manager's team (`self.team`).
+        # 4. Inside the loop, check if the `direct_report` is a `Manager`.
+        #    - If it is, we need to search deeper. Call this same method (`find_manager_n_help`) on the `direct_report`.
+        #    - Pass the original `name` and `n`. The new path will be the current `path` plus the current manager's name (`self.name`).
+        #    - Add all the names returned from this call to your `found_managers` list.
+        # 5. As an alternative check (`elif`), see if the `direct_report` is an `IC` AND its name matches the target `name`.
+        #    - If it is, we've found the employee. The path to this employee is the current `path` plus the current manager's name (`self.name`).
+        #    - Check if this new path to the employee is long enough (i.e., its length is `>= n`).
+        #    - If it is, the manager we want is at index `-n` of this new path. Add this manager's name to `found_managers`.
+        # 6. After the loop finishes, return the `found_managers` list.
+        managers_managers_names = []
+        if self.name == name and len(path) >= 2:
+            managers_managers_names.append(path[-2])
+        for direct_report in self.team:
+            if isinstance(direct_report, Manager):
+                managers_managers_names.extend(direct_report.find_managers_manager_help(name, path + [self.name]))
+            elif direct_report.name == name and len(path) >= 1:
+                managers_managers_names.append(path[-1])
+        return managers_managers_names
+    
+class IC:
+    def __init__(self, name: str):
+        self.name = name
+```

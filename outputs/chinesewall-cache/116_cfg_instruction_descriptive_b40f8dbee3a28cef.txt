@@ -1,0 +1,191 @@
+[4625, 4634]
+from typing import Literal, List
+
+# EDIT: Add "for" to the list of possible tokens, as it is used in the new `for` loop grammar rule.
+Token = Literal["expr", ";", "if", "(", ")", "other"]
+# EDIT: Add "optexpr" to the list of possible non-terminals. This is required because the new helper method for parsing optional expressions will create `ParseTree` nodes with this type.
+NonTerminal = Literal["stmt"]
+
+
+class ParseTree:
+    def __init__(self, children, nonterminal: NonTerminal):
+        self.children = children
+        self.nonterminal = nonterminal
+
+    def __eq__(self, obj) -> bool:
+        if not isinstance(obj, ParseTree):
+            return False
+        if isinstance(obj, ParseTree) and obj.nonterminal != self.nonterminal:
+            return False
+        else:
+            if len(self.children) != len(obj.children):
+                return False
+            else:
+                for i, child in enumerate(obj.children):
+                    if child != self.children[i]:
+                        return False
+            return True
+
+
+class Parser:
+    Malformed = ValueError("input is not in the language accepted by this grammar")
+
+    def __init__(self):
+        self.inputs = []
+        self.lookahead = 0
+
+    def parse(self, inputs: List[Token]) -> ParseTree:
+        self.inputs = inputs
+        self.lookahead = 0
+        temp = self.stmt()
+        if self.lookahead != len(self.inputs):
+            raise Parser.Malformed
+        else:
+            return temp
+
+    def match(self, terminal: Token):
+        if terminal == self.inputs[self.lookahead]:
+            self.lookahead += 1
+        else:
+            raise Parser.Malformed
+
+    def stmt(self) -> ParseTree:
+        match self.inputs[self.lookahead]:
+            case "expr":
+                self.match("expr")
+                self.match(";")
+                return ParseTree(["expr", ";"], "stmt")
+            case "if":
+                self.match("if")
+                self.match("(")
+                self.match("expr")
+                self.match(")")
+                return ParseTree(["if", "(", "expr", ")", self.stmt()], "stmt")
+            # EDIT: Add a new case here to handle the "for" token, placed before the "other" case.
+            # This case will parse a for loop according to the grammar: for ( optexpr ; optexpr ; optexpr ) stmt
+            # To implement this:
+            # 1. Match the "for" token.
+            # 2. Match the opening parenthesis "(".
+            # 3. Call a new helper method, `self.optexpr()`, to parse the first optional expression (the initializer).
+            # 4. Match the semicolon ";".
+            # 5. Call `self.optexpr()` again to parse the second optional expression (the condition).
+            # 6. Match the second semicolon ";".
+            # 7. Call `self.optexpr()` a third time to parse the final optional expression (the increment).
+            # 8. Match the closing parenthesis ")".
+            # 9. Recursively call `self.stmt()` to parse the body of the for loop.
+            # 10. Return a new `ParseTree` for the "stmt" non-terminal. The children of this tree should be a list containing all the tokens and parse trees you just parsed, in order: "for", "(", the result of the first optexpr call, ";", the result of the second optexpr call, ";", the result of the third optexpr call, ")", and the result of the recursive stmt call.
+            case "other":
+                self.match("other")
+                return ParseTree(["other"], "stmt")
+            case _:
+                raise Parser.Malformed
+
+    # EDIT: After the `stmt` method, define a new method called `optexpr`. It should take no arguments (other than `self`) and return a `ParseTree`.
+    # This method will parse an optional expression (`optexpr`) based on the grammar: optexpr := expr | e
+    # where 'e' represents an empty string.
+    # To implement this:
+    # 1. Check if the parser has more tokens to read AND if the current token is "expr".
+    #    (A safe way to check is `self.lookahead < len(self.inputs) and self.inputs[self.lookahead] == "expr"`).
+    # 2. If the condition is true (the token is "expr"):
+    #    a. Match the "expr" token by calling `self.match("expr")`.
+    #    b. Return a new `ParseTree` with "optexpr" as the nonterminal and a list containing the string "expr" as its children.
+    # 3. Otherwise (if there are no more tokens or the current token is not "expr"), this represents the empty case 'e':
+    #    a. Do not advance the parser (i.e., do not call `match`).
+    #    b. Return a new `ParseTree` with "optexpr" as the nonterminal and an empty list as its children.
+
+===============
+```py
+from typing import Literal, List
+
+# EDIT: Add "for" to the list of possible tokens, as it is used in the new `for` loop grammar rule.
+Token = Literal["expr", ";", "if", "(", ")", "other"]
+# EDIT: Add "optexpr" to the list of possible non-terminals. This is required because the new helper method for parsing optional expressions will create `ParseTree` nodes with this type.
+NonTerminal = Literal["stmt"]
+
+
+class ParseTree:
+    def __init__(self, children, nonterminal: NonTerminal):
+        self.children = children
+        self.nonterminal = nonterminal
+
+    def __eq__(self, obj) -> bool:
+        if not isinstance(obj, ParseTree):
+            return False
+        if isinstance(obj, ParseTree) and obj.nonterminal != self.nonterminal:
+            return False
+        else:
+            if len(self.children) != len(obj.children):
+                return False
+            else:
+                for i, child in enumerate(obj.children):
+                    if child != self.children[i]:
+                        return False
+            return True
+
+
+class Parser:
+    Malformed = ValueError("input is not in the language accepted by this grammar")
+
+    def __init__(self):
+        self.inputs = []
+        self.lookahead = 0
+
+    def parse(self, inputs: List[Token]) -> ParseTree:
+        self.inputs = inputs
+        self.lookahead = 0
+        temp = self.stmt()
+        if self.lookahead != len(self.inputs):
+            raise Parser.Malformed
+        else:
+            return temp
+
+    def match(self, terminal: Token):
+        if terminal == self.inputs[self.lookahead]:
+            self.lookahead += 1
+        else:
+            raise Parser.Malformed
+
+    def stmt(self) -> ParseTree:
+        match self.inputs[self.lookahead]:
+            case "expr":
+                self.match("expr")
+                self.match(";")
+                return ParseTree(["expr", ";"], "stmt")
+            case "if":
+                self.match("if")
+                self.match("(")
+                self.match("expr")
+                self.match(")")
+                return ParseTree(["if", "(", "expr", ")", self.stmt()], "stmt")
+            # EDIT: Add a new case here to handle the "for" token, placed before the "other" case.
+            # This case will parse a for loop according to the grammar: for ( optexpr ; optexpr ; optexpr ) stmt
+            # To implement this:
+            # 1. Match the "for" token.
+            # 2. Match the opening parenthesis "(".
+            # 3. Call a new helper method, `self.optexpr()`, to parse the first optional expression (the initializer).
+            # 4. Match the semicolon ";".
+            # 5. Call `self.optexpr()` again to parse the second optional expression (the condition).
+            # 6. Match the second semicolon ";".
+            # 7. Call `self.optexpr()` a third time to parse the final optional expression (the increment).
+            # 8. Match the closing parenthesis ")".
+            # 9. Recursively call `self.stmt()` to parse the body of the for loop.
+            # 10. Return a new `ParseTree` for the "stmt" non-terminal. The children of this tree should be a list containing all the tokens and parse trees you just parsed, in order: "for", "(", the result of the first optexpr call, ";", the result of the second optexpr call, ";", the result of the third optexpr call, ")", and the result of the recursive stmt call.
+            case "other":
+                self.match("other")
+                return ParseTree(["other"], "stmt")
+            case _:
+                raise Parser.Malformed
+
+    # EDIT: After the `stmt` method, define a new method called `optexpr`. It should take no arguments (other than `self`) and return a `ParseTree`.
+    # This method will parse an optional expression (`optexpr`) based on the grammar: optexpr := expr | e
+    # where 'e' represents an empty string.
+    # To implement this:
+    # 1. Check if the parser has more tokens to read AND if the current token is "expr".
+    #    (A safe way to check is `self.lookahead < len(self.inputs) and self.inputs[self.lookahead] == "expr"`).
+    # 2. If the condition is true (the token is "expr"):
+    #    a. Match the "expr" token by calling `self.match("expr")`.
+    #    b. Return a new `ParseTree` with "optexpr" as the nonterminal and a list containing the string "expr" as its children.
+    # 3. Otherwise (if there are no more tokens or the current token is not "expr"), this represents the empty case 'e':
+    #    a. Do not advance the parser (i.e., do not call `match`).
+    #    b. Return a new `ParseTree` with "optexpr" as the nonterminal and an empty list as its children.
+```

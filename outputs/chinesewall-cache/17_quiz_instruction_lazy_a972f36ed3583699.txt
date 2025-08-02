@@ -1,0 +1,81 @@
+[1921, 1930]
+class Quiz:
+
+    def __init__(self, questions, answers):
+        self.questions = questions
+        self.answers = answers
+        self.total_questions = len(questions)
+        self.score = 0
+        # EDIT: Create a new variable called 'skipped' on this object (using 'self'). Initialize it to 0. This variable will keep track of how many questions the user has skipped.
+        self.current_question = 0
+
+    def check_answer(self, question_index, answer) -> bool:
+        if self.answers[question_index] == answer:
+            self.score += 1
+            return True
+        return False
+
+    def next_question(self):
+        if self.current_question == self.total_questions:
+            raise IndexError("No more questions!")
+        else:
+            q = self.questions[self.current_question]
+            self.current_question += 1
+            return q
+    
+    # EDIT: Define a new method here called `skip_question`. It should take `self` as its only parameter.
+    # The purpose of this method is to skip the current question and move to the next one.
+    # 1. First, increase the value of `self.skipped` by 1 to record that a question was skipped.
+    # 2. Then, call the `self.next_question()` method. This will handle moving to the next question and returning its text.
+    # 3. Finally, return the value that you get from calling `self.next_question()`.
+
+    def add_question(self, question, answer):
+        self.questions.append(question)
+        self.answers.append(answer)
+        self.total_questions += 1
+    
+    def display_results(self):
+        # EDIT: Modify the string being returned below. Add a new line that displays the number of skipped questions. The new line should read "Skipped Questions: {self.skipped}". Make sure to include a newline character `\n` before it so it appears on its own line.
+        return f"Total Questions: {self.total_questions}\nTotal Points Obtained: {self.score}"
+
+===============
+```py
+class Quiz:
+
+    def __init__(self, questions, answers):
+        self.questions = questions
+        self.answers = answers
+        self.total_questions = len(questions)
+        self.score = 0
+        # EDIT: Create a new variable called 'skipped' on this object (using 'self'). Initialize it to 0. This variable will keep track of how many questions the user has skipped.
+        self.current_question = 0
+
+    def check_answer(self, question_index, answer) -> bool:
+        if self.answers[question_index] == answer:
+            self.score += 1
+            return True
+        return False
+
+    def next_question(self):
+        if self.current_question == self.total_questions:
+            raise IndexError("No more questions!")
+        else:
+            q = self.questions[self.current_question]
+            self.current_question += 1
+            return q
+    
+    # EDIT: Define a new method here called `skip_question`. It should take `self` as its only parameter.
+    # The purpose of this method is to skip the current question and move to the next one.
+    # 1. First, increase the value of `self.skipped` by 1 to record that a question was skipped.
+    # 2. Then, call the `self.next_question()` method. This will handle moving to the next question and returning its text.
+    # 3. Finally, return the value that you get from calling `self.next_question()`.
+
+    def add_question(self, question, answer):
+        self.questions.append(question)
+        self.answers.append(answer)
+        self.total_questions += 1
+    
+    def display_results(self):
+        # EDIT: Modify the string being returned below. Add a new line that displays the number of skipped questions. The new line should read "Skipped Questions: {self.skipped}". Make sure to include a newline character `\n` before it so it appears on its own line.
+        return f"Total Questions: {self.total_questions}\nTotal Points Obtained: {self.score}"
+```

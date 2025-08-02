@@ -1,0 +1,43 @@
+[1647, 1656]
+import torch
+
+
+# EDIT: Add a new parameter to the function called `num_samples`. This parameter should be an integer (`int`) and have a default value of 100000.
+def kl_div(q: torch.distributions.Distribution, p: torch.distributions.Distribution) -> torch.Tensor:
+    # EDIT: The current line calculates the exact KL divergence. We need to replace it with a Monte Carlo approximation, which estimates the value using random samples.
+    # The formula for the Monte Carlo approximation of KL divergence is the average of `log(q(x)) - log(p(x))` where samples `x` are drawn from the distribution `q`.
+    #
+    # Here are the steps to implement this:
+    # 1. Draw `num_samples` from the distribution `q`.
+    #    Hint: Use the `rsample` method on the `q` object. The `sample_shape` argument should be a tuple containing `num_samples`, like `(num_samples,)`. Store the result in a variable, for example, `samples`.
+    # 2. Calculate the log probability of the `samples` under the distribution `q`.
+    #    Hint: Use the `log_prob` method on the `q` object, passing your `samples` variable to it.
+    # 3. Calculate the log probability of the `samples` under the distribution `p`.
+    #    Hint: Use the `log_prob` method on the `p` object, passing your `samples` variable to it.
+    # 4. Subtract the result of step 3 from the result of step 2. This gives you the `log(q(x)) - log(p(x))` part for each sample.
+    # 5. Calculate the average (mean) of the result from step 4. This is the final approximation.
+    # 6. Return the calculated mean. This new logic will replace the line below.
+    return torch.distributions.kl_divergence(q, p).mean()
+
+===============
+```py
+import torch
+
+
+# EDIT: Add a new parameter to the function called `num_samples`. This parameter should be an integer (`int`) and have a default value of 100000.
+def kl_div(q: torch.distributions.Distribution, p: torch.distributions.Distribution) -> torch.Tensor:
+    # EDIT: The current line calculates the exact KL divergence. We need to replace it with a Monte Carlo approximation, which estimates the value using random samples.
+    # The formula for the Monte Carlo approximation of KL divergence is the average of `log(q(x)) - log(p(x))` where samples `x` are drawn from the distribution `q`.
+    #
+    # Here are the steps to implement this:
+    # 1. Draw `num_samples` from the distribution `q`.
+    #    Hint: Use the `rsample` method on the `q` object. The `sample_shape` argument should be a tuple containing `num_samples`, like `(num_samples,)`. Store the result in a variable, for example, `samples`.
+    # 2. Calculate the log probability of the `samples` under the distribution `q`.
+    #    Hint: Use the `log_prob` method on the `q` object, passing your `samples` variable to it.
+    # 3. Calculate the log probability of the `samples` under the distribution `p`.
+    #    Hint: Use the `log_prob` method on the `p` object, passing your `samples` variable to it.
+    # 4. Subtract the result of step 3 from the result of step 2. This gives you the `log(q(x)) - log(p(x))` part for each sample.
+    # 5. Calculate the average (mean) of the result from step 4. This is the final approximation.
+    # 6. Return the calculated mean. This new logic will replace the line below.
+    return torch.distributions.kl_divergence(q, p).mean()
+```

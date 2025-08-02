@@ -1,0 +1,17 @@
+[624, 633]
+import math
+
+def heronArea(sideLength1, sideLength2, sideLength3):
+    semiperimeter = (sideLength1 + sideLength2 + sideLength3)/2
+    # EDIT: The calculation on the next line is incorrect due to a missing pair of parentheses. Because of the order of operations, the multiplication `* semiperimeter` will be performed before the subtraction `- sideLength3`. To fix this, you need to enclose the `semiperimeter - sideLength3` part in parentheses `()` so that the subtraction is performed first.
+    return math.sqrt(semiperimeter * (semiperimeter - sideLength1) * (semiperimeter - sideLength2) * semiperimeter - sideLength3)
+
+===============
+```py
+import math
+
+def heronArea(sideLength1, sideLength2, sideLength3):
+    semiperimeter = (sideLength1 + sideLength2 + sideLength3)/2
+    # EDIT: The calculation on the next line is incorrect due to a missing pair of parentheses. Because of the order of operations, the multiplication `* semiperimeter` will be performed before the subtraction `- sideLength3`. To fix this, you need to enclose the `semiperimeter - sideLength3` part in parentheses `()` so that the subtraction is performed first.
+    return math.sqrt(semiperimeter * (semiperimeter - sideLength1) * (semiperimeter - sideLength2) * semiperimeter - sideLength3)
+```

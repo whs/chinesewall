@@ -1,0 +1,147 @@
+[2899, 2908]
+class Cipher:
+
+    def __init__(self):
+        self.ciphers = {
+            "default": {
+                'a': 'b',
+                'b': 'a',
+                'c': 'e',
+                'd': 'd',
+                'e': 'c',
+                'f': 'g',
+                'g': 'f',
+                'h': 'i',
+                'i': 'h',
+                'j': 'k',
+                'k': 'j',
+                'l': 'm',
+                'm': 'l',
+                'n': 'o',
+                'o': 'n',
+                'p': 'q',
+                'q': 'p',
+                'r': 's',
+                's': 'r',
+                't': 'u',
+                'u': 't',
+                'v': 'w',
+                'w': 'v',
+                'x': 'y',
+                'y': 'x',
+                'z': 'z'}
+        }
+
+    def translate(self, cipher, text):
+        result = ""
+        dic = self.ciphers[cipher]
+        for s in text:
+            result += dic[s]
+        return result
+
+    def add_cipher(self, name, cipher):
+        dic = {}
+        lets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        for c, l in zip(cipher, lets):
+            dic[l] = c
+        self.ciphers[name] = cipher
+
+    # EDIT: Define a new method here called `caesar_cipher`. It should accept three arguments: `self`, `name`, and `shift`.
+    # `name` will be the name for the new cipher, and `shift` will be the number of places to shift letters.
+    
+        # EDIT: Create a list containing all the lowercase letters of the alphabet from 'a' to 'z'. Let's call it `alphabet`.
+        
+        # EDIT: Create a new, empty dictionary to hold the cipher mapping. Let's call it `new_cipher`.
+        
+        # EDIT: Start a loop that goes through each letter in your `alphabet` list. A `for` loop is a good choice.
+        # It's helpful to get both the index (position) of the letter and the letter itself. The `enumerate` function can help with this.
+        # For example: `for index, letter in enumerate(alphabet):`
+        
+            # EDIT: Inside the loop, calculate the new, shifted index for the current letter.
+            # The formula is: `(index + shift) % 26`.
+            # The `% 26` (modulo operator) ensures that if the index goes past 25 (the index for 'z'), it wraps back to the beginning of the alphabet.
+            
+            # EDIT: Get the new letter from the `alphabet` list using the new index you just calculated.
+            
+            # EDIT: Add a new key-value pair to your `new_cipher` dictionary.
+            # The key should be the original `letter` from the loop.
+            # The value should be the `new_letter` you just found.
+            
+        # EDIT: After the loop finishes, add the `new_cipher` dictionary to `self.ciphers`.
+        # The key should be the `name` that was passed into this method.
+
+===============
+```py
+class Cipher:
+
+    def __init__(self):
+        self.ciphers = {
+            "default": {
+                'a': 'b',
+                'b': 'a',
+                'c': 'e',
+                'd': 'd',
+                'e': 'c',
+                'f': 'g',
+                'g': 'f',
+                'h': 'i',
+                'i': 'h',
+                'j': 'k',
+                'k': 'j',
+                'l': 'm',
+                'm': 'l',
+                'n': 'o',
+                'o': 'n',
+                'p': 'q',
+                'q': 'p',
+                'r': 's',
+                's': 'r',
+                't': 'u',
+                'u': 't',
+                'v': 'w',
+                'w': 'v',
+                'x': 'y',
+                'y': 'x',
+                'z': 'z'}
+        }
+
+    def translate(self, cipher, text):
+        result = ""
+        dic = self.ciphers[cipher]
+        for s in text:
+            result += dic[s]
+        return result
+
+    def add_cipher(self, name, cipher):
+        dic = {}
+        lets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        for c, l in zip(cipher, lets):
+            dic[l] = c
+        self.ciphers[name] = cipher
+
+    # EDIT: Define a new method here called `caesar_cipher`. It should accept three arguments: `self`, `name`, and `shift`.
+    # `name` will be the name for the new cipher, and `shift` will be the number of places to shift letters.
+    
+        # EDIT: Create a list containing all the lowercase letters of the alphabet from 'a' to 'z'. Let's call it `alphabet`.
+        
+        # EDIT: Create a new, empty dictionary to hold the cipher mapping. Let's call it `new_cipher`.
+        
+        # EDIT: Start a loop that goes through each letter in your `alphabet` list. A `for` loop is a good choice.
+        # It's helpful to get both the index (position) of the letter and the letter itself. The `enumerate` function can help with this.
+        # For example: `for index, letter in enumerate(alphabet):`
+        
+            # EDIT: Inside the loop, calculate the new, shifted index for the current letter.
+            # The formula is: `(index + shift) % 26`.
+            # The `% 26` (modulo operator) ensures that if the index goes past 25 (the index for 'z'), it wraps back to the beginning of the alphabet.
+            
+            # EDIT: Get the new letter from the `alphabet` list using the new index you just calculated.
+            
+            # EDIT: Add a new key-value pair to your `new_cipher` dictionary.
+            # The key should be the original `letter` from the loop.
+            # The value should be the `new_letter` you just found.
+            
+        # EDIT: After the loop finishes, add the `new_cipher` dictionary to `self.ciphers`.
+        # The key should be the `name` that was passed into this method.
+```

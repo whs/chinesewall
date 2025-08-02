@@ -1,0 +1,49 @@
+[896, 905]
+def find_primes(end: int):
+
+    primes = []
+    is_prime = [True] * (end + 1)
+
+    # EDIT: The numbers 0 and 1 are not considered prime numbers. You should explicitly mark them as not prime.
+    # Right here, set the elements at index 0 and 1 of the `is_prime` list to `False`.
+
+    # EDIT: The Sieve of Eratosthenes algorithm works by eliminating multiples of prime numbers. The first prime number is 2.
+    # This loop should start checking from 2, but it currently starts from 1, which is incorrect.
+    # Change the starting number of this `range` from 1 to 2.
+    for num in range(1, int(end**0.5) + 1):
+        if is_prime[num]:
+            primes.append(num)
+            for multiple in range(num * num, end + 1, num):
+                is_prime[multiple] = False
+
+    for num in range(int(end**0.5) + 1, end + 1):
+        if is_prime[num]:
+            primes.append(num)
+
+    return primes
+
+===============
+```py
+def find_primes(end: int):
+
+    primes = []
+    is_prime = [True] * (end + 1)
+
+    # EDIT: The numbers 0 and 1 are not considered prime numbers. You should explicitly mark them as not prime.
+    # Right here, set the elements at index 0 and 1 of the `is_prime` list to `False`.
+
+    # EDIT: The Sieve of Eratosthenes algorithm works by eliminating multiples of prime numbers. The first prime number is 2.
+    # This loop should start checking from 2, but it currently starts from 1, which is incorrect.
+    # Change the starting number of this `range` from 1 to 2.
+    for num in range(1, int(end**0.5) + 1):
+        if is_prime[num]:
+            primes.append(num)
+            for multiple in range(num * num, end + 1, num):
+                is_prime[multiple] = False
+
+    for num in range(int(end**0.5) + 1, end + 1):
+        if is_prime[num]:
+            primes.append(num)
+
+    return primes
+```

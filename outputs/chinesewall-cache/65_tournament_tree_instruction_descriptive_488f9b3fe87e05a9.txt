@@ -1,0 +1,159 @@
+[3508, 3517]
+from typing import Optional, Union
+
+
+class Player:
+    """
+    A player and its rating; the rating is always a positive integer (>= 0).
+    """
+
+    def __init__(self, name, rating):
+        self.name = name
+        assert isinstance(rating, int) and rating >= 0
+        self.rating = rating
+
+    # EDIT: Add a new method here called `against`.
+    # It should accept two arguments: `self` and `other`. `other` will be another `Player` object.
+    # The method should return the `Player` object that wins.
+    # The logic for winning is as follows:
+    # 1. If `self.rating` is greater than `other.rating`, return `self`.
+    # 2. If `other.rating` is greater than `self.rating`, return `other`.
+    # 3. If the ratings are equal, compare their names. The player whose name comes first alphabetically wins.
+    #    - If `self.name` is less than `other.name`, return `self`.
+    #    - Otherwise, return `other`.
+    # Remember to add type hints: `other` should be hinted as `'Player'` and the return value as `'Player'`.
+
+
+class TournamentTreeNode:
+    """
+    A tournament tree, where the leaves are players and the internal nodes are
+    matches and leaves are players.
+    """
+
+    def __init__(self, left: Union['TournamentTreeNode', Player], right: Union['TournamentTreeNode', Player]):
+        self.left = left
+        self.right = right
+
+    # EDIT: Remove the entire `who_won` method below.
+    def who_won(self) -> Optional[Player]:
+        """
+        Return the player that won this match. If the match is not yet played (i.e. the
+        left and right subtrees are not leaves), return None.
+        Ties are broken by the player with the lower name (lexicographically).
+        """
+        if isinstance(self.left, Player) and isinstance(self.right, Player):
+            if self.left.rating > self.right.rating:
+                return self.left
+            elif self.left.rating == self.right.rating:
+                # ties broken by name
+                if self.left.name < self.right.name:
+                    return self.left
+                else:
+                    return self.right
+            else:
+                return self.right
+        else:
+            return None
+
+    def play(self):
+        """
+        Play the match at this node. If the match is already played, do nothing.
+        """
+        if isinstance(self.left, Player) and isinstance(self.right, Player):
+            return
+        else:
+            if isinstance(self.left, TournamentTreeNode):
+                self.left.play()
+                # EDIT: Replace the line below.
+                # After the `self.left.play()` call, the `self.left` node contains two players in its `left` and `right` attributes.
+                # We need to determine the winner between these two players.
+                # Call the `against` method on the player at `self.left.left` and pass `self.left.right` as the argument.
+                # Assign the winning player that is returned by the `against` method back to `self.left`.
+                self.left = self.left.who_won()
+            if isinstance(self.right, TournamentTreeNode):
+                self.right.play()
+                # EDIT: Replace the line below using the same logic as the edit above, but for the `self.right` subtree.
+                # Call the `against` method on the player at `self.right.left` and pass `self.right.right` as the argument.
+                # Assign the winning player back to `self.right`.
+                self.right = self.right.who_won()
+
+===============
+```py
+from typing import Optional, Union
+
+
+class Player:
+    """
+    A player and its rating; the rating is always a positive integer (>= 0).
+    """
+
+    def __init__(self, name, rating):
+        self.name = name
+        assert isinstance(rating, int) and rating >= 0
+        self.rating = rating
+
+    # EDIT: Add a new method here called `against`.
+    # It should accept two arguments: `self` and `other`. `other` will be another `Player` object.
+    # The method should return the `Player` object that wins.
+    # The logic for winning is as follows:
+    # 1. If `self.rating` is greater than `other.rating`, return `self`.
+    # 2. If `other.rating` is greater than `self.rating`, return `other`.
+    # 3. If the ratings are equal, compare their names. The player whose name comes first alphabetically wins.
+    #    - If `self.name` is less than `other.name`, return `self`.
+    #    - Otherwise, return `other`.
+    # Remember to add type hints: `other` should be hinted as `'Player'` and the return value as `'Player'`.
+
+
+class TournamentTreeNode:
+    """
+    A tournament tree, where the leaves are players and the internal nodes are
+    matches and leaves are players.
+    """
+
+    def __init__(self, left: Union['TournamentTreeNode', Player], right: Union['TournamentTreeNode', Player]):
+        self.left = left
+        self.right = right
+
+    # EDIT: Remove the entire `who_won` method below.
+    def who_won(self) -> Optional[Player]:
+        """
+        Return the player that won this match. If the match is not yet played (i.e. the
+        left and right subtrees are not leaves), return None.
+        Ties are broken by the player with the lower name (lexicographically).
+        """
+        if isinstance(self.left, Player) and isinstance(self.right, Player):
+            if self.left.rating > self.right.rating:
+                return self.left
+            elif self.left.rating == self.right.rating:
+                # ties broken by name
+                if self.left.name < self.right.name:
+                    return self.left
+                else:
+                    return self.right
+            else:
+                return self.right
+        else:
+            return None
+
+    def play(self):
+        """
+        Play the match at this node. If the match is already played, do nothing.
+        """
+        if isinstance(self.left, Player) and isinstance(self.right, Player):
+            return
+        else:
+            if isinstance(self.left, TournamentTreeNode):
+                self.left.play()
+                # EDIT: Replace the line below.
+                # After the `self.left.play()` call, the `self.left` node contains two players in its `left` and `right` attributes.
+                # We need to determine the winner between these two players.
+                # Call the `against` method on the player at `self.left.left` and pass `self.left.right` as the argument.
+                # Assign the winning player that is returned by the `against` method back to `self.left`.
+                self.left = self.left.who_won()
+            if isinstance(self.right, TournamentTreeNode):
+                self.right.play()
+                # EDIT: Replace the line below using the same logic as the edit above, but for the `self.right` subtree.
+                # Call the `against` method on the player at `self.right.left` and pass `self.right.right` as the argument.
+                # Assign the winning player back to `self.right`.
+                self.right = self.right.who_won()
+```

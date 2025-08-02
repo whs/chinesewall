@@ -1,0 +1,121 @@
+[3436, 3445]
+from abc import ABC, abstractmethod
+# EDIT: Import the `math` module, which contains mathematical functions like square root (`sqrt`) and arccosine (`acos`).
+
+class Vector(ABC):
+    def __init__(self, *args: int):
+        self.vals = args
+
+    @abstractmethod
+    def manhattan_distance(self, other) -> float:
+        pass
+
+    @abstractmethod
+    def cosine_similarity(self, other) -> float:
+        pass
+
+# EDIT: Create a new class named `MyVector` that inherits from the `Vector` class.
+# This means `MyVector` will have all the features of `Vector`, but we will provide
+# the specific implementation for its abstract methods.
+class MyVector(Vector):
+    # EDIT: Implement the `manhattan_distance` method. It takes two arguments: `self` (the current vector object)
+    # and `other` (another vector object). It should be type-hinted to return a `float`.
+    def manhattan_distance(self, other: Vector) -> float:
+        # EDIT: The goal is to calculate the sum of the absolute differences between the elements of the two vectors.
+        # 1. Initialize a variable, for example `total_distance`, to 0.
+        # 2. Use the `zip` function to iterate over `self.vals` and `other.vals` at the same time.
+        #    This will give you pairs of corresponding elements (e.g., the first element of `self` with the first of `other`, and so on).
+        # 3. For each pair of values, calculate their absolute difference using the `abs()` function.
+        # 4. Add this difference to your `total_distance` variable.
+        # 5. After the loop finishes, return the `total_distance`.
+        pass
+
+    # EDIT: Implement the `cosine_similarity` method. It also takes `self` and `other` as arguments
+    # and should be type-hinted to return a `float`.
+    def cosine_similarity(self, other: Vector) -> float:
+        # EDIT: To find the angle, you first need to calculate three things: the dot product of the two vectors,
+        # the magnitude of the first vector, and the magnitude of the second vector.
+
+        # EDIT: Step 1: Calculate the dot product.
+        # - Initialize a variable `dot_product` to 0.
+        # - Use `zip` to loop through `self.vals` and `other.vals` together.
+        # - In each loop iteration, multiply the pair of values and add the result to `dot_product`.
+
+        # EDIT: Step 2: Calculate the magnitude of the `self` vector.
+        # - Initialize a variable `sum_of_squares_self` to 0.
+        # - Loop through each value in `self.vals`.
+        # - In the loop, add the square of the value (value * value) to `sum_of_squares_self`.
+        # - After the loop, calculate the magnitude by taking the square root of `sum_of_squares_self` using `math.sqrt()`. Store it in a variable `magnitude_self`.
+
+        # EDIT: Step 3: Calculate the magnitude of the `other` vector using the same process as in Step 2. Store it in `magnitude_other`.
+
+        # EDIT: Step 4: To prevent dividing by zero, check if either `magnitude_self` or `magnitude_other` is 0. If one is, the angle is undefined. In this case, simply return 0.0.
+
+        # EDIT: Step 5: Calculate the cosine of the angle using the formula: `dot_product / (magnitude_self * magnitude_other)`. Store this in a variable.
+
+        # EDIT: Step 6: The final goal is the angle itself, not its cosine. Use the `math.acos()` function on the value from Step 5 to get the angle in radians.
+
+        # EDIT: Step 7: Return the calculated angle.
+        pass
+
+===============
+```py
+from abc import ABC, abstractmethod
+# EDIT: Import the `math` module, which contains mathematical functions like square root (`sqrt`) and arccosine (`acos`).
+
+class Vector(ABC):
+    def __init__(self, *args: int):
+        self.vals = args
+
+    @abstractmethod
+    def manhattan_distance(self, other) -> float:
+        pass
+
+    @abstractmethod
+    def cosine_similarity(self, other) -> float:
+        pass
+
+# EDIT: Create a new class named `MyVector` that inherits from the `Vector` class.
+# This means `MyVector` will have all the features of `Vector`, but we will provide
+# the specific implementation for its abstract methods.
+class MyVector(Vector):
+    # EDIT: Implement the `manhattan_distance` method. It takes two arguments: `self` (the current vector object)
+    # and `other` (another vector object). It should be type-hinted to return a `float`.
+    def manhattan_distance(self, other: Vector) -> float:
+        # EDIT: The goal is to calculate the sum of the absolute differences between the elements of the two vectors.
+        # 1. Initialize a variable, for example `total_distance`, to 0.
+        # 2. Use the `zip` function to iterate over `self.vals` and `other.vals` at the same time.
+        #    This will give you pairs of corresponding elements (e.g., the first element of `self` with the first of `other`, and so on).
+        # 3. For each pair of values, calculate their absolute difference using the `abs()` function.
+        # 4. Add this difference to your `total_distance` variable.
+        # 5. After the loop finishes, return the `total_distance`.
+        pass
+
+    # EDIT: Implement the `cosine_similarity` method. It also takes `self` and `other` as arguments
+    # and should be type-hinted to return a `float`.
+    def cosine_similarity(self, other: Vector) -> float:
+        # EDIT: To find the angle, you first need to calculate three things: the dot product of the two vectors,
+        # the magnitude of the first vector, and the magnitude of the second vector.
+
+        # EDIT: Step 1: Calculate the dot product.
+        # - Initialize a variable `dot_product` to 0.
+        # - Use `zip` to loop through `self.vals` and `other.vals` together.
+        # - In each loop iteration, multiply the pair of values and add the result to `dot_product`.
+
+        # EDIT: Step 2: Calculate the magnitude of the `self` vector.
+        # - Initialize a variable `sum_of_squares_self` to 0.
+        # - Loop through each value in `self.vals`.
+        # - In the loop, add the square of the value (value * value) to `sum_of_squares_self`.
+        # - After the loop, calculate the magnitude by taking the square root of `sum_of_squares_self` using `math.sqrt()`. Store it in a variable `magnitude_self`.
+
+        # EDIT: Step 3: Calculate the magnitude of the `other` vector using the same process as in Step 2. Store it in `magnitude_other`.
+
+        # EDIT: Step 4: To prevent dividing by zero, check if either `magnitude_self` or `magnitude_other` is 0. If one is, the angle is undefined. In this case, simply return 0.0.
+
+        # EDIT: Step 5: Calculate the cosine of the angle using the formula: `dot_product / (magnitude_self * magnitude_other)`. Store this in a variable.
+
+        # EDIT: Step 6: The final goal is the angle itself, not its cosine. Use the `math.acos()` function on the value from Step 5 to get the angle in radians.
+
+        # EDIT: Step 7: Return the calculated angle.
+        pass
+```

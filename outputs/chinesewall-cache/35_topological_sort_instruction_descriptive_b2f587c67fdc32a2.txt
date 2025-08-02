@@ -1,0 +1,133 @@
+[3375, 3384]
+from typing import List
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+    def __init__(self, id: int, out_edges: List[int]):
+        uniques = {}
+        for edge in out_edges:
+            if edge in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[edge] = True
+        self.id = id
+        # EDIT: The parameter `out_edges` represents outgoing edges. The property should be named `out_edges` to reflect this, not `in_edges`. Please rename `self.in_edges` to `self.out_edges`.
+        self.in_edges = out_edges
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques:
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+        
+    def find_node(self, id: int):
+        for node in self.nodes:
+            if node.id == id:
+                return node
+    
+    def topological_sort(self) -> List[Node]:
+        # EDIT: To perform a topological sort, we'll use Kahn's algorithm.
+        # First, create a dictionary to store the "in-degree" (number of incoming edges) for each node.
+        # The keys should be node IDs and the values their in-degree counts.
+        # Initialize all in-degrees to 0. A dictionary comprehension is a good way to do this, for example: `{node.id: 0 for node in self.nodes}`.
+
+        # EDIT: Now, calculate the actual in-degree for each node.
+        # Iterate through each `node` in `self.nodes`.
+        # For each `node`, iterate through its `out_edges`. Each edge points to a neighbor.
+        # For each `neighbor_id` in `node.out_edges`, increment the in-degree count for that neighbor in your dictionary.
+
+        # EDIT: Create a queue to hold nodes with an in-degree of 0. A simple list can act as a queue.
+        # Iterate through all the nodes in `self.nodes`.
+        # If a node's in-degree in your dictionary is 0, add the node object itself to the queue.
+
+        # EDIT: Create an empty list that will store the sorted nodes. This will be our final result.
+
+        # EDIT: Process the nodes in the queue. Loop as long as the queue is not empty.
+        # Inside the loop:
+        # 1. Remove the first node from the queue. Let's call it `current_node`.
+        # 2. Add `current_node` to your result list.
+        # 3. For each `neighbor_id` in `current_node.out_edges`:
+        #    a. Find the corresponding neighbor node object using `self.find_node(neighbor_id)`.
+        #    b. Decrement the in-degree of this neighbor node in your in-degree dictionary.
+        #    c. If the neighbor's in-degree becomes 0, add the neighbor node object to the queue.
+
+        # EDIT: After the loop, check if a valid topological sort was possible.
+        # If the number of nodes in your result list is less than the total number of nodes in the graph (`len(self.nodes)`), it means the graph has a cycle.
+        # In this case, you must raise a `RuntimeError` with a message like "The graph contains a cycle and cannot be sorted topologically."
+
+        # EDIT: If no cycle was found, the result list contains the topologically sorted nodes.
+        # Return your result list here instead of `self.nodes`.
+        return self.nodes
+
+===============
+```py
+from typing import List
+
+class Node:
+    '''Simple node (No duplicate edges between nodes)'''
+    def __init__(self, id: int, out_edges: List[int]):
+        uniques = {}
+        for edge in out_edges:
+            if edge in uniques.keys():
+                raise RuntimeError
+            else:
+                uniques[edge] = True
+        self.id = id
+        # EDIT: The parameter `out_edges` represents outgoing edges. The property should be named `out_edges` to reflect this, not `in_edges`. Please rename `self.in_edges` to `self.out_edges`.
+        self.in_edges = out_edges
+
+class Graph:
+    '''Simple directed graph (No duplicate edges between nodes, no duplicate nodes)'''
+    def __init__(self, nodes: List[Node]):
+        uniques = {}
+        for node in nodes:
+            if node in uniques:
+                raise RuntimeError
+            else:
+                uniques[node] = True
+        self.nodes = nodes
+        
+    def find_node(self, id: int):
+        for node in self.nodes:
+            if node.id == id:
+                return node
+    
+    def topological_sort(self) -> List[Node]:
+        # EDIT: To perform a topological sort, we'll use Kahn's algorithm.
+        # First, create a dictionary to store the "in-degree" (number of incoming edges) for each node.
+        # The keys should be node IDs and the values their in-degree counts.
+        # Initialize all in-degrees to 0. A dictionary comprehension is a good way to do this, for example: `{node.id: 0 for node in self.nodes}`.
+
+        # EDIT: Now, calculate the actual in-degree for each node.
+        # Iterate through each `node` in `self.nodes`.
+        # For each `node`, iterate through its `out_edges`. Each edge points to a neighbor.
+        # For each `neighbor_id` in `node.out_edges`, increment the in-degree count for that neighbor in your dictionary.
+
+        # EDIT: Create a queue to hold nodes with an in-degree of 0. A simple list can act as a queue.
+        # Iterate through all the nodes in `self.nodes`.
+        # If a node's in-degree in your dictionary is 0, add the node object itself to the queue.
+
+        # EDIT: Create an empty list that will store the sorted nodes. This will be our final result.
+
+        # EDIT: Process the nodes in the queue. Loop as long as the queue is not empty.
+        # Inside the loop:
+        # 1. Remove the first node from the queue. Let's call it `current_node`.
+        # 2. Add `current_node` to your result list.
+        # 3. For each `neighbor_id` in `current_node.out_edges`:
+        #    a. Find the corresponding neighbor node object using `self.find_node(neighbor_id)`.
+        #    b. Decrement the in-degree of this neighbor node in your in-degree dictionary.
+        #    c. If the neighbor's in-degree becomes 0, add the neighbor node object to the queue.
+
+        # EDIT: After the loop, check if a valid topological sort was possible.
+        # If the number of nodes in your result list is less than the total number of nodes in the graph (`len(self.nodes)`), it means the graph has a cycle.
+        # In this case, you must raise a `RuntimeError` with a message like "The graph contains a cycle and cannot be sorted topologically."
+
+        # EDIT: If no cycle was found, the result list contains the topologically sorted nodes.
+        # Return your result list here instead of `self.nodes`.
+        return self.nodes
+```

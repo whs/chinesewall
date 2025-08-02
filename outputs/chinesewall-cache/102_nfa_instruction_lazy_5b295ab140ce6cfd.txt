@@ -1,0 +1,73 @@
+[2161, 2170]
+from typing import Literal, List
+
+# EDIT: A deterministic finite automaton (DFA) does not have empty string transitions. Remove `""` from the list of possible inputs.
+Input = Literal["a", "b", ""]
+# EDIT: The states of the new DFA will be different from the NFA's. We will need four states: a start state (0), two accepting states (1 and 2), and a "trap" state (3) for invalid inputs. Add state `3` to the list of possible states.
+State = Literal[0, 1, 2]
+
+
+# EDIT: Rename the class from `NFA` to `DFA` to reflect that it now represents a deterministic finite automaton.
+class NFA:
+    def __init__(self) -> None:
+        self.current: State = 0
+        # EDIT: The accepting states for the DFA are the new states that correspond to any group of NFA states containing an original accepting state (which were {1, 2}). In our new DFA, states 1 and 2 will be the accepting states. Update this set to be `{1, 2}`.
+        self.accept: set[State] = {1, 2}
+
+    # EDIT: In a DFA, a transition from a state on an input symbol leads to exactly one new state, not a list of them. Change the return type hint from `List[State]` to `State`.
+    def transition(self, input: Input) -> List[State]:
+        # EDIT: Replace the NFA's transition table with the DFA's equivalent transition table. The new table should map each state and input to a single next state.
+        # The DFA states are: 0 (the start state), 1 (an accepting state), 2 (another accepting state), and 3 (a non-accepting trap state).
+        # The transitions should be:
+        # - From state 0: 'a' goes to 1, 'b' goes to 3.
+        # - From state 1: 'a' goes to 3, 'b' goes to 2.
+        # - From state 2: 'a' goes to 3, 'b' goes to 2.
+        # - From state 3 (the trap state): 'a' goes to 3, 'b' goes to 3.
+        # Also, since a DFA does not have empty string transitions, remove the `""` key from each state's dictionary.
+        table = {
+            0: {"a": [1, 2], "b": [], "": [0]},
+            1: {"a": [], "b": [], "": [1]},
+            2: {"a": [], "b": [2], "": [2]},
+        }
+        return table[self.current][input]
+
+    def accepted(self):
+        return self.current in self.accept
+
+===============
+```py
+from typing import Literal, List
+
+# EDIT: A deterministic finite automaton (DFA) does not have empty string transitions. Remove `""` from the list of possible inputs.
+Input = Literal["a", "b", ""]
+# EDIT: The states of the new DFA will be different from the NFA's. We will need four states: a start state (0), two accepting states (1 and 2), and a "trap" state (3) for invalid inputs. Add state `3` to the list of possible states.
+State = Literal[0, 1, 2]
+
+
+# EDIT: Rename the class from `NFA` to `DFA` to reflect that it now represents a deterministic finite automaton.
+class NFA:
+    def __init__(self) -> None:
+        self.current: State = 0
+        # EDIT: The accepting states for the DFA are the new states that correspond to any group of NFA states containing an original accepting state (which were {1, 2}). In our new DFA, states 1 and 2 will be the accepting states. Update this set to be `{1, 2}`.
+        self.accept: set[State] = {1, 2}
+
+    # EDIT: In a DFA, a transition from a state on an input symbol leads to exactly one new state, not a list of them. Change the return type hint from `List[State]` to `State`.
+    def transition(self, input: Input) -> List[State]:
+        # EDIT: Replace the NFA's transition table with the DFA's equivalent transition table. The new table should map each state and input to a single next state.
+        # The DFA states are: 0 (the start state), 1 (an accepting state), 2 (another accepting state), and 3 (a non-accepting trap state).
+        # The transitions should be:
+        # - From state 0: 'a' goes to 1, 'b' goes to 3.
+        # - From state 1: 'a' goes to 3, 'b' goes to 2.
+        # - From state 2: 'a' goes to 3, 'b' goes to 2.
+        # - From state 3 (the trap state): 'a' goes to 3, 'b' goes to 3.
+        # Also, since a DFA does not have empty string transitions, remove the `""` key from each state's dictionary.
+        table = {
+            0: {"a": [1, 2], "b": [], "": [0]},
+            1: {"a": [], "b": [], "": [1]},
+            2: {"a": [], "b": [2], "": [2]},
+        }
+        return table[self.current][input]
+
+    def accepted(self):
+        return self.current in self.accept
+```

@@ -1,0 +1,245 @@
+[5543, 5552]
+import numpy as np
+import random
+import math
+
+random.seed(100)
+
+class City:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"({self.x}, {self.y})"
+
+    def __eq__(self, other):
+        if isinstance(other, City):
+            return self.x == other.x and self.y == other.y
+        return False
+
+    def __hash__(self) -> int:
+        return self.__repr__().__hash__()
+
+def generate_cities(num_cities):
+    cities = []
+    # EDIT: To ensure we don't have duplicate cities, we'll use a set to track the coordinates of cities we've created, since sets only store unique items.
+    # EDIT: Initialize an empty set here called `created_coords`.
+    # EDIT: The current `for` loop can create duplicate cities. Change it to a `while` loop that continues as long as the length of the `cities` list is less than `num_cities`.
+    for _ in range(num_cities):
+        # EDIT: Inside the loop, generate a random (x, y) coordinate pair.
+        # EDIT: Check if this (x, y) tuple is already in your `created_coords` set.
+        # EDIT: If the coordinate is NOT in the set, then you should:
+        # EDIT: 1. Add the coordinate tuple to the `created_coords` set.
+        # EDIT: 2. Create a new `City` object with this coordinate.
+        # EDIT: 3. Append the new `City` object to the `cities` list.
+        # EDIT: The line below should be moved inside your new `if` statement.
+        cities.append(City(random.randint(0, 10), random.randint(0, 10)))
+    return cities
+    
+def distance(this, that):
+    return np.sqrt((this.x - that.x)**2 + (this.y - that.y)**2)
+    
+def calculate_fitness(route):
+    d = 0
+    for i in range(len(route)):
+        if i + 1 == len(route):
+            d += distance(route[i], route[0])
+        else:
+            d += distance(route[i], route[i + 1])
+    return 1 / d
+
+def generate_population(cities, population_size):
+    routes = []
+    for _ in range(population_size):
+        routes.append(random.sample(cities, len(cities)))
+    return routes
+
+def tournament_selection(population, tournament_size=3):
+    indices = random.sample(range(len(population)), tournament_size)
+    fitnesses = [calculate_fitness(population[i]) for i in indices]
+    best_index = indices[fitnesses.index(max(fitnesses))]
+    return population[best_index]
+
+def mutate(route, mutation_rate=0.1):
+    if (random.random() < mutation_rate):
+        i1 = random.randint(0, len(route) - 1)
+        i2 = random.randint(0, len(route) - 1)
+        route[i1], route[i2] = route[i2], route[i1]
+    return route
+
+def get_crossing_point(parent1):
+    return random.randint(1, len(parent1) - 1)
+
+def crossover(parent1, parent2):
+    # EDIT: The current crossover method can create invalid routes with duplicate cities. We will replace it with a method called 'Ordered Crossover' to ensure the child route is always a valid permutation of cities.
+    # EDIT: Please remove the two lines of code below this comment block.
+
+    # EDIT: Step 1: Select two random crossover points for slicing.
+    # EDIT: Create two random integer indices, 'start' and 'end'.
+    # EDIT: Ensure 'start' is less than 'end'. A simple way is to generate two distinct random numbers between 0 and len(parent1)-1, and then use min() and max() to assign them to 'start' and 'end'.
+
+    # EDIT: Step 2: Copy the slice from parent1 to the child.
+    # EDIT: Create a list for the 'child' with the same number of elements as a parent, but fill it with a placeholder like 'None'.
+    # EDIT: Copy the slice from parent1 (from 'start' up to, but not including, 'end') into the 'child' list at the same positions. e.g., `child[start:end] = parent1[start:end]`
+    # EDIT: To make checking for duplicates easier later, you can also store this slice in a separate variable or a set.
+
+    # EDIT: Step 3: Fill the remaining empty ('None') slots in the child.
+    # EDIT: Create an index to keep track of which city you are looking at in parent2. Initialize it to 0. Let's call it `parent2_idx`.
+    # EDIT: Loop through each position in the 'child' list (e.g., `for i in range(len(child))`).
+    # EDIT: Inside the loop, check if the current position `child[i]` is empty (i.e., is 'None').
+    # EDIT: If it is empty, you need to find the next valid city from parent2 to place there.
+    # EDIT: Start an inner `while True` loop to search through parent2.
+    # EDIT: Inside the inner loop, get the city from parent2 at `parent2_idx`.
+    # EDIT: Increment `parent2_idx` to prepare for the next time you need a city.
+    # EDIT: Check if this city is already in the slice you copied from parent1.
+    # EDIT: If the city is NOT in the slice, place it at the empty spot `child[i]` and `break` out of the inner `while` loop to move to the next empty spot.
+    
+    # EDIT: Step 4: After the loops are finished, the 'child' list will be a complete and valid route. Return it.
+    crossover_point = get_crossing_point(parent1)
+    child = parent1[:crossover_point] + parent2[crossover_point:]
+    return child
+
+def next_generation(population, crossover_rate, mutation_rate):
+
+    next_pop = []
+
+    cross = math.floor(len(population) * crossover_rate)
+    normal = len(population) - cross
+
+    for _ in range(normal):
+        next_pop.append(random.choice(population))
+
+    for _ in range(cross):
+        parent1 = tournament_selection(population)
+        parent2 = tournament_selection(population)
+        next_pop.append(crossover(parent1, parent2))
+
+    next_pop = [mutate(p, mutation_rate) for p in next_pop]
+
+    return next_pop
+
+===============
+```py
+import numpy as np
+import random
+import math
+
+random.seed(100)
+
+class City:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"({self.x}, {self.y})"
+
+    def __eq__(self, other):
+        if isinstance(other, City):
+            return self.x == other.x and self.y == other.y
+        return False
+
+    def __hash__(self) -> int:
+        return self.__repr__().__hash__()
+
+def generate_cities(num_cities):
+    cities = []
+    # EDIT: To ensure we don't have duplicate cities, we'll use a set to track the coordinates of cities we've created, since sets only store unique items.
+    # EDIT: Initialize an empty set here called `created_coords`.
+    # EDIT: The current `for` loop can create duplicate cities. Change it to a `while` loop that continues as long as the length of the `cities` list is less than `num_cities`.
+    for _ in range(num_cities):
+        # EDIT: Inside the loop, generate a random (x, y) coordinate pair.
+        # EDIT: Check if this (x, y) tuple is already in your `created_coords` set.
+        # EDIT: If the coordinate is NOT in the set, then you should:
+        # EDIT: 1. Add the coordinate tuple to the `created_coords` set.
+        # EDIT: 2. Create a new `City` object with this coordinate.
+        # EDIT: 3. Append the new `City` object to the `cities` list.
+        # EDIT: The line below should be moved inside your new `if` statement.
+        cities.append(City(random.randint(0, 10), random.randint(0, 10)))
+    return cities
+    
+def distance(this, that):
+    return np.sqrt((this.x - that.x)**2 + (this.y - that.y)**2)
+    
+def calculate_fitness(route):
+    d = 0
+    for i in range(len(route)):
+        if i + 1 == len(route):
+            d += distance(route[i], route[0])
+        else:
+            d += distance(route[i], route[i + 1])
+    return 1 / d
+
+def generate_population(cities, population_size):
+    routes = []
+    for _ in range(population_size):
+        routes.append(random.sample(cities, len(cities)))
+    return routes
+
+def tournament_selection(population, tournament_size=3):
+    indices = random.sample(range(len(population)), tournament_size)
+    fitnesses = [calculate_fitness(population[i]) for i in indices]
+    best_index = indices[fitnesses.index(max(fitnesses))]
+    return population[best_index]
+
+def mutate(route, mutation_rate=0.1):
+    if (random.random() < mutation_rate):
+        i1 = random.randint(0, len(route) - 1)
+        i2 = random.randint(0, len(route) - 1)
+        route[i1], route[i2] = route[i2], route[i1]
+    return route
+
+def get_crossing_point(parent1):
+    return random.randint(1, len(parent1) - 1)
+
+def crossover(parent1, parent2):
+    # EDIT: The current crossover method can create invalid routes with duplicate cities. We will replace it with a method called 'Ordered Crossover' to ensure the child route is always a valid permutation of cities.
+    # EDIT: Please remove the two lines of code below this comment block.
+
+    # EDIT: Step 1: Select two random crossover points for slicing.
+    # EDIT: Create two random integer indices, 'start' and 'end'.
+    # EDIT: Ensure 'start' is less than 'end'. A simple way is to generate two distinct random numbers between 0 and len(parent1)-1, and then use min() and max() to assign them to 'start' and 'end'.
+
+    # EDIT: Step 2: Copy the slice from parent1 to the child.
+    # EDIT: Create a list for the 'child' with the same number of elements as a parent, but fill it with a placeholder like 'None'.
+    # EDIT: Copy the slice from parent1 (from 'start' up to, but not including, 'end') into the 'child' list at the same positions. e.g., `child[start:end] = parent1[start:end]`
+    # EDIT: To make checking for duplicates easier later, you can also store this slice in a separate variable or a set.
+
+    # EDIT: Step 3: Fill the remaining empty ('None') slots in the child.
+    # EDIT: Create an index to keep track of which city you are looking at in parent2. Initialize it to 0. Let's call it `parent2_idx`.
+    # EDIT: Loop through each position in the 'child' list (e.g., `for i in range(len(child))`).
+    # EDIT: Inside the loop, check if the current position `child[i]` is empty (i.e., is 'None').
+    # EDIT: If it is empty, you need to find the next valid city from parent2 to place there.
+    # EDIT: Start an inner `while True` loop to search through parent2.
+    # EDIT: Inside the inner loop, get the city from parent2 at `parent2_idx`.
+    # EDIT: Increment `parent2_idx` to prepare for the next time you need a city.
+    # EDIT: Check if this city is already in the slice you copied from parent1.
+    # EDIT: If the city is NOT in the slice, place it at the empty spot `child[i]` and `break` out of the inner `while` loop to move to the next empty spot.
+    
+    # EDIT: Step 4: After the loops are finished, the 'child' list will be a complete and valid route. Return it.
+    crossover_point = get_crossing_point(parent1)
+    child = parent1[:crossover_point] + parent2[crossover_point:]
+    return child
+
+def next_generation(population, crossover_rate, mutation_rate):
+
+    next_pop = []
+
+    cross = math.floor(len(population) * crossover_rate)
+    normal = len(population) - cross
+
+    for _ in range(normal):
+        next_pop.append(random.choice(population))
+
+    for _ in range(cross):
+        parent1 = tournament_selection(population)
+        parent2 = tournament_selection(population)
+        next_pop.append(crossover(parent1, parent2))
+
+    next_pop = [mutate(p, mutation_rate) for p in next_pop]
+
+    return next_pop
+```

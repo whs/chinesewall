@@ -1,0 +1,57 @@
+[1083, 1092]
+def find_cycles(permutation):
+
+    cycles = []
+    visited = set()
+
+    # EDIT: We need to check each number from 1 up to the length of the permutation, as the problem now uses 1-based numbering.
+    # The current loop iterates from 0 up to (but not including) the length.
+    # Please change the `range` to start from 1 and end at `len(permutation) + 1`.
+    for i in range(len(permutation)):
+        
+        if i not in visited:
+            cycle = []
+            current = i
+
+            while current not in visited:
+                visited.add(current)
+                cycle.append(current)
+                # EDIT: The `permutation` list is indexed from 0 (the first element is at index 0), but our `current` number is 1-based (starts from 1).
+                # To find the next element in the cycle, you need to access the list at the correct 0-based index.
+                # You can get the correct index by subtracting 1 from the `current` number.
+                current = permutation[current]
+
+            if cycle:
+                cycles.append(cycle)
+
+    return cycles
+
+===============
+```py
+def find_cycles(permutation):
+
+    cycles = []
+    visited = set()
+
+    # EDIT: We need to check each number from 1 up to the length of the permutation, as the problem now uses 1-based numbering.
+    # The current loop iterates from 0 up to (but not including) the length.
+    # Please change the `range` to start from 1 and end at `len(permutation) + 1`.
+    for i in range(len(permutation)):
+        
+        if i not in visited:
+            cycle = []
+            current = i
+
+            while current not in visited:
+                visited.add(current)
+                cycle.append(current)
+                # EDIT: The `permutation` list is indexed from 0 (the first element is at index 0), but our `current` number is 1-based (starts from 1).
+                # To find the next element in the cycle, you need to access the list at the correct 0-based index.
+                # You can get the correct index by subtracting 1 from the `current` number.
+                current = permutation[current]
+
+            if cycle:
+                cycles.append(cycle)
+
+    return cycles
+```

@@ -1,0 +1,99 @@
+[2008, 2017]
+from abc import ABC, abstractmethod
+
+
+class LinkedList:
+    @abstractmethod
+    def sort(self):
+        pass
+    @abstractmethod
+    def remove(self, element):
+        pass
+    @abstractmethod
+    def insert(self, element):
+        pass
+
+class Cons(LinkedList):
+    def __init__(self, first, rest: LinkedList):
+        self.first = first
+        self.rest = rest
+    def sort(self):
+        return self.rest.sort().insert(self.first)
+
+    # EDIT: Define a new method called 'remove' that takes 'self' and 'element' as arguments.
+    # This method should remove the first occurrence of 'element' from the list.
+        # EDIT: Check if the 'element' to be removed is the same as the value of the current node, which is 'self.first'.
+        # EDIT: If they are the same, this is the node to remove. The new list will be just the rest of the list, so return 'self.rest'.
+        # EDIT: If the 'element' is not the same as 'self.first', we need to continue searching in the rest of the list.
+        # EDIT: To do this, create a new 'Cons' object. The first part of this new object will be the same as the current one ('self.first').
+        # EDIT: The second part (the rest of the list) will be the result of calling the 'remove' method on the rest of the current list ('self.rest'), passing the same 'element' to it.
+        # EDIT: Return this newly created 'Cons' object.
+
+    def insert(self, element):
+        if element < self.first:
+            return Cons(element, self)
+        else:
+            return Cons(self.first, self.rest.insert(element))
+
+
+class Empty(LinkedList):
+    def __init__(self):
+        pass
+    def sort(self):
+        return self
+    # EDIT: Define a new method called 'remove' that takes 'self' and 'element' as arguments.
+        # EDIT: When trying to remove an element from an empty list, there is nothing to remove.
+        # EDIT: The list will still be empty, so simply return the current object, 'self'.
+    def insert(self, element):
+        return Cons(element, self)
+
+===============
+```py
+from abc import ABC, abstractmethod
+
+
+class LinkedList:
+    @abstractmethod
+    def sort(self):
+        pass
+    @abstractmethod
+    def remove(self, element):
+        pass
+    @abstractmethod
+    def insert(self, element):
+        pass
+
+class Cons(LinkedList):
+    def __init__(self, first, rest: LinkedList):
+        self.first = first
+        self.rest = rest
+    def sort(self):
+        return self.rest.sort().insert(self.first)
+
+    # EDIT: Define a new method called 'remove' that takes 'self' and 'element' as arguments.
+    # This method should remove the first occurrence of 'element' from the list.
+        # EDIT: Check if the 'element' to be removed is the same as the value of the current node, which is 'self.first'.
+        # EDIT: If they are the same, this is the node to remove. The new list will be just the rest of the list, so return 'self.rest'.
+        # EDIT: If the 'element' is not the same as 'self.first', we need to continue searching in the rest of the list.
+        # EDIT: To do this, create a new 'Cons' object. The first part of this new object will be the same as the current one ('self.first').
+        # EDIT: The second part (the rest of the list) will be the result of calling the 'remove' method on the rest of the current list ('self.rest'), passing the same 'element' to it.
+        # EDIT: Return this newly created 'Cons' object.
+
+    def insert(self, element):
+        if element < self.first:
+            return Cons(element, self)
+        else:
+            return Cons(self.first, self.rest.insert(element))
+
+
+class Empty(LinkedList):
+    def __init__(self):
+        pass
+    def sort(self):
+        return self
+    # EDIT: Define a new method called 'remove' that takes 'self' and 'element' as arguments.
+        # EDIT: When trying to remove an element from an empty list, there is nothing to remove.
+        # EDIT: The list will still be empty, so simply return the current object, 'self'.
+    def insert(self, element):
+        return Cons(element, self)
+```

@@ -1,0 +1,125 @@
+[3530, 3539]
+class Student:
+    def __init__(self, name, gpa) -> None:
+        self.name = name
+        self.gpa = gpa
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Student):
+            return False
+        else:
+            return __value.name == self.name
+
+class Course:
+
+    def __init__(self, students) -> None:
+        self.students = students
+
+    def average_gpa(self):
+        # EDIT: Add a check at the beginning of this method. If `self.students` is an empty list, return `None`.
+        # EDIT: The for loop below has a bug because `total` is not initialized. We will replace the entire logic to fix this and remove the loop.
+        for student in self.students:
+            total += student.gpa
+
+        # EDIT: Remove the for loop above and this return statement.
+        # EDIT: In their place, add the new logic. You will need the `reduce` function, which should be imported from the `functools` module at the top of the file.
+        # EDIT: 1. Calculate the sum of all student GPAs using `reduce`. The `reduce` function needs a function, a list, and a starting value.
+        # EDIT:    - The function can be a `lambda` that takes two arguments (an accumulator and a student) and returns the accumulator plus the student's `gpa`.
+        # EDIT:    - The list is `self.students`.
+        # EDIT:    - The starting value for the sum is `0`.
+        # EDIT: 2. Store this sum in a variable called `total_gpa`.
+        # EDIT: 3. Return `total_gpa` divided by the number of students.
+        return total / len(self.students)
+    
+    def raise_grade_all(self):
+        # EDIT: Remove the `for` loop below. We will replace it with a higher-order function to avoid using loops.
+        for student in self.students:
+            student.gpa += 1
+        # EDIT: After removing the loop, add a call to the `reduce` function here (you will need to import it from `functools`).
+        # EDIT: We will use `reduce` to perform an action on each student, not to calculate a value.
+        # EDIT: Call `reduce` with the following arguments:
+        # EDIT: 1. A `lambda` function that takes two arguments (an accumulator, which we can ignore, and a `student`). This lambda should increase the `student.gpa` by 1 and can return `None`.
+        # EDIT: 2. The list to process, which is `self.students`.
+        # EDIT: 3. An initial value, which can be `None` since we are not accumulating a result.
+        # EDIT: This method does not need to return anything.
+
+    def best_student(self):
+
+        # EDIT: The line below will cause an error if the `self.students` list is empty.
+        # EDIT: Add a check at the very beginning of this method. If `self.students` is empty, return `None`.
+        best = self.students[0]
+        # EDIT: Remove the line `best = self.students[0]` above and the `for` loop below. We will replace them with a single line of code.
+        for student in self.students:
+            if student.gpa > best.gpa:
+                best = student
+
+        # EDIT: Replace the `return best` statement with a call to the built-in `max()` function.
+        # EDIT: The `max()` function can find the largest item in a list based on a specific attribute.
+        # EDIT: Call `max()` on `self.students`. To tell `max()` to compare students by their GPA, pass a `key` argument.
+        # EDIT: The value for `key` should be a `lambda` function that takes a `student` object and returns its `gpa`.
+        # EDIT: Return the result of this `max()` function call.
+        return best
+
+===============
+```py
+class Student:
+    def __init__(self, name, gpa) -> None:
+        self.name = name
+        self.gpa = gpa
+
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, Student):
+            return False
+        else:
+            return __value.name == self.name
+
+class Course:
+
+    def __init__(self, students) -> None:
+        self.students = students
+
+    def average_gpa(self):
+        # EDIT: Add a check at the beginning of this method. If `self.students` is an empty list, return `None`.
+        # EDIT: The for loop below has a bug because `total` is not initialized. We will replace the entire logic to fix this and remove the loop.
+        for student in self.students:
+            total += student.gpa
+
+        # EDIT: Remove the for loop above and this return statement.
+        # EDIT: In their place, add the new logic. You will need the `reduce` function, which should be imported from the `functools` module at the top of the file.
+        # EDIT: 1. Calculate the sum of all student GPAs using `reduce`. The `reduce` function needs a function, a list, and a starting value.
+        # EDIT:    - The function can be a `lambda` that takes two arguments (an accumulator and a student) and returns the accumulator plus the student's `gpa`.
+        # EDIT:    - The list is `self.students`.
+        # EDIT:    - The starting value for the sum is `0`.
+        # EDIT: 2. Store this sum in a variable called `total_gpa`.
+        # EDIT: 3. Return `total_gpa` divided by the number of students.
+        return total / len(self.students)
+    
+    def raise_grade_all(self):
+        # EDIT: Remove the `for` loop below. We will replace it with a higher-order function to avoid using loops.
+        for student in self.students:
+            student.gpa += 1
+        # EDIT: After removing the loop, add a call to the `reduce` function here (you will need to import it from `functools`).
+        # EDIT: We will use `reduce` to perform an action on each student, not to calculate a value.
+        # EDIT: Call `reduce` with the following arguments:
+        # EDIT: 1. A `lambda` function that takes two arguments (an accumulator, which we can ignore, and a `student`). This lambda should increase the `student.gpa` by 1 and can return `None`.
+        # EDIT: 2. The list to process, which is `self.students`.
+        # EDIT: 3. An initial value, which can be `None` since we are not accumulating a result.
+        # EDIT: This method does not need to return anything.
+
+    def best_student(self):
+
+        # EDIT: The line below will cause an error if the `self.students` list is empty.
+        # EDIT: Add a check at the very beginning of this method. If `self.students` is empty, return `None`.
+        best = self.students[0]
+        # EDIT: Remove the line `best = self.students[0]` above and the `for` loop below. We will replace them with a single line of code.
+        for student in self.students:
+            if student.gpa > best.gpa:
+                best = student
+
+        # EDIT: Replace the `return best` statement with a call to the built-in `max()` function.
+        # EDIT: The `max()` function can find the largest item in a list based on a specific attribute.
+        # EDIT: Call `max()` on `self.students`. To tell `max()` to compare students by their GPA, pass a `key` argument.
+        # EDIT: The value for `key` should be a `lambda` function that takes a `student` object and returns its `gpa`.
+        # EDIT: Return the result of this `max()` function call.
+        return best
+```

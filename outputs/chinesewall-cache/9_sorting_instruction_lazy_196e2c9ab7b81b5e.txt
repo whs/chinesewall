@@ -1,0 +1,83 @@
+[2744, 2753]
+class Sorter:
+    def __init__(self):
+        pass
+
+    # EDIT: This function should sort the list `nums` in place, meaning it modifies the list directly and doesn't return a new one. Change the return type hint from `list[int]` to `None`.
+    def sort(self, nums: list[int]) -> list[int]:
+        # EDIT: The current recursive logic creates new lists. Replace it with an iterative, in-place algorithm.
+        # 1. Remove the entire `if/else` block.
+        # 2. Loop through the list from the second element to the end. A `for` loop using `range(1, len(nums))` is a good way to do this. Let's use `i` as the loop variable for the index.
+        # 3. In each iteration, the sublist from the start up to `i-1` is already sorted. Your goal is to insert the element at `nums[i]` into this sorted sublist.
+        # 4. Call the `self.insert` helper method to perform this insertion. You'll pass it the list `nums` and the current index `i`. The call will be `self.insert(nums, i)`.
+        #    (Note: The `insert` method itself will also need to be changed).
+        if len(nums) == 0:
+            return nums
+        else:
+            return self.insert(self.sort(nums[1:]), nums[0])
+        
+    # EDIT: This method needs to be changed to perform an in-place insertion. It will take an index `i` instead of a number `num`.
+    # 1. Change the second parameter from `num: int` to `i: int`.
+    # 2. This method will modify the list directly, so it should not return anything. Change the return type hint from `list[int]` to `None`.
+    # The new signature will be: `def insert(self, nums: list[int], i: int) -> None:`
+    def insert(self, nums: list[int], num: int) -> list[int]:
+        # EDIT: Replace the current code, which builds a new list, with logic that modifies `nums` in place.
+        # 1. Remove all the code currently inside this method.
+        # 2. Store the value of the element to be inserted, `nums[i]`, in a variable (e.g., `key`).
+        # 3. Set up a pointer, let's call it `j`, to the index just before `i`. So, `j = i - 1`.
+        # 4. Use a `while` loop to shift elements. The loop should run as long as `j` is 0 or greater, AND the element `nums[j]` is greater than `key`.
+        # 5. Inside the `while` loop:
+        #    a. Move the element `nums[j]` one position to the right (to `nums[j + 1]`).
+        #    b. Decrease `j` by 1 to move the pointer to the left.
+        # 6. After the loop, the correct position for `key` is at index `j + 1`. Assign `key` to `nums[j + 1]`.
+        output = []
+        for i, n in enumerate(nums):
+            if num < n:
+                output.append(num)
+                return output + nums[i:]
+            else:
+                output.append(n)
+        return output + [num]
+
+===============
+```py
+class Sorter:
+    def __init__(self):
+        pass
+
+    # EDIT: This function should sort the list `nums` in place, meaning it modifies the list directly and doesn't return a new one. Change the return type hint from `list[int]` to `None`.
+    def sort(self, nums: list[int]) -> list[int]:
+        # EDIT: The current recursive logic creates new lists. Replace it with an iterative, in-place algorithm.
+        # 1. Remove the entire `if/else` block.
+        # 2. Loop through the list from the second element to the end. A `for` loop using `range(1, len(nums))` is a good way to do this. Let's use `i` as the loop variable for the index.
+        # 3. In each iteration, the sublist from the start up to `i-1` is already sorted. Your goal is to insert the element at `nums[i]` into this sorted sublist.
+        # 4. Call the `self.insert` helper method to perform this insertion. You'll pass it the list `nums` and the current index `i`. The call will be `self.insert(nums, i)`.
+        #    (Note: The `insert` method itself will also need to be changed).
+        if len(nums) == 0:
+            return nums
+        else:
+            return self.insert(self.sort(nums[1:]), nums[0])
+        
+    # EDIT: This method needs to be changed to perform an in-place insertion. It will take an index `i` instead of a number `num`.
+    # 1. Change the second parameter from `num: int` to `i: int`.
+    # 2. This method will modify the list directly, so it should not return anything. Change the return type hint from `list[int]` to `None`.
+    # The new signature will be: `def insert(self, nums: list[int], i: int) -> None:`
+    def insert(self, nums: list[int], num: int) -> list[int]:
+        # EDIT: Replace the current code, which builds a new list, with logic that modifies `nums` in place.
+        # 1. Remove all the code currently inside this method.
+        # 2. Store the value of the element to be inserted, `nums[i]`, in a variable (e.g., `key`).
+        # 3. Set up a pointer, let's call it `j`, to the index just before `i`. So, `j = i - 1`.
+        # 4. Use a `while` loop to shift elements. The loop should run as long as `j` is 0 or greater, AND the element `nums[j]` is greater than `key`.
+        # 5. Inside the `while` loop:
+        #    a. Move the element `nums[j]` one position to the right (to `nums[j + 1]`).
+        #    b. Decrease `j` by 1 to move the pointer to the left.
+        # 6. After the loop, the correct position for `key` is at index `j + 1`. Assign `key` to `nums[j + 1]`.
+        output = []
+        for i, n in enumerate(nums):
+            if num < n:
+                output.append(num)
+                return output + nums[i:]
+            else:
+                output.append(n)
+        return output + [num]
+```

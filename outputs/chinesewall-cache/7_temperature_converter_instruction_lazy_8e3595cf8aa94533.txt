@@ -1,0 +1,21 @@
+[475, 484]
+def fahrenheit_to_celsius(temperature):
+    return ((temperature - 32)*5)/9
+
+# EDIT: Define a new function here called `celsius_to_fahrenheit`.
+# EDIT: This function should accept one argument, which we can call `temperature`.
+# EDIT: Inside the function, you need to perform the calculation to convert Celsius to Fahrenheit.
+# EDIT: The formula is: multiply the `temperature` by 9, then divide the result by 5, and finally add 32.
+# EDIT: Return the final calculated value.
+
+===============
+```py
+def fahrenheit_to_celsius(temperature):
+    return ((temperature - 32)*5)/9
+
+# EDIT: Define a new function here called `celsius_to_fahrenheit`.
+# EDIT: This function should accept one argument, which we can call `temperature`.
+# EDIT: Inside the function, you need to perform the calculation to convert Celsius to Fahrenheit.
+# EDIT: The formula is: multiply the `temperature` by 9, then divide the result by 5, and finally add 32.
+# EDIT: Return the final calculated value.
+```

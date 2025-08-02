@@ -1,0 +1,55 @@
+[1100, 1109]
+class Tensor:
+
+    def __init__(self, matrix):
+        self.matrix = matrix
+    
+    def m(self):
+        return len(self.matrix)
+    
+    def n(self):
+        return len(self.matrix[0])
+    
+    def relu(self):
+        for i in range(self.m()):
+            for j in range(self.n()):
+                self.matrix[i][j] = max(0, self.matrix[i][j])
+
+    def flatten(self):
+        sofar = []
+        # EDIT: To flatten the matrix from top to bottom (iterating through rows), the outer loop should go through each row. The number of rows is given by `self.m()`. Change `self.n()` to `self.m()`.
+        for i in range(self.n()):
+            # EDIT: For each row, we need to iterate through its elements from left to right (iterating through columns). The number of columns is given by `self.n()`. Change `self.m()` to `self.n()`.
+            for j in range(self.m()):
+                # EDIT: To access the element at the current row `i` and current column `j`, change the matrix access from `self.matrix[j][i]` to `self.matrix[i][j]`.
+                sofar.append(self.matrix[j][i])
+        return sofar
+
+===============
+```py
+class Tensor:
+
+    def __init__(self, matrix):
+        self.matrix = matrix
+    
+    def m(self):
+        return len(self.matrix)
+    
+    def n(self):
+        return len(self.matrix[0])
+    
+    def relu(self):
+        for i in range(self.m()):
+            for j in range(self.n()):
+                self.matrix[i][j] = max(0, self.matrix[i][j])
+
+    def flatten(self):
+        sofar = []
+        # EDIT: To flatten the matrix from top to bottom (iterating through rows), the outer loop should go through each row. The number of rows is given by `self.m()`. Change `self.n()` to `self.m()`.
+        for i in range(self.n()):
+            # EDIT: For each row, we need to iterate through its elements from left to right (iterating through columns). The number of columns is given by `self.n()`. Change `self.m()` to `self.n()`.
+            for j in range(self.m()):
+                # EDIT: To access the element at the current row `i` and current column `j`, change the matrix access from `self.matrix[j][i]` to `self.matrix[i][j]`.
+                sofar.append(self.matrix[j][i])
+        return sofar
+```

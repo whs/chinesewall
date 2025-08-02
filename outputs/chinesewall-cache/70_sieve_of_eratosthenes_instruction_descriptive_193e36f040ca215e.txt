@@ -1,0 +1,53 @@
+[1031, 1040]
+def find_primes(end: int):
+
+    primes = []
+    is_prime = [True] * (end + 1)
+    # EDIT: By definition, the numbers 0 and 1 are not prime.
+    # To reflect this, add two new lines of code right here.
+    # 1. Set the element at index 0 of the `is_prime` list to `False`.
+    # 2. Set the element at index 1 of the `is_prime` list to `False`.
+
+    # EDIT: The algorithm is failing because this loop starts checking from the number 1.
+    # Since 1 is not a prime number, it incorrectly marks all other numbers as not prime.
+    # The Sieve of Eratosthenes algorithm must start with the first prime number, which is 2.
+    # To fix this, change the starting number of this loop's `range` from 1 to 2.
+    for num in range(1, int(end**0.5) + 1):
+        if is_prime[num]:
+            primes.append(num)
+            for multiple in range(num * num, end + 1, num):
+                is_prime[multiple] = False
+
+    for num in range(int(end**0.5) + 1, end + 1):
+        if is_prime[num]:
+            primes.append(num)
+
+    return primes
+
+===============
+```py
+def find_primes(end: int):
+
+    primes = []
+    is_prime = [True] * (end + 1)
+    # EDIT: By definition, the numbers 0 and 1 are not prime.
+    # To reflect this, add two new lines of code right here.
+    # 1. Set the element at index 0 of the `is_prime` list to `False`.
+    # 2. Set the element at index 1 of the `is_prime` list to `False`.
+
+    # EDIT: The algorithm is failing because this loop starts checking from the number 1.
+    # Since 1 is not a prime number, it incorrectly marks all other numbers as not prime.
+    # The Sieve of Eratosthenes algorithm must start with the first prime number, which is 2.
+    # To fix this, change the starting number of this loop's `range` from 1 to 2.
+    for num in range(1, int(end**0.5) + 1):
+        if is_prime[num]:
+            primes.append(num)
+            for multiple in range(num * num, end + 1, num):
+                is_prime[multiple] = False
+
+    for num in range(int(end**0.5) + 1, end + 1):
+        if is_prime[num]:
+            primes.append(num)
+
+    return primes
+```

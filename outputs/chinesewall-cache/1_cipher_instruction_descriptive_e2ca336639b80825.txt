@@ -1,0 +1,141 @@
+[3014, 3023]
+class Cipher:
+
+    def __init__(self):
+        self.ciphers = {
+            "default": {
+                'a': 'b',
+                'b': 'a',
+                'c': 'e',
+                'd': 'd',
+                'e': 'c',
+                'f': 'g',
+                'g': 'f',
+                'h': 'i',
+                'i': 'h',
+                'j': 'k',
+                'k': 'j',
+                'l': 'm',
+                'm': 'l',
+                'n': 'o',
+                'o': 'n',
+                'p': 'q',
+                'q': 'p',
+                'r': 's',
+                's': 'r',
+                't': 'u',
+                'u': 't',
+                'v': 'w',
+                'w': 'v',
+                'x': 'y',
+                'y': 'x',
+                'z': 'z'}
+        }
+        # EDIT: Create an instance attribute called `self.alphabet`.
+        # EDIT: Assign it a list of all lowercase letters from 'a' to 'z'.
+
+    def translate(self, cipher, text):
+        result = ""
+        dic = self.ciphers[cipher]
+        for s in text:
+            result += dic[s]
+        return result
+
+    def add_cipher(self, name, cipher):
+        dic = {}
+        lets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        for c, l in zip(cipher, lets):
+            dic[l] = c
+        self.ciphers[name] = cipher
+
+    # EDIT: Define a new method here called `caesar_cipher`. It should accept `self` and one argument, `shift`.
+    # EDIT: Add a type hint to `shift` to indicate it's an `int`. The method should not return anything, so its return type hint should be `None`.
+    
+        # EDIT: Create an empty dictionary. This will store the new cipher map, where each letter maps to its shifted counterpart.
+        
+        # EDIT: Loop through `self.alphabet` using `enumerate` to get both the index (e.g., `i`) and the character (e.g., `char`) of each letter.
+        
+            # EDIT: Inside the loop, calculate the new index for the shifted character.
+            # EDIT: The formula is `(i + shift) % len(self.alphabet)`.
+            # EDIT: The modulo operator (`%`) ensures that the index "wraps around" if it goes beyond the end of the alphabet. For example, with a shift of 1, 'z' (at index 25) becomes (25 + 1) % 26 = 0, which correctly maps to 'a'.
+            
+            # EDIT: Get the new character from `self.alphabet` using the `new_index` you just calculated.
+            
+            # EDIT: Add a new key-value pair to the dictionary you created earlier. The key should be the original character (`char`), and the value should be the new shifted character.
+            
+        # EDIT: After the loop, create a name for this cipher. The name should be the string "caesar" followed by the value of the `shift` argument. For example, if `shift` is 4, the name should be "caesar4".
+        
+        # EDIT: Add the new cipher dictionary to `self.ciphers`. Use the name you just created as the key.
+
+===============
+```py
+class Cipher:
+
+    def __init__(self):
+        self.ciphers = {
+            "default": {
+                'a': 'b',
+                'b': 'a',
+                'c': 'e',
+                'd': 'd',
+                'e': 'c',
+                'f': 'g',
+                'g': 'f',
+                'h': 'i',
+                'i': 'h',
+                'j': 'k',
+                'k': 'j',
+                'l': 'm',
+                'm': 'l',
+                'n': 'o',
+                'o': 'n',
+                'p': 'q',
+                'q': 'p',
+                'r': 's',
+                's': 'r',
+                't': 'u',
+                'u': 't',
+                'v': 'w',
+                'w': 'v',
+                'x': 'y',
+                'y': 'x',
+                'z': 'z'}
+        }
+        # EDIT: Create an instance attribute called `self.alphabet`.
+        # EDIT: Assign it a list of all lowercase letters from 'a' to 'z'.
+
+    def translate(self, cipher, text):
+        result = ""
+        dic = self.ciphers[cipher]
+        for s in text:
+            result += dic[s]
+        return result
+
+    def add_cipher(self, name, cipher):
+        dic = {}
+        lets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        for c, l in zip(cipher, lets):
+            dic[l] = c
+        self.ciphers[name] = cipher
+
+    # EDIT: Define a new method here called `caesar_cipher`. It should accept `self` and one argument, `shift`.
+    # EDIT: Add a type hint to `shift` to indicate it's an `int`. The method should not return anything, so its return type hint should be `None`.
+    
+        # EDIT: Create an empty dictionary. This will store the new cipher map, where each letter maps to its shifted counterpart.
+        
+        # EDIT: Loop through `self.alphabet` using `enumerate` to get both the index (e.g., `i`) and the character (e.g., `char`) of each letter.
+        
+            # EDIT: Inside the loop, calculate the new index for the shifted character.
+            # EDIT: The formula is `(i + shift) % len(self.alphabet)`.
+            # EDIT: The modulo operator (`%`) ensures that the index "wraps around" if it goes beyond the end of the alphabet. For example, with a shift of 1, 'z' (at index 25) becomes (25 + 1) % 26 = 0, which correctly maps to 'a'.
+            
+            # EDIT: Get the new character from `self.alphabet` using the `new_index` you just calculated.
+            
+            # EDIT: Add a new key-value pair to the dictionary you created earlier. The key should be the original character (`char`), and the value should be the new shifted character.
+            
+        # EDIT: After the loop, create a name for this cipher. The name should be the string "caesar" followed by the value of the `shift` argument. For example, if `shift` is 4, the name should be "caesar4".
+        
+        # EDIT: Add the new cipher dictionary to `self.ciphers`. Use the name you just created as the key.
+```

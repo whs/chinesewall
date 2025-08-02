@@ -1,0 +1,203 @@
+[5180, 5189]
+from typing import List, Optional
+from z3 import ArithRef, Int, Solver, Distinct, And, sat, IntVal
+
+
+def make_9x9_z3_board(board_text: str, solver: Solver) -> List[List[ArithRef]]:
+    """
+    Creates a board of z3 variables from a string representation of a board.
+    For unknown cells, make the value be 0, and for known cells, make the value
+    be a number from 1-9.
+    """
+    board = []
+    for line_counter, line in enumerate(board_text.splitlines()):
+        row = []
+        for char_counter, character in enumerate(line.strip()):
+            if character.isdigit():
+                num = int(character)
+                # 0 is unknown
+                cell = Int(f"cell_{line_counter}_{char_counter}")
+                if num == 0:
+                    solver.add(And(cell >= 1, cell <= 9))
+                    row.append(cell)
+                elif 0 < num < 10:
+                    solver.add(cell == IntVal(num))
+                    row.append(cell)
+        if len(row) != 9:
+            raise ValueError(
+                f"Invalid column count of board, must be 9, got {len(row)}")
+        board.append(row)
+
+    if len(board) != 9:
+        raise ValueError(
+            f"Invalid row count of board, must be 9, got {len(board)}")
+
+    return board
+
+
+def assert_uniq(solver: Solver, z3_board: List[List[ArithRef]]):
+    # Assert rows unique
+    for row in z3_board:
+        solver.add(Distinct(row))
+
+    # Assert columns unique
+    for col in zip(*z3_board):
+        solver.add(Distinct(col))
+
+    # EDIT: Add constraints to ensure that each 3x3 subgrid contains unique numbers.
+    # EDIT: We need to iterate through the 9 subgrids. The top-left corner of each subgrid starts at row 0, 3, or 6, and column 0, 3, or 6.
+    # EDIT: Create a loop that iterates through the starting row indices of the subgrids. Use a step of 3. For example, `for i in range(0, 9, 3):`.
+        # EDIT: Create a nested loop that iterates through the starting column indices of the subgrids. Also use a step of 3. For example, `for j in range(0, 9, 3):`.
+            # EDIT: Inside the loops, create an empty list to store the cells of the current 3x3 subgrid. Let's call it `subgrid_cells`.
+            # EDIT: Create another nested loop to iterate through the 3 rows of the subgrid. For example, `for row_offset in range(3):`.
+                # EDIT: Create a final nested loop to iterate through the 3 columns of the subgrid. For example, `for col_offset in range(3):`.
+                    # EDIT: Inside this innermost loop, get the cell from `z3_board` at the correct position (`i + row_offset`, `j + col_offset`) and add it to your `subgrid_cells` list.
+            # EDIT: After the inner loops have finished collecting all 9 cells for the subgrid, add a `Distinct` constraint to the solver for the `subgrid_cells` list.
+
+
+def print_board(board: List[List[int]]):
+    for row in board:
+        print(row)
+
+
+def check_valid(board: List[List[int]]) -> bool:
+    for row in board:
+        if len(set(row)) != 9:
+            return False
+
+    for col in zip(*board):
+        if len(set(col)) != 9:
+            return False
+
+    # EDIT: Add logic to check if each 3x3 subgrid is valid. A subgrid is valid if it contains the numbers 1 through 9 exactly once.
+    # EDIT: We need to iterate through the 9 subgrids. The top-left corner of each subgrid starts at row 0, 3, or 6, and column 0, 3, or 6.
+    # EDIT: Create a loop that iterates through the starting row indices of the subgrids. Use a step of 3. For example, `for i in range(0, 9, 3):`.
+        # EDIT: Create a nested loop that iterates through the starting column indices of the subgrids. Also use a step of 3. For example, `for j in range(0, 9, 3):`.
+            # EDIT: Inside the loops, create an empty list to store the numbers of the current 3x3 subgrid. Let's call it `subgrid_numbers`.
+            # EDIT: Create another nested loop to iterate through the 3 rows of the subgrid. For example, `for row_offset in range(3):`.
+                # EDIT: Create a final nested loop to iterate through the 3 columns of the subgrid. For example, `for col_offset in range(3):`.
+                    # EDIT: Inside this innermost loop, get the number from `board` at the correct position (`i + row_offset`, `j + col_offset`) and add it to your `subgrid_numbers` list.
+            # EDIT: After collecting all 9 numbers for the subgrid, check if they are unique.
+            # EDIT: A simple way is to convert the `subgrid_numbers` list to a `set` and check if its length is 9.
+            # EDIT: If the length of the set is not 9, it means there are duplicate numbers, so the board is invalid. Return `False`.
+
+    return True
+
+
+def solve(board_text: str) -> Optional[List[List[int]]]:
+    solver = Solver()
+    z3_board = make_9x9_z3_board(board_text, solver)
+    board: List[List[int]] = [[] for _ in range(9)]
+    assert_uniq(solver, z3_board)
+    if solver.check() == sat:
+        model = solver.model()
+        for i, row in enumerate(z3_board):
+            row = [model.evaluate(cell).as_long()  # type: ignore
+                   for cell in row]
+            board[i] = row
+        return board
+    else:
+        return None
+
+===============
+```py
+from typing import List, Optional
+from z3 import ArithRef, Int, Solver, Distinct, And, sat, IntVal
+
+
+def make_9x9_z3_board(board_text: str, solver: Solver) -> List[List[ArithRef]]:
+    """
+    Creates a board of z3 variables from a string representation of a board.
+    For unknown cells, make the value be 0, and for known cells, make the value
+    be a number from 1-9.
+    """
+    board = []
+    for line_counter, line in enumerate(board_text.splitlines()):
+        row = []
+        for char_counter, character in enumerate(line.strip()):
+            if character.isdigit():
+                num = int(character)
+                # 0 is unknown
+                cell = Int(f"cell_{line_counter}_{char_counter}")
+                if num == 0:
+                    solver.add(And(cell >= 1, cell <= 9))
+                    row.append(cell)
+                elif 0 < num < 10:
+                    solver.add(cell == IntVal(num))
+                    row.append(cell)
+        if len(row) != 9:
+            raise ValueError(
+                f"Invalid column count of board, must be 9, got {len(row)}")
+        board.append(row)
+
+    if len(board) != 9:
+        raise ValueError(
+            f"Invalid row count of board, must be 9, got {len(board)}")
+
+    return board
+
+
+def assert_uniq(solver: Solver, z3_board: List[List[ArithRef]]):
+    # Assert rows unique
+    for row in z3_board:
+        solver.add(Distinct(row))
+
+    # Assert columns unique
+    for col in zip(*z3_board):
+        solver.add(Distinct(col))
+
+    # EDIT: Add constraints to ensure that each 3x3 subgrid contains unique numbers.
+    # EDIT: We need to iterate through the 9 subgrids. The top-left corner of each subgrid starts at row 0, 3, or 6, and column 0, 3, or 6.
+    # EDIT: Create a loop that iterates through the starting row indices of the subgrids. Use a step of 3. For example, `for i in range(0, 9, 3):`.
+        # EDIT: Create a nested loop that iterates through the starting column indices of the subgrids. Also use a step of 3. For example, `for j in range(0, 9, 3):`.
+            # EDIT: Inside the loops, create an empty list to store the cells of the current 3x3 subgrid. Let's call it `subgrid_cells`.
+            # EDIT: Create another nested loop to iterate through the 3 rows of the subgrid. For example, `for row_offset in range(3):`.
+                # EDIT: Create a final nested loop to iterate through the 3 columns of the subgrid. For example, `for col_offset in range(3):`.
+                    # EDIT: Inside this innermost loop, get the cell from `z3_board` at the correct position (`i + row_offset`, `j + col_offset`) and add it to your `subgrid_cells` list.
+            # EDIT: After the inner loops have finished collecting all 9 cells for the subgrid, add a `Distinct` constraint to the solver for the `subgrid_cells` list.
+
+
+def print_board(board: List[List[int]]):
+    for row in board:
+        print(row)
+
+
+def check_valid(board: List[List[int]]) -> bool:
+    for row in board:
+        if len(set(row)) != 9:
+            return False
+
+    for col in zip(*board):
+        if len(set(col)) != 9:
+            return False
+
+    # EDIT: Add logic to check if each 3x3 subgrid is valid. A subgrid is valid if it contains the numbers 1 through 9 exactly once.
+    # EDIT: We need to iterate through the 9 subgrids. The top-left corner of each subgrid starts at row 0, 3, or 6, and column 0, 3, or 6.
+    # EDIT: Create a loop that iterates through the starting row indices of the subgrids. Use a step of 3. For example, `for i in range(0, 9, 3):`.
+        # EDIT: Create a nested loop that iterates through the starting column indices of the subgrids. Also use a step of 3. For example, `for j in range(0, 9, 3):`.
+            # EDIT: Inside the loops, create an empty list to store the numbers of the current 3x3 subgrid. Let's call it `subgrid_numbers`.
+            # EDIT: Create another nested loop to iterate through the 3 rows of the subgrid. For example, `for row_offset in range(3):`.
+                # EDIT: Create a final nested loop to iterate through the 3 columns of the subgrid. For example, `for col_offset in range(3):`.
+                    # EDIT: Inside this innermost loop, get the number from `board` at the correct position (`i + row_offset`, `j + col_offset`) and add it to your `subgrid_numbers` list.
+            # EDIT: After collecting all 9 numbers for the subgrid, check if they are unique.
+            # EDIT: A simple way is to convert the `subgrid_numbers` list to a `set` and check if its length is 9.
+            # EDIT: If the length of the set is not 9, it means there are duplicate numbers, so the board is invalid. Return `False`.
+
+    return True
+
+
+def solve(board_text: str) -> Optional[List[List[int]]]:
+    solver = Solver()
+    z3_board = make_9x9_z3_board(board_text, solver)
+    board: List[List[int]] = [[] for _ in range(9)]
+    assert_uniq(solver, z3_board)
+    if solver.check() == sat:
+        model = solver.model()
+        for i, row in enumerate(z3_board):
+            row = [model.evaluate(cell).as_long()  # type: ignore
+                   for cell in row]
+            board[i] = row
+        return board
+    else:
+        return None
+```

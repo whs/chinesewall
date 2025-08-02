@@ -1,0 +1,177 @@
+[3173, 3182]
+from abc import abstractmethod
+
+class Tree:
+
+    @abstractmethod
+    def tree_map(self, func):
+        pass 
+
+    @abstractmethod
+    def tree_filter(self, func, filler):
+        pass 
+
+    @abstractmethod
+    def tree_andmap(self, func):
+        pass 
+
+    @abstractmethod
+    def tree_ormap(self, func):
+        pass 
+
+    @abstractmethod
+    def __eq__(self, other):
+        pass
+
+class Node(Tree):
+
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def tree_map(self, func):
+        # EDIT: This method should return a new `Node` object instead of modifying the current one.
+        # 1. Call `tree_map` on the `self.left` child and store the returned new subtree in a variable named `new_left`.
+        # 2. Call `tree_map` on the `self.right` child and store the returned new subtree in a variable named `new_right`.
+        # 3. Return a new `Node` object created with `new_left` and `new_right`.
+        self.left.tree_map(func)
+        self.right.tree_map(func)
+
+    def tree_filter(self, func, filler):
+        # EDIT: This method should return a new `Node` object instead of modifying the current one.
+        # 1. Call `tree_filter` on the `self.left` child and store the returned new subtree in a variable named `new_left`.
+        # 2. Call `tree_filter` on the `self.right` child and store the returned new subtree in a variable named `new_right`.
+        # 3. Return a new `Node` object created with `new_left` and `new_right`.
+        self.left.tree_filter(func, filler)
+        self.right.tree_filter(func, filler)
+
+    def tree_andmap(self, func):
+        return self.left.tree_andmap(func) and self.right.tree_andmap(func)
+
+    def tree_ormap(self, func):
+        return self.left.tree_ormap(func) or self.right.tree_ormap(func)
+    
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return self.left == other.left and self.right == other.right
+        return False
+
+class Leaf(Tree):
+
+    def __init__(self, value):
+        self.value = value
+
+    def tree_map(self, func):
+        # EDIT: This method should return a new `Leaf` object instead of modifying the current one.
+        # 1. Apply the `func` function to `self.value` and store the result in a new variable.
+        # 2. Create and return a new `Leaf` object, passing the new value from the previous step to its constructor.
+        self.value = func(self.value)
+
+    def tree_filter(self, func, filler):
+        # EDIT: This method should return a new `Leaf` object instead of modifying the current one.
+        # 1. Check if calling `func` with `self.value` as its argument results in a true value.
+        # 2. If it is true, create and return a new `Leaf` object with the `filler` value.
+        # 3. If it is false, create and return a new `Leaf` object with the original `self.value`.
+        if func(self.value):
+            self.value = filler
+
+    def tree_andmap(self, func):
+        return func(self.value)
+
+    def tree_ormap(self, func):
+        return func(self.value)
+    
+    def __eq__(self, other):
+        if isinstance(other, Leaf):
+            return self.value == other.value 
+        return False
+
+===============
+```py
+from abc import abstractmethod
+
+class Tree:
+
+    @abstractmethod
+    def tree_map(self, func):
+        pass 
+
+    @abstractmethod
+    def tree_filter(self, func, filler):
+        pass 
+
+    @abstractmethod
+    def tree_andmap(self, func):
+        pass 
+
+    @abstractmethod
+    def tree_ormap(self, func):
+        pass 
+
+    @abstractmethod
+    def __eq__(self, other):
+        pass
+
+class Node(Tree):
+
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def tree_map(self, func):
+        # EDIT: This method should return a new `Node` object instead of modifying the current one.
+        # 1. Call `tree_map` on the `self.left` child and store the returned new subtree in a variable named `new_left`.
+        # 2. Call `tree_map` on the `self.right` child and store the returned new subtree in a variable named `new_right`.
+        # 3. Return a new `Node` object created with `new_left` and `new_right`.
+        self.left.tree_map(func)
+        self.right.tree_map(func)
+
+    def tree_filter(self, func, filler):
+        # EDIT: This method should return a new `Node` object instead of modifying the current one.
+        # 1. Call `tree_filter` on the `self.left` child and store the returned new subtree in a variable named `new_left`.
+        # 2. Call `tree_filter` on the `self.right` child and store the returned new subtree in a variable named `new_right`.
+        # 3. Return a new `Node` object created with `new_left` and `new_right`.
+        self.left.tree_filter(func, filler)
+        self.right.tree_filter(func, filler)
+
+    def tree_andmap(self, func):
+        return self.left.tree_andmap(func) and self.right.tree_andmap(func)
+
+    def tree_ormap(self, func):
+        return self.left.tree_ormap(func) or self.right.tree_ormap(func)
+    
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return self.left == other.left and self.right == other.right
+        return False
+
+class Leaf(Tree):
+
+    def __init__(self, value):
+        self.value = value
+
+    def tree_map(self, func):
+        # EDIT: This method should return a new `Leaf` object instead of modifying the current one.
+        # 1. Apply the `func` function to `self.value` and store the result in a new variable.
+        # 2. Create and return a new `Leaf` object, passing the new value from the previous step to its constructor.
+        self.value = func(self.value)
+
+    def tree_filter(self, func, filler):
+        # EDIT: This method should return a new `Leaf` object instead of modifying the current one.
+        # 1. Check if calling `func` with `self.value` as its argument results in a true value.
+        # 2. If it is true, create and return a new `Leaf` object with the `filler` value.
+        # 3. If it is false, create and return a new `Leaf` object with the original `self.value`.
+        if func(self.value):
+            self.value = filler
+
+    def tree_andmap(self, func):
+        return func(self.value)
+
+    def tree_ormap(self, func):
+        return func(self.value)
+    
+    def __eq__(self, other):
+        if isinstance(other, Leaf):
+            return self.value == other.value 
+        return False
+```

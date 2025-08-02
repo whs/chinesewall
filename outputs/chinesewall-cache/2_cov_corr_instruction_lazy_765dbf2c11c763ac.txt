@@ -1,0 +1,47 @@
+[1149, 1158]
+class Probability:
+
+    def sample_mean(self, X):
+        """Computes the sample mean of the data"""
+        return sum(X) / len(X)
+
+    def variance(self, X):
+        """Computes the variance of the data"""
+        mean = sum(X) / len(X)
+        return sum((x - mean) ** 2 for x in X) / len(X)
+
+    # EDIT: Change the name of this function from `correlation` to `covariance`.
+    # EDIT: Change the name of the first parameter from `cov` to `corr`. This parameter will represent the correlation value.
+    def correlation(self, cov, var_x, var_y):
+        # EDIT: Update this docstring to describe the new function. It should say: "Computes the covariance of the data based on its Corr(X, Y), Var(X) and Var(Y)".
+        """Computes the correlation of the data based on its Var(X). Var(Y) and Cov(X, Y)"""
+        std_y = var_y ** 0.5
+        std_x = var_x ** 0.5
+        # EDIT: The formula to calculate covariance is: correlation multiplied by the standard deviation of X and the standard deviation of Y.
+        # Replace the current division operation with a multiplication of `corr`, `std_x`, and `std_y`.
+        return cov / (std_x * std_y)
+
+===============
+```py
+class Probability:
+
+    def sample_mean(self, X):
+        """Computes the sample mean of the data"""
+        return sum(X) / len(X)
+
+    def variance(self, X):
+        """Computes the variance of the data"""
+        mean = sum(X) / len(X)
+        return sum((x - mean) ** 2 for x in X) / len(X)
+
+    # EDIT: Change the name of this function from `correlation` to `covariance`.
+    # EDIT: Change the name of the first parameter from `cov` to `corr`. This parameter will represent the correlation value.
+    def correlation(self, cov, var_x, var_y):
+        # EDIT: Update this docstring to describe the new function. It should say: "Computes the covariance of the data based on its Corr(X, Y), Var(X) and Var(Y)".
+        """Computes the correlation of the data based on its Var(X). Var(Y) and Cov(X, Y)"""
+        std_y = var_y ** 0.5
+        std_x = var_x ** 0.5
+        # EDIT: The formula to calculate covariance is: correlation multiplied by the standard deviation of X and the standard deviation of Y.
+        # Replace the current division operation with a multiplication of `corr`, `std_x`, and `std_y`.
+        return cov / (std_x * std_y)
+```

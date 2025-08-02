@@ -1,0 +1,65 @@
+[2107, 2116]
+import numpy as np
+
+class MarkovChain:
+
+    def create_transition_matrix(self, matrix):
+        
+        matrix = np.array(matrix)
+        column_sums = np.sum(matrix, axis=0)
+        normalized_matrix = matrix / column_sums
+        return normalized_matrix.tolist()
+
+    # EDIT: Define a new method here called `translate_from_list`. It should accept `self` and `adj_list` as parameters.
+    # `adj_list` will be a dictionary where keys are integers (representing nodes) and values are lists of integers (the nodes they connect to).
+    
+        # EDIT: First, you need to figure out the size of the matrix. Find the largest node number in the entire `adj_list` (it could be a key or a value in one of the lists). The size of your square matrix will be `largest_node_number + 1`. Let's call this size `num_nodes`.
+        
+        # EDIT: Create a new square matrix (a list of lists) with dimensions `num_nodes` by `num_nodes`. Initialize all its elements to 0. Let's call this `matrix`.
+
+        # EDIT: Now, you need to fill this `matrix` based on the connections in `adj_list`.
+        # Iterate through each item in the `adj_list` dictionary. For each key (let's call it `start_node`) and its corresponding list of values (let's call it `end_nodes`):
+        
+            # EDIT: Inside that loop, create another loop that goes through each `end_node` in the `end_nodes` list.
+            
+                # EDIT: For each connection from a `start_node` to an `end_node`, you need to place a 1 in the `matrix`.
+                # The position in the matrix should be at the row corresponding to the `end_node` and the column corresponding to the `start_node`.
+                # So, you will set `matrix[end_node][start_node]` to 1.
+
+        # EDIT: After you have finished filling the `matrix` with 1s for all the connections, you need to normalize it so that the sum of each column is 1.
+        # You can do this by calling the `create_transition_matrix` method that is already part of this class.
+        # Pass your newly created `matrix` to `self.create_transition_matrix()` and return its result.
+
+===============
+```py
+import numpy as np
+
+class MarkovChain:
+
+    def create_transition_matrix(self, matrix):
+        
+        matrix = np.array(matrix)
+        column_sums = np.sum(matrix, axis=0)
+        normalized_matrix = matrix / column_sums
+        return normalized_matrix.tolist()
+
+    # EDIT: Define a new method here called `translate_from_list`. It should accept `self` and `adj_list` as parameters.
+    # `adj_list` will be a dictionary where keys are integers (representing nodes) and values are lists of integers (the nodes they connect to).
+    
+        # EDIT: First, you need to figure out the size of the matrix. Find the largest node number in the entire `adj_list` (it could be a key or a value in one of the lists). The size of your square matrix will be `largest_node_number + 1`. Let's call this size `num_nodes`.
+        
+        # EDIT: Create a new square matrix (a list of lists) with dimensions `num_nodes` by `num_nodes`. Initialize all its elements to 0. Let's call this `matrix`.
+
+        # EDIT: Now, you need to fill this `matrix` based on the connections in `adj_list`.
+        # Iterate through each item in the `adj_list` dictionary. For each key (let's call it `start_node`) and its corresponding list of values (let's call it `end_nodes`):
+        
+            # EDIT: Inside that loop, create another loop that goes through each `end_node` in the `end_nodes` list.
+            
+                # EDIT: For each connection from a `start_node` to an `end_node`, you need to place a 1 in the `matrix`.
+                # The position in the matrix should be at the row corresponding to the `end_node` and the column corresponding to the `start_node`.
+                # So, you will set `matrix[end_node][start_node]` to 1.
+
+        # EDIT: After you have finished filling the `matrix` with 1s for all the connections, you need to normalize it so that the sum of each column is 1.
+        # You can do this by calling the `create_transition_matrix` method that is already part of this class.
+        # Pass your newly created `matrix` to `self.create_transition_matrix()` and return its result.
+```

@@ -1,0 +1,73 @@
+[1826, 1835]
+class Fib:
+    def __iter__(self):
+        self.prev_prev = 0
+        self.prev = 1
+        return self
+    def __next__(self):
+        output = self.prev + self.prev_prev
+        self.prev_prev = self.prev
+        self.prev = output
+        return output
+    
+    # EDIT: Define a new method here called `next_n_fibs`. It should accept two arguments: `self` and an integer `n`.
+    # Add a type hint to `n` to show it's an `int`.
+    # The method should be type-hinted to return a list of integers (`list[int]`).
+    
+        # EDIT: To make sure we don't change the object's current state (`self.prev` and `self.prev_prev`),
+        # we need to work with copies of these values.
+        # Create a new variable, let's call it `temp_prev`, and assign it the value of `self.prev`.
+        # Create another new variable, let's call it `temp_prev_prev`, and assign it the value of `self.prev_prev`.
+
+        # EDIT: Create an empty list to store the sequence of Fibonacci numbers we will generate. Let's call it `fib_list`.
+
+        # EDIT: We need to generate `n` numbers. Create a loop that will repeat `n` times. A `for` loop is suitable for this.
+
+            # EDIT: Inside the loop, calculate the next Fibonacci number by adding `temp_prev` and `temp_prev_prev`. Store this sum in a new variable, for example, `next_num`.
+
+            # EDIT: Add the calculated `next_num` to the end of your `fib_list`.
+
+            # EDIT: Now, update your temporary variables to prepare for the next calculation in the loop.
+            # First, set `temp_prev_prev` to the value of `temp_prev`.
+            # Second, set `temp_prev` to the value of `next_num`.
+            # The order of these two updates is important.
+
+        # EDIT: After the loop has finished, return the `fib_list` which now contains the `n` Fibonacci numbers.
+
+===============
+```py
+class Fib:
+    def __iter__(self):
+        self.prev_prev = 0
+        self.prev = 1
+        return self
+    def __next__(self):
+        output = self.prev + self.prev_prev
+        self.prev_prev = self.prev
+        self.prev = output
+        return output
+    
+    # EDIT: Define a new method here called `next_n_fibs`. It should accept two arguments: `self` and an integer `n`.
+    # Add a type hint to `n` to show it's an `int`.
+    # The method should be type-hinted to return a list of integers (`list[int]`).
+    
+        # EDIT: To make sure we don't change the object's current state (`self.prev` and `self.prev_prev`),
+        # we need to work with copies of these values.
+        # Create a new variable, let's call it `temp_prev`, and assign it the value of `self.prev`.
+        # Create another new variable, let's call it `temp_prev_prev`, and assign it the value of `self.prev_prev`.
+
+        # EDIT: Create an empty list to store the sequence of Fibonacci numbers we will generate. Let's call it `fib_list`.
+
+        # EDIT: We need to generate `n` numbers. Create a loop that will repeat `n` times. A `for` loop is suitable for this.
+
+            # EDIT: Inside the loop, calculate the next Fibonacci number by adding `temp_prev` and `temp_prev_prev`. Store this sum in a new variable, for example, `next_num`.
+
+            # EDIT: Add the calculated `next_num` to the end of your `fib_list`.
+
+            # EDIT: Now, update your temporary variables to prepare for the next calculation in the loop.
+            # First, set `temp_prev_prev` to the value of `temp_prev`.
+            # Second, set `temp_prev` to the value of `next_num`.
+            # The order of these two updates is important.
+
+        # EDIT: After the loop has finished, return the `fib_list` which now contains the `n` Fibonacci numbers.
+```
