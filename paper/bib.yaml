@@ -1,0 +1,860 @@
+# https://github.com/typst/hayagriva/blob/main/docs/file-format.md
+starcoder2:
+  type: article
+  title: "StarCoder 2 and The Stack v2: The Next Generation"
+  author:
+    - Anton Lozhkov
+    - Raymond Li
+    - Loubna Ben Allal
+    - Federico Cassano
+    - Joel Lamy-Poirier
+    - Nouamane Tazi
+    - Ao Tang
+    - Dmytro Pykhtar
+    - Jiawei Liu
+    - Yuxiang Wei
+    - Tianyang Liu
+    - Max Tian
+    - Denis Kocetkov
+    - Arthur Zucker
+    - Younes Belkada
+    - Zijian Wang
+    - Qian Liu
+    - Dmitry Abulkhanov
+    - Indraneil Paul
+    - Zhuang Li
+    - Wen-Ding Li
+    - Megan Risdal
+    - Jia Li
+    - Jian Zhu
+    - Terry Yue Zhuo
+    - Evgenii Zheltonozhskii
+    - Nii Osae Osae Dade
+    - Wenhao Yu
+    - Lucas Krauß
+    - Naman Jain
+    - Yixuan Su
+    - Xuanli He
+    - Manan Dey
+    - Edoardo Abati
+    - Yekun Chai
+    - Niklas Muennighoff
+    - Xiangru Tang
+    - Muhtasham Oblokulov
+    - Christopher Akiki
+    - Marc Marone
+    - Chenghao Mou
+    - Mayank Mishra
+    - Alex Gu
+    - Binyuan Hui
+    - Tri Dao
+    - Armel Zebaze
+    - Olivier Dehaene
+    - Nicolas Patry
+    - Canwen Xu
+    - Julian McAuley
+    - Han Hu
+    - Torsten Scholak
+    - Sebastien Paquet
+    - Jennifer Robinson
+    - Carolyn Jane Anderson
+    - Nicolas Chapados
+    - Mostofa Patwary
+    - Nima Tajbakhsh
+    - Yacine Jernite
+    - Carlos Muñoz Ferrandis
+    - Lingming Zhang
+    - Sean Hughes
+    - Thomas Wolf
+    - Arjun Guha
+    - Leandro von Werra
+    - Harm de Vries
+  organization: BigCode Project
+  date: 2024-02-29
+  serial-number:
+    arxiv: "2402.19173"
+    doi: "10.48550/arXiv.2402.19173"
+
+starcoder2instruct:
+  type: article
+  title: "SelfCodeAlign: Self-Alignment for Code Generation"
+  author:
+    - Yuxiang Wei
+    - Federico Cassano
+    - Jiawei Liu
+    - Yifeng Ding
+    - Naman Jain
+    - Zachary Mueller
+    - Harm de Vries
+    - Leandro von Werra
+    - Arjun Guha
+    - Lingming Zhang
+  date: 2024
+  serial-number:
+    arxiv: "2410.24198"
+    doi: "10.48550/arXiv.2410.24198"
+  parent:
+    - type: proceedings
+      title: The Thirty-eighth Annual Conference on Neural Information Processing Systems"
+
+thestack:
+  type: article
+  title: "The Stack: 3 TB of permissively licensed source code"
+  organization: BigCode Project
+  author:
+    - Denis Kocetkov
+    - Raymond Li
+    - Loubna Ben Allal
+    - Jia Li
+    - Chenghao Mou
+    - Carlos Muñoz Ferrandis
+    - Yacine Jernite
+    - Margaret Mitchell
+    - Sean Hughes
+    - Thomas Wolf
+    - Dzmitry Bahdanau
+    - Leandro von Werra
+    - Harm de Vries
+  date: 2023-06
+  serial-number:
+    arxiv: "2211.15533"
+    doi: "10.48550/arXiv.2211.15533"
+  parent:
+    - type: periodical
+      title: "Transactions on Machine Learning Research"
+      serial-number:
+        issn: 2835-8856
+
+starcoder:
+  type: article
+  title: "StarCoder: may the source be with you!" 
+  author:
+    - Raymond Li
+    - Loubna Ben Allal
+    - Yangtian Zi
+    - Niklas Muennighoff
+    - Denis Kocetkov
+    - Chenghao Mou
+    - Marc Marone
+    - Christopher Akiki
+    - Jia Li
+    - Jenny Chim
+    - Qian Liu
+    - Evgenii Zheltonozhskii
+    - Terry Yue Zhuo
+    - Thomas Wang
+    - Olivier Dehaene
+    - Mishig Davaadorj
+    - Joel Lamy-Poirier
+    - João Monteiro
+    - Oleh Shliazhko
+    - Nicolas Gontier
+    - Nicholas Meade
+    - Armel Zebaze
+    - Ming-Ho Yee
+    - Logesh Kumar Umapathi
+    - Jian Zhu
+    - Benjamin Lipkin
+    - Muhtasham Oblokulov
+    - Zhiruo Wang
+    - Rudra Murthy
+    - Jason Stillerman
+    - Siva Sankalp Patel
+    - Dmitry Abulkhanov
+    - Marco Zocca
+    - Manan Dey
+    - Zhihan Zhang
+    - Nour Fahmy
+    - Urvashi Bhattacharyya
+    - Wenhao Yu
+    - Swayam Singh
+    - Sasha Luccioni
+    - Paulo Villegas
+    - Maxim Kunakov
+    - Fedor Zhdanov
+    - Manuel Romero
+    - Tony Lee
+    - Nadav Timor
+    - Jennifer Ding
+    - Claire Schlesinger
+    - Hailey Schoelkopf
+    - Jan Ebert
+    - Tri Dao
+    - Mayank Mishra
+    - Alex Gu
+    - Jennifer Robinson
+    - Carolyn Jane Anderson
+    - Brendan Dolan-Gavitt
+    - Danish Contractor
+    - Siva Reddy
+    - Daniel Fried
+    - Dzmitry Bahdanau
+    - Yacine Jernite
+    - Carlos Muñoz Ferrandis
+    - Sean Hughes
+    - Thomas Wolf
+    - Arjun Guha
+    - Leandro von Werra
+    - Harm de Vries
+  date: 2023-12
+  serial-number:
+    arxiv: "2305.06161"
+    doi: "10.48550/arXiv.2305.06161"
+  parent:
+    - type: periodical
+      title: "Transactions on Machine Learning Research"
+      serial-number:
+        issn: 2835-8856
+
+canitedit:
+  type: article
+  title: Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions
+  author:
+    - Federico Cassano
+    - Luisa Li
+    - Akul Sethi
+    - Noah Shinn
+    - Abby Brennan-Jones
+    - Jacob Ginesin
+    - Edward Berman
+    - George Chakhnashvili
+    - Anton Lozhkov
+    - Carolyn Jane Anderson
+    - Arjun Guha
+  date: 2024
+  serial-number:
+    arxiv: "2312.12450"
+    doi: "10.48550/arXiv.2312.12450"
+  parent:
+    - type: proceedings
+      title: Conference on Language Modeling (COLM)
+      location: University of Pennsylvania, Philadelphia, PA
+
+aiderarchitect:
+  type: web
+  title: Separating code reasoning and editing
+  url:
+    value: https://aider.chat/2024/09/26/architect.html
+    date: 2025-06-21
+  date: 2024-09-26
+  organization: Aider AI LLC
+  author: Aider AI LLC
+
+aiderpolyglot:
+  type: web
+  title: Aider polyglot coding leaderboard
+  url:
+    value: https://aider.chat/docs/leaderboards/
+    date: 2025-06-25
+  author: Aider AI LLC
+
+lmarenawebdev:
+  type: web
+  title: WebDev Arena
+  url:
+    value: https://lmarena.ai/leaderboard/webdev
+    date: 2025-06-25
+  date: 2025-05-30
+  author:
+  - Aryan Vichare
+  - Anastasios N. Angelopoulos
+  - Wei-Lin Chiang
+  - Kelly Tang
+  - Luca Manolache
+
+lmarenacopilot:
+  type: web
+  title: Copilot Arena
+  url:
+    value: https://lmarena.ai/leaderboard/copilot
+    date: 2025-06-25
+  date: 2025-05-30
+  author:
+  - Wayne Chi
+  - Valerie Chen
+  - Anastasios Nikolas Angelopoulos
+  - Wei-Lin Chiang
+  - Aditya Mittal
+  - Naman Jain
+  - Tianjun Zhang
+  - Ion Stoica
+  - Chris Donahue
+  - Ameet Talwalkar
+
+gpt4:
+  type: article
+  title: GPT-4 Technical Report
+  author:
+    - OpenAI
+    - Josh Achiam
+    - Steven Adler
+    - Sandhini Agarwal
+    - Lama Ahmad
+    - Ilge Akkaya
+    - Florencia Leoni Aleman
+    - Diogo Almeida
+    - Janko Altenschmidt
+    - Sam Altman
+    - Shyamal Anadkat
+    - Red Avila
+    - Igor Babuschkin
+    - Suchir Balaji
+    - Valerie Balcom
+    - Paul Baltescu
+    - Haiming Bao
+    - Mohammad Bavarian
+    - Jeff Belgum
+    - Irwan Bello
+    - Jake Berdine
+    - Gabriel Bernadett-Shapiro
+    - Christopher Berner
+    - Lenny Bogdonoff
+    - Oleg Boiko
+    - Madelaine Boyd
+    - Anna-Luisa Brakman
+    - Greg Brockman
+    - Tim Brooks
+    - Miles Brundage
+    - Kevin Button
+    - Trevor Cai
+    - Rosie Campbell
+    - Andrew Cann
+    - Brittany Carey
+    - Chelsea Carlson
+    - Rory Carmichael
+    - Brooke Chan
+    - Che Chang
+    - Fotis Chantzis
+    - Derek Chen
+    - Sully Chen
+    - Ruby Chen
+    - Jason Chen
+    - Mark Chen
+    - Ben Chess
+    - Chester Cho
+    - Casey Chu
+    - Hyung Won Chung
+    - Dave Cummings
+    - Jeremiah Currier
+    - Yunxing Dai
+    - Cory Decareaux
+    - Thomas Degry
+    - Noah Deutsch
+    - Damien Deville
+    - Arka Dhar
+    - David Dohan
+    - Steve Dowling
+    - Sheila Dunning
+    - Adrien Ecoffet
+    - Atty Eleti
+    - Tyna Eloundou
+    - David Farhi
+    - Liam Fedus
+    - Niko Felix
+    - Simón Posada Fishman
+    - Juston Forte
+    - Isabella Fulford
+    - Leo Gao
+    - Elie Georges
+    - Christian Gibson
+    - Vik Goel
+    - Tarun Gogineni
+    - Gabriel Goh
+    - Rapha Gontijo-Lopes
+    - Jonathan Gordon
+    - Morgan Grafstein
+    - Scott Gray
+    - Ryan Greene
+    - Joshua Gross
+    - Shixiang Shane Gu
+    - Yufei Guo
+    - Chris Hallacy
+    - Jesse Han
+    - Jeff Harris
+    - Yuchen He
+    - Mike Heaton
+    - Johannes Heidecke
+    - Chris Hesse
+    - Alan Hickey
+    - Wade Hickey
+    - Peter Hoeschele
+    - Brandon Houghton
+    - Kenny Hsu
+    - Shengli Hu
+    - Xin Hu
+    - Joost Huizinga
+    - Shantanu Jain
+    - Shawn Jain
+    - Joanne Jang
+    - Angela Jiang
+    - Roger Jiang
+    - Haozhun Jin
+    - Denny Jin
+    - Shino Jomoto
+    - Billie Jonn
+    - Heewoo Jun
+    - Tomer Kaftan
+    - Łukasz Kaiser
+    - Ali Kamali
+    - Ingmar Kanitscheider
+    - Nitish Shirish Keskar
+    - Tabarak Khan
+    - Logan Kilpatrick
+    - Jong Wook Kim
+    - Christina Kim
+    - Yongjik Kim
+    - Jan Hendrik Kirchner
+    - Jamie Kiros
+    - Matt Knight
+    - Daniel Kokotajlo
+    - Łukasz Kondraciuk
+    - Andrew Kondrich
+    - Aris Konstantinidis
+    - Kyle Kosic
+    - Gretchen Krueger
+    - Vishal Kuo
+    - Michael Lampe
+    - Ikai Lan
+    - Teddy Lee
+    - Jan Leike
+    - Jade Leung
+    - Daniel Levy
+    - Chak Ming Li
+    - Rachel Lim
+    - Molly Lin
+    - Stephanie Lin
+    - Mateusz Litwin
+    - Theresa Lopez
+    - Ryan Lowe
+    - Patricia Lue
+    - Anna Makanju
+    - Kim Malfacini
+    - Sam Manning
+    - Todor Markov
+    - Yaniv Markovski
+    - Bianca Martin
+    - Katie Mayer
+    - Andrew Mayne
+    - Bob McGrew
+    - Scott Mayer McKinney
+    - Christine McLeavey
+    - Paul McMillan
+    - Jake McNeil
+    - David Medina
+    - Aalok Mehta
+    - Jacob Menick
+    - Luke Metz
+    - Andrey Mishchenko
+    - Pamela Mishkin
+    - Vinnie Monaco
+    - Evan Morikawa
+    - Daniel Mossing
+    - Tong Mu
+    - Mira Murati
+    - Oleg Murk
+    - David Mély
+    - Ashvin Nair
+    - Reiichiro Nakano
+    - Rajeev Nayak
+    - Arvind Neelakantan
+    - Richard Ngo
+    - Hyeonwoo Noh
+    - Long Ouyang
+    - Cullen O'Keefe
+    - Jakub Pachocki
+    - Alex Paino
+    - Joe Palermo
+    - Ashley Pantuliano
+    - Giambattista Parascandolo
+    - Joel Parish
+    - Emy Parparita
+    - Alex Passos
+    - Mikhail Pavlov
+    - Andrew Peng
+    - Adam Perelman
+    - Filipe de Avila Belbute Peres
+    - Michael Petrov
+    - Henrique Ponde de Oliveira Pinto
+    - Michael
+    - Pokorny
+    - Michelle Pokrass
+    - Vitchyr H. Pong
+    - Tolly Powell
+    - Alethea Power
+    - Boris Power
+    - Elizabeth Proehl
+    - Raul Puri
+    - Alec Radford
+    - Jack Rae
+    - Aditya Ramesh
+    - Cameron Raymond
+    - Francis Real
+    - Kendra Rimbach
+    - Carl Ross
+    - Bob Rotsted
+    - Henri Roussez
+    - Nick Ryder
+    - Mario Saltarelli
+    - Ted Sanders
+    - Shibani Santurkar
+    - Girish Sastry
+    - Heather Schmidt
+    - David Schnurr
+    - John Schulman
+    - Daniel Selsam
+    - Kyla Sheppard
+    - Toki Sherbakov
+    - Jessica Shieh
+    - Sarah Shoker
+    - Pranav Shyam
+    - Szymon Sidor
+    - Eric Sigler
+    - Maddie Simens
+    - Jordan Sitkin
+    - Katarina Slama
+    - Ian Sohl
+    - Benjamin Sokolowsky
+    - Yang Song
+    - Natalie Staudacher
+    - Felipe Petroski Such
+    - Natalie Summers
+    - Ilya Sutskever
+    - Jie Tang
+    - Nikolas Tezak
+    - Madeleine B. Thompson
+    - Phil Tillet
+    - Amin Tootoonchian
+    - Elizabeth Tseng
+    - Preston Tuggle
+    - Nick Turley
+    - Jerry Tworek
+    - Juan Felipe Cerón Uribe
+    - Andrea Vallone
+    - Arun Vijayvergiya
+    - Chelsea Voss
+    - Carroll Wainwright
+    - Justin Jay Wang
+    - Alvin Wang
+    - Ben Wang
+    - Jonathan Ward
+    - Jason Wei
+    - CJ Weinmann
+    - Akila Welihinda
+    - Peter Welinder
+    - Jiayi Weng
+    - Lilian Weng
+    - Matt Wiethoff
+    - Dave Willner
+    - Clemens Winter
+    - Samuel Wolrich
+    - Hannah Wong
+    - Lauren Workman
+    - Sherwin Wu
+    - Jeff Wu
+    - Michael Wu
+    - Kai Xiao
+    - Tao Xu
+    - Sarah Yoo
+    - Kevin Yu
+    - Qiming Yuan
+    - Wojciech Zaremba
+    - Rowan Zellers
+    - Chong Zhang
+    - Marvin Zhang
+    - Shengjia Zhao
+    - Tianhao Zheng
+    - Juntang Zhuang
+    - William Zhuk
+    - Barret Zoph
+  date: 2024
+  serial-number:
+    arxiv: "2303.08774"
+  organization: OpenAI
+
+o3:
+  type: article
+  title: OpenAI o3 and o4-mini System Card
+  author: OpenAI
+  date: 2025-04-16
+  url:
+    value: https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf
+    date: 2025-06-22
+  organization: OpenAI
+
+o3-mini:
+  type: web
+  title: OpenAI o3-mini
+  author: OpenAI
+  date: 2025-01-31
+  url:
+    value: https://openai.com/index/openai-o3-mini/
+    date: 2025-06-22
+
+gpt-4o-mini:
+  type: web
+  title: "GPT-4o mini: advancing cost-efficient intelligence"
+  author: OpenAI
+  date: 2024-07-18
+  url:
+    value: https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/
+    date: 2025-06-22
+
+copilotquake:
+  type: post
+  title: I don't want to say anything but that's not the right license Mr Copilot.
+  author: Armin Ronacher
+  date: 2021-07-02
+  url:
+    value: https://x.com/mitsuhiko/status/1410886329924194309
+    date: 2025-06-22
+
+comma:
+  type: article
+  title: "The Common Pile v0.1: An 8TB Dataset of Public Domain and Openly Licensed Text"
+  author:
+    - Nikhil Kandpal
+    - Brian Lester
+    - Colin Raffel
+    - Sebastian Majstorovic
+    - Stella Biderman
+    - Baber Abbasi
+    - Luca Soldaini
+    - Enrico Shippole
+    - A. Feder Cooper
+    - Aviya Skowron
+    - John Kirchenbauer
+    - Shayne Longpre
+    - Lintang Sutawika
+    - Alon Albalak
+    - Zhenlin Xu
+    - Guilherme Penedo
+    - Loubna Ben Allal
+    - Elie Bakouch
+    - John David Pressman
+    - Honglu Fan
+    - Dashiell Stander
+    - Guangyu Song
+    - Aaron Gokaslan
+    - Tom Goldstein
+    - Brian R. Bartoldson
+    - Bhavya Kailkhura
+    - Tyler Murray
+  date: 2025
+  serial-number:
+    arxiv: "2506.05209"
+    doi: "10.48550/arXiv.2506.05209"
+
+bamboo:
+  type: web
+  title: Bamboo Nano
+  author: KoalaAI
+  url:
+    value: https://huggingface.co/KoalaAI/Bamboo-Nano
+    date: 2025-06-22
+
+zephyr:
+  type: article
+  title: "Zephyr: Direct Distillation of LM Alignment"
+  date: 2023
+  organization: The H4 (Helpful, Honest, Harmless, Huggy) Team
+  author:
+    - Lewis Tunstall
+    - Edward Beeching
+    - Nathan Lambert
+    - Nazneen Rajani
+    - Shengyi Huang
+    - Kashif Rasul
+    - Alvaro Bartolome
+    - Alexander M. Rush
+    - Thomas Wolf
+  serial-number:
+    arxiv: "2310.16944"
+    doi: "10.48550/arXiv.2310.16944"
+  parent:
+    - type: proceedings
+      title: Conference on Language Modeling (COLM)
+      location: University of Pennsylvania, Philadelphia, PA
+
+octopack:
+  type: article
+  title: "OctoPack: Instruction Tuning Code Large Language Models"
+  author:
+    - Niklas Muennighoff
+    - Qian Liu
+    - Armel Zebaze
+    - Qinkai Zheng
+    - Binyuan Hui
+    - Terry Yue Zhuo
+    - Swayam Singh
+    - Xiangru Tang
+    - Leandro von Werra
+    - Shayne Longpre
+  year: 2024
+  serial-number:
+    arxiv: "2308.07124"
+    doi: "10.48550/arXiv.2308.07124"
+  parent:
+    - type: proceedings
+      title: The Twelfth International Conference on Learning Representations
+      location: Vienna, Austria
+
+chinesewall:
+  type: article
+  title: Reverse-Engineering
+  author: Matthew Schwartz
+  date: 2001-11-12
+  publisher: ComputerWorld
+  url:
+    value: https://www.computerworld.com/article/1349695/reverse-engineering.html
+    date: 2025-06-22
+
+q_rsqrt:
+  type: repository
+  title: Quake III Arena's code/game/q_math.c
+  author: id Software
+  date: 2005-08-20
+  url:
+    value: "https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/game/q_math.c"
+    date: 2025-06-22
+  parent:
+    type: repository
+    title: Quake III Arena
+    url: https://github.com/id-Software/Quake-III-Arena
+
+lomont2003:
+  type: article
+  title: Fast Inverse Square Root
+  author: Chris Lomont
+  date: 2003-02
+  organization: Department of Mathematics, Purdue University
+  url:
+    value: https://www.lomont.org/papers/2003/InvSqrt.pdf
+    date: 2025-06-22
+
+phi4:
+  type: article
+  title: Phi-4 Technical Report
+  author:
+    - Marah Abdin
+    - Jyoti Aneja
+    - Harkirat Behl
+    - Sébastien Bubeck
+    - Ronen Eldan
+    - Suriya Gunasekar
+    - Michael Harrison
+    - Russell J. Hewett
+    - Mojan Javaheripi
+    - Piero Kauffmann
+    - James R. Lee
+    - Yin Tat Lee
+    - Yuanzhi Li
+    - Weishung Liu
+    - Caio C. T. Mendes
+    - Anh Nguyen
+    - Eric Price
+    - Gustavo de Rosa
+    - Olli Saarikivi
+    - Adil Salim
+    - Shital Shah
+    - Xin Wang
+    - Rachel Ward
+    - Yue Wu
+    - Dingli Yu
+    - Cyril Zhang
+    - Yi Zhang
+  organization: Microsoft Research
+  date: 2024-12-12
+  serial-number:
+    arxiv: "2412.08905"
+    doi: "10.48550/arXiv.2412.08905"
+
+gemini25:
+  type: article
+  title: "Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities."
+  author: Gemini Team
+  organization: Google
+  date: 2025-06-17
+  url:
+    value: https://storage.googleapis.com/deepmind-media/gemini/gemini_v2_5_report.pdf
+    date: 2025-06-25
+  serial-number:
+    arxiv: "2507.06261"
+    doi: "10.48550/arXiv.2507.06261"
+
+githubcopilotlitigation:
+  type: case
+  title: Doe 1 v. GitHub, Inc.
+  date: 2022-11-03
+  archive: CourtListener
+  page-total: 56
+  serial-number:
+    serial: 3:22-cv-06823-KAW
+  url:
+    value: https://storage.courtlistener.com/recap/gov.uscourts.cand.403220/gov.uscourts.cand.403220.1.0.pdf
+    date: 2025-06-25
+
+nytlitigation:
+  type: case
+  title: The New York Times Company v. Microsoft Corporation
+  date: 2023-12-27
+  archive: CourtListener
+  page-total: 69
+  serial-number:
+    serial: 1:23-cv-11195-SHS-OTW
+  url:
+    value: https://storage.courtlistener.com/recap/gov.uscourts.nysd.612697/gov.uscourts.nysd.612697.1.0_1.pdf
+    date: 2025-06-25
+
+authorslitigation:
+  type: case
+  title: Alter v. OpenAI Inc.
+  date: 2023-11-21
+  archive: CourtListener
+  page-total: 28
+  serial-number:
+    serial: 1:23-cv-10211-SHS-OTW
+  url:
+    value: https://storage.courtlistener.com/recap/gov.uscourts.nysd.610699/gov.uscourts.nysd.610699.1.0_1.pdf
+    date: 2025-06-25
+
+openaitos:
+  type: misc
+  title: Terms of Use
+  date: 2024-12-11
+  author: OpenAI
+  url:
+    value: https://openai.com/policies/row-terms-of-use/
+    date: 2025-06-25
+
+commabnb:
+  type: repository
+  title: whsinth/comma-v0.1-1t-bnb-8b
+  author: Manatsawin Hanmongkolchai
+  date: 2025-06-29
+  url:
+    value: https://huggingface.co/whsinth/comma-v0.1-1t-bnb-8b
+
+int8:
+  type: article
+  title: "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale"
+  author:
+    - Tim Dettmers
+    - Mike Lewis
+    - Younes Belkada
+    - Luke Zettlemoyer
+  date: 2022
+  serial-number:
+    arxiv: "2208.07339"
+    doi: "10.48550/arXiv.2208.07339"
+
+pleias:
+  type: article
+  title: "They Said It Couldn’t Be Done"
+  date: 2024-12-05
+  author:
+    - Pierre-Carl Langlais
+    - Anastasia Stasenko
+    - Catherine Arnett
+  url:
+      value: "https://huggingface.co/blog/Pclanglais/common-models"
+      date: 2025-07-06

@@ -1,0 +1,41 @@
+[project]
+name = "chinesewall"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "accelerate>=1.8.1",
+    "bitsandbytes>=0.46.0",
+    "datasets>=3.6.0",
+    "notebook>=7.4.3",
+    "ollama>=0.5.1",
+    "openai>=1.90.0",
+    "scipy>=1.16.0",
+    "torch>=2.7.0",
+    "tqdm>=4.67.1",
+    "transformers>=4.52.4",
+    "vllm>=0.9.1",
+    "flashinfer-python>=0.2.6",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "vllm"
+url = "https://wheels.vllm.ai/nightly"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128" },
+]
+flashinfer-python = [
+  { index = "pytorch-cu128" },
+]
+vllm = [
+  { index = "vllm" },
+]

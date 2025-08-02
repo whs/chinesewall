@@ -1,44 +1,51 @@
-# Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions
+# Applying the Chinese Wall Reverse Engineering Technique to Large Language Model Code Editing
 
-CanItEdit is a benchmark for evaluating LLMs on instructional code editing, the task of
-updating a program given a natural language instruction. The benchmark contains 105
-hand-crafted Python programs with `before` and `after` code blocks,
-two types of natural language instructions (descriptive and lazy), and a hidden test suite.
+This repository contains code from my paper ["Applying the Chinese Wall Reverse Engineering Technique to Large Language Model Code Editing". (arXiv:2507.15599)](https://arxiv.org/abs/2507.15599).
 
-#### See [our paper](https://arxiv.org/abs/2312.12450) for more.
+## Benchmark
+The benchmark is based on [CanItEdit](https://github.com/nuprl/CanItEdit/) by Federico Cassano, et al.
 
-This repository provides code for evaluating models on the benchmark, and the code to reproduce
-EditPackFT and EditCoder, a dataset and a LLM built for instructional code editing.
+The code is refactored to improve modularity, but new code use hardcoded inputs. To run
 
-The CanItEdit benchmark dataset, EditCoder model, and EditPackFT dataset can be found on HuggingFace:
+```sh
+uv sync
 
-- CanItEdit: https://huggingface.co/datasets/nuprl/CanItEdit
-- EditCoder: https://huggingface.co/nuprl/EditCoder-6.7b-v1
-- EditPackFT: https://huggingface.co/datasets/nuprl/EditPackFT
+# Generate results
 
-## Cloning the repository
-It is very important to clone this repository and initialize all submodule recursively.
-This can be done with the following command:
+# Chinese wall vLLM
+python benchmark/generate_completions.py --model=/path/to/comma-v0.1-1t-bnb-8b --model-type=chinesewall-direct --output-dir=outputs-chinesewall-comma --completion-limit=20 --batch-size=5 --temperature=0.2 --max-tokens=2048 --top-p=0.95
+# Chinese wall Ollama
+python benchmark/generate_completions.py --model=phi4 --model-type=chinesewall --output-dir=outputs-chinesewall-phi4 --completion-limit=20 --batch-size=1 --temperature=0.2 --max-tokens=2048 --top-p=0.95
+# vLLM
+python benchmark/generate_completions.py --model=/path/to/comma-v0.1-1t-bnb-8b --model-type=direct --output-dir=outputs-comma --completion-limit=20 --batch-size=5 --temperature=0.2 --max-tokens=2048 --top-p=0.95
+# OpenAI
+OPENAI_API_KEY=... OPENAI_BASE_URL=https://router.requesty.ai/v1 python benchmark/generate_completions.py --model=google/gemini-2.5-pro --model-type=openai --output-dir=outputs-gemini-2.5-pro --completion-limit=20 --batch-size=8 --temperature=0.2 --max-tokens=100000 --top-p=0.95
 
-```bash
-git clone --recurse-submodules https://github.com/nuprl/CanItEdit
+# Generate result
+
+./benchmark/evaluate_completions.sh /full/path/to/outputs-comma
+./benchmark/separate_results.sh outputs-comma
+python ./benchmark/pass_k.py outputs-comma_* -k 20
 ```
 
-## Structure
+### License
+Unknown - The original benchmark did not have copyright metadata.
 
-- `./benchmark` contains the CanItEdit benchmark dataset and code for generating and evaluating completions
-- `./editcoder` contains code to train an EditCoder model
-- `./editpackft` contains code to reproduce the EditPackFT dataset
-- `./requirements.txt` contains the requirements for running the code in this repository
+## Paper
+The paper code is written in Typst. It vendorized the following code
+
+- [Citation Styles](https://github.com/citation-style-language/styles/blob/master/ieee-with-url.csl) Copyright CC BY-SA 3.0 (see list of authors in the file)
+- [arkheion template](https://github.com/mgoulao/arkheion) Copyright MIT License Manuel Goulão
 
 ## Citation
-If you use this code or the CanItEdit benchmark, please cite our paper:
-
 ```
-@inproceedings{cassano:canitedit,
-      title={Can It Edit? Evaluating the Ability of Large Language Models to Follow Code Editing Instructions}, 
-      author={Federico Cassano and Luisa Li and Akul Sethi and Noah Shinn and Abby Brennan-Jones and Anton Lozhkov and Carolyn Jane Anderson and Arjun Guha},
-      booktitle={Conference on Language Modeling (COLM)},
-      year={2024},
+@misc{hanmongkolchai2025applyingchinesewallreverse,
+      title={Applying the Chinese Wall Reverse Engineering Technique to Large Language Model Code Editing}, 
+      author={Manatsawin Hanmongkolchai},
+      year={2025},
+      eprint={2507.15599},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2507.15599}, 
 }
 ```
