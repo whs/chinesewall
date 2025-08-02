@@ -49,8 +49,8 @@ As discussed in the paper, it is to my believe that the outputs of the LLM may i
 This includes the following contents:
 
 - All LLM generated contents with unclear license (if it is allowed for me to make a copyright claim on it), except for fields that are copied from the benchmark
-- Results file from evaluating the accompanying test on the LLM code
-- The contents of the chinesewall-cache folder are entirely generated from Gemini 2.5 Pro. The [Vertex AI service specific terms](https://cloud.google.com/terms/service-terms) as of 2025-08-02 states that Google does not claims copyright to the output, and provide indemnification obligation.
+- Results from evaluating the accompanying test on the LLM code
+- The contents of the chinesewall-cache folder are CanItEdit input source, modified with Gemini 2.5 Pro. The [Vertex AI service specific terms](https://cloud.google.com/terms/service-terms) as of 2025-08-02 states that Google does not claims copyright to the new output, and provide indemnification obligation.
 
 ## Citation
 ```
